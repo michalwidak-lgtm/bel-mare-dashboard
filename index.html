@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{font-size:13px}
@@ -49,7 +51,11 @@ body{font-family:'Inter',sans-serif;background:#f5f6fa;color:#1e293b;min-height:
 /* TOPBAR */
 .topbar{height:52px;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:fixed;top:0;left:240px;right:0;z-index:90}
 .topbar-title{font-size:.95rem;font-weight:600;color:#1e293b}
+.topbar-right{display:flex;align-items:center;gap:12px}
 .topbar-date{font-size:.8rem;color:#64748b}
+.topbar-import-status{font-size:.65rem;padding:3px 10px;border-radius:10px;font-weight:600}
+.topbar-import-status.has-data{background:#d1fae5;color:#065f46}
+.topbar-import-status.no-data{background:#fee2e2;color:#991b1b}
 
 /* MAIN */
 .main{margin-left:240px;margin-top:52px;padding:20px 24px 40px;min-height:calc(100vh - 52px)}
@@ -63,7 +69,7 @@ body{font-family:'Inter',sans-serif;background:#f5f6fa;color:#1e293b;min-height:
 .kpi-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-bottom:20px}
 .kpi-card{background:#fff;border-radius:12px;padding:14px 16px;border:1px solid #e2e8f0;position:relative;overflow:hidden}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.kpi-card.blue::before{background:#3b82f6}.kpi-card.green::before{background:#10b981}.kpi-card.amber::before{background:#f59e0b}.kpi-card.red::before{background:#ef4444}.kpi-card.purple::before{background:#8b5cf6}.kpi-card.cyan::before{background:#06b6d4}.kpi-card.rose::before{background:#f43f5e}.kpi-card.slate::before{background:#64748b}.kpi-card.pink::before{background:#ec4899}.kpi-card.orange::before{background:#f97316}
+.kpi-card.blue::before{background:#3b82f6}.kpi-card.green::before{background:#10b981}.kpi-card.amber::before{background:#f59e0b}.kpi-card.red::before{background:#ef4444}.kpi-card.purple::before{background:#8b5cf6}.kpi-card.cyan::before{background:#06b6d4}.kpi-card.rose::before{background:#f43f5e}.kpi-card.slate::before{background:#64748b}
 .kpi-label{font-size:.68rem;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
 .kpi-label small{display:block;font-size:.56rem;color:#94a3b8;font-weight:400;text-transform:none;letter-spacing:0;margin-top:1px}
 .kpi-value{font-size:1.5rem;font-weight:700;color:#1e293b;margin-top:4px}
@@ -89,7 +95,7 @@ tbody tr:hover{background:#f8fafc}
 
 /* PILLS */
 .pill{padding:2px 7px;border-radius:4px;font-size:.62rem;font-weight:600;white-space:nowrap}
-.pill-blue{background:#dbeafe;color:#1e40af}.pill-green{background:#d1fae5;color:#065f46}.pill-amber{background:#fef3c7;color:#92400e}.pill-red{background:#fee2e2;color:#991b1b}.pill-purple{background:#ede9fe;color:#5b21b6}.pill-slate{background:#f1f5f9;color:#475569}.pill-pink{background:#fce7f3;color:#9d174d}.pill-cyan{background:#cffafe;color:#155e75}.pill-orange{background:#ffedd5;color:#9a3412}
+.pill-blue{background:#dbeafe;color:#1e40af}.pill-green{background:#d1fae5;color:#065f46}.pill-amber{background:#fef3c7;color:#92400e}.pill-red{background:#fee2e2;color:#991b1b}.pill-purple{background:#ede9fe;color:#5b21b6}.pill-slate{background:#f1f5f9;color:#475569}
 
 /* EVENT DOTS */
 .evt-dots{display:flex;gap:3px;flex-wrap:wrap;max-width:120px}
@@ -122,47 +128,10 @@ tbody tr:hover{background:#f8fafc}
 .weather-day .wd-desc{font-size:.56rem;color:#64748b;margin-top:2px}
 .weather-day .wd-detail{font-size:.52rem;color:#94a3b8;margin-top:4px;line-height:1.4}
 
-/* ANIMATION SCHEDULE */
-.anim-day-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.anim-day-btn{padding:8px 18px;border-radius:8px;border:2px solid #e2e8f0;background:#fff;font-size:.8rem;cursor:pointer;font-weight:600;font-family:inherit;transition:all .2s;color:#64748b}
-.anim-day-btn:hover{border-color:#8b5cf6;color:#8b5cf6}
-.anim-day-btn.active{background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:#fff;border-color:#8b5cf6;box-shadow:0 4px 12px rgba(139,92,246,.3)}
-.anim-day-btn .day-sub{display:block;font-size:.55rem;font-weight:400;opacity:.7;margin-top:1px}
-.anim-timeline{position:relative}
-.anim-slot{display:flex;align-items:stretch;gap:0;margin-bottom:2px;border-radius:10px;overflow:hidden;background:#fff;border:1px solid #e2e8f0;transition:transform .1s,box-shadow .1s}
-.anim-slot:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.06)}
-.anim-time{width:110px;padding:10px 12px;font-size:.72rem;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;text-align:center;line-height:1.3}
-.anim-content{flex:1;padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:2px}
-.anim-name-pl{font-size:.82rem;font-weight:700;color:#1e293b}
-.anim-name-de{font-size:.62rem;color:#94a3b8;font-style:italic}
-.anim-loc{display:inline-flex;align-items:center;gap:4px;margin-top:3px}
-.anim-loc-pill{padding:2px 8px;border-radius:4px;font-size:.58rem;font-weight:600;background:#f1f5f9;color:#475569}
-.anim-cat-icon{font-size:.9rem;margin-right:2px}
-
-/* Location colors */
-.loc-hol{background:#dbeafe;color:#1e40af}
-.loc-sala{background:#d1fae5;color:#065f46}
-.loc-kids{background:#fef3c7;color:#92400e}
-.loc-play{background:#ede9fe;color:#5b21b6}
-.loc-nite{background:#fce7f3;color:#9d174d}
-.loc-aqua{background:#cffafe;color:#155e75}
-
-/* Time slot colors */
-.time-morning{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
-.time-midday{background:linear-gradient(135deg,#3b82f6,#60a5fa)}
-.time-afternoon{background:linear-gradient(135deg,#10b981,#34d399)}
-.time-evening{background:linear-gradient(135deg,#8b5cf6,#a78bfa)}
-.time-night{background:linear-gradient(135deg,#1e293b,#475569)}
-
-/* Anim week overview */
-.anim-week-grid{display:grid;grid-template-columns:100px repeat(7,1fr);gap:2px;font-size:.62rem}
-.anim-week-header{padding:8px 6px;font-weight:700;text-align:center;color:#64748b;background:#f8fafc;border-radius:6px;font-size:.65rem}
-.anim-week-time{padding:8px 6px;font-weight:600;color:#475569;background:#f8fafc;border-radius:6px;font-size:.6rem;display:flex;align-items:center}
-.anim-week-cell{padding:6px;border-radius:6px;background:#fff;border:1px solid #f1f5f9;min-height:48px;font-size:.58rem;line-height:1.4;color:#334155}
-.anim-week-cell.has-activity{background:#faf5ff;border-color:#e9d5ff}
-.anim-week-cell .act-name{font-weight:600;color:#1e293b;font-size:.6rem}
-.anim-week-cell .act-loc{font-size:.5rem;color:#8b5cf6;margin-top:1px}
-.anim-week-cell.highlight{background:#ede9fe;border-color:#c4b5fd}
+/* UPLOAD AREAS */
+.upload-zone{border:2px dashed #e2e8f0;border-radius:12px;padding:20px;text-align:center;transition:all .2s;cursor:pointer}
+.upload-zone:hover{border-color:#3b82f6;background:#f8fafc}
+.upload-zone.loaded{border-color:#10b981;background:#f0fdf4}
 
 /* ADMIN */
 .admin-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:16px}
@@ -181,17 +150,8 @@ tbody tr:hover{background:#f8fafc}
 .status-badge{padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:600}
 .status-badge.active{background:#d1fae5;color:#065f46}.status-badge.inactive{background:#fee2e2;color:#991b1b}
 
-/* Reason bars */
-.reason-bars{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.reason-bar-row{display:flex;align-items:center;gap:10px;font-size:.75rem}
-.reason-bar-label{width:180px;text-align:right;color:#64748b;font-weight:500;flex-shrink:0}
-.reason-bar-track{flex:1;height:24px;background:#f1f5f9;border-radius:6px;overflow:hidden}
-.reason-bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding:0 8px;font-size:.65rem;font-weight:600;color:#fff;min-width:fit-content;white-space:nowrap}
-
-/* Note card */
-.note-card{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fde68a;border-radius:10px;padding:14px 18px;font-size:.75rem;color:#92400e;margin-bottom:16px;line-height:1.5}
-.note-card strong{color:#78350f}
-
+/* RESPONSIVE */
+@media(max-width:768px){.sidebar{display:none}.topbar{left:0}.main{margin-left:0}.card-grid{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(2,1fr)}}
 @media print{.sidebar,.topbar,#loginOverlay{display:none!important}.main{margin:0;padding:10px}.section{display:block!important;page-break-inside:avoid}}
 </style>
 </head>
@@ -207,7 +167,7 @@ tbody tr:hover{background:#f8fafc}
 <div class="login-field"><label>Hasło</label><input type="password" id="loginPass" placeholder="Wpisz hasło" autocomplete="current-password"></div>
 <button class="login-btn" onclick="handleLogin()">Zaloguj się</button>
 <div class="login-error" id="loginError"></div>
-<div class="login-hint">Dostęp wyłącznie dla autoryzowanego personelu Bel Mare Resort.</div>
+<div class="login-hint">Dostęp wyłącznie dla autoryzowanego personelu.<br>Domyślnie: admin / belmare2026!</div>
 </div>
 </div>
 
@@ -216,17 +176,14 @@ tbody tr:hover{background:#f8fafc}
 <div class="sidebar-header"><div class="resort-name">BEL MARE</div><div class="resort-sub">Panel Operacyjny · 2026</div></div>
 <nav class="sidebar-nav" id="sidebarNav">
 <div class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')"><span class="nav-icon">📊</span> Pulpit główny</div>
-<div class="nav-item" data-section="calendar" onclick="showSection('calendar')"><span class="nav-icon">📅</span> Kalendarz wydarzeń</div>
-<div class="nav-item" data-section="animations" onclick="showSection('animations')"><span class="nav-icon">🎭</span> Animacje</div>
+<div class="nav-item" data-section="calendar" onclick="showSection('calendar')"><span class="nav-icon">📅</span> Kalendarz</div>
 <div class="nav-sep"></div>
 <div class="nav-item" data-section="occupancy" onclick="showSection('occupancy')"><span class="nav-icon">🏨</span> Obłożenie</div>
 <div class="nav-item" data-section="meals" onclick="showSection('meals')"><span class="nav-icon">🍽️</span> Wyżywienie</div>
 <div class="nav-item" data-section="hsk" onclick="showSection('hsk')"><span class="nav-icon">🧹</span> HSK</div>
-<div class="nav-item" data-section="arrivals" onclick="showSection('arrivals')"><span class="nav-icon">🔄</span> Przyjazdy / Wyjazdy</div>
+<div class="nav-item" data-section="arrivals" onclick="showSection('arrivals')"><span class="nav-icon">🔄</span> Przyjazdy/Wyjazdy</div>
 <div class="nav-sep"></div>
-<div class="nav-item" data-section="pickup" onclick="showSection('pickup')"><span class="nav-icon">📥</span> Pickup Report</div>
 <div class="nav-item" data-section="cancellations" onclick="showSection('cancellations')"><span class="nav-icon">❌</span> Anulacje</div>
-<div class="nav-item" data-section="channels" onclick="showSection('channels')"><span class="nav-icon">📡</span> Kanały sprzedaży</div>
 <div class="nav-sep"></div>
 <div class="nav-item" data-section="import" onclick="showSection('import')"><span class="nav-icon">📂</span> Import danych</div>
 <div class="nav-item nav-admin" data-section="admin" onclick="showSection('admin')" style="display:none"><span class="nav-icon">⚙️</span> Administracja</div>
@@ -240,393 +197,807 @@ tbody tr:hover{background:#f8fafc}
 <!-- TOPBAR -->
 <div class="topbar" id="topbar" style="display:none">
 <div class="topbar-title">Bel Mare Resort – Raport Operacyjny</div>
+<div class="topbar-right">
+<span class="topbar-import-status no-data" id="topImportBadge">Dane domyślne</span>
 <div class="topbar-date" id="topbarDate"></div>
+</div>
 </div>
 
 <!-- MAIN -->
 <div class="main" id="mainContent" style="display:none">
 
-<!-- DASHBOARD -->
+<!-- ===== DASHBOARD ===== -->
 <div class="section active" id="sec-dashboard">
-<div class="section-title">Pulpit główny <small>Dashboard · Daily Overview</small></div>
-<div class="section-desc">Podsumowanie operacyjne na dziś z kluczowymi wskaźnikami.</div>
-<div class="card" id="weatherCard"><div class="card-title">Pogoda – Międzyzdroje <small>Open-Meteo API · auto-odświeżanie 06:00</small></div><div class="weather-strip" id="weatherStrip"><div style="padding:20px;color:#94a3b8;font-size:.8rem">Ładowanie prognozy pogody...</div></div></div>
-<div class="kpi-strip" id="todayKpis"></div>
+<div class="section-title">Pulpit główny <small>Dashboard</small></div>
+<div class="section-desc">Podsumowanie operacyjne na dziś.</div>
+<div class="card"><div class="card-title">🌤️ Pogoda – Międzyzdroje <small>Open-Meteo API</small></div><div class="weather-strip" id="weatherStrip"><div style="padding:20px;color:#94a3b8;font-size:.8rem">Ładowanie pogody...</div></div></div>
+<div class="kpi-strip" id="dashKpis"></div>
 <div class="card-grid">
-<div class="card"><div class="card-title">Obłożenie 7 dni <small>Rooms Occupied – 7 Day</small></div><div class="chart-wrap"><canvas id="chart7occ"></canvas></div></div>
-<div class="card"><div class="card-title">Wyżywienie 7 dni <small>Meals – 7 Day</small></div><div class="chart-wrap"><canvas id="chart7meals"></canvas></div></div>
+<div class="card"><div class="card-title">Obłożenie 7 dni <small>Rooms Occ.</small></div><div class="chart-wrap"><canvas id="chart7occ"></canvas></div></div>
+<div class="card"><div class="card-title">Wyżywienie 7 dni <small>Meals</small></div><div class="chart-wrap"><canvas id="chart7meals"></canvas></div></div>
 </div>
-<!-- Anim today mini -->
-<div class="card" style="border-left:4px solid #8b5cf6">
-<div class="card-title" style="color:#8b5cf6">🎭 Animacje dziś <small>Today's Animation Schedule</small></div>
-<div id="dashAnimToday" style="margin-top:10px"></div>
-</div>
-<!-- Cancel alert -->
-<div class="card" style="border-left:4px solid #ef4444">
-<div class="card-title" style="color:#ef4444">⚠️ Anulacje wczoraj <small>Reservation Cancellations · 19.03.2026</small></div>
-<div class="kpi-strip" style="margin-top:12px;margin-bottom:0" id="dashCancelKpis"></div>
-</div>
+<div class="card" style="border-left:4px solid #ef4444"><div class="card-title" style="color:#ef4444">⚠️ Ostatnie anulacje</div><div class="kpi-strip" style="margin-top:12px;margin-bottom:0" id="dashCancelKpis"></div></div>
 </div>
 
-<!-- CALENDAR -->
+<!-- ===== CALENDAR ===== -->
 <div class="section" id="sec-calendar">
-<div class="section-title">Kalendarz wydarzeń <small>Events Calendar PL/DE 2026</small></div>
-<div class="section-desc">Święta, ferie, wakacje – Polska i Niemcy.</div>
+<div class="section-title">Kalendarz wydarzeń <small>PL/DE 2026</small></div>
 <div class="cal-months" id="calMonths"></div>
 <div class="card"><div class="cal-grid" id="calGrid"></div></div>
 <div class="card" style="margin-top:16px"><div class="card-title">Lista wydarzeń 2026</div><div class="tbl-wrap"><table id="eventsTable"><thead><tr><th>Okres</th><th>Wydarzenie (PL)</th><th>Nazwa (DE)</th><th>Kraj</th><th>Wpływ</th></tr></thead><tbody></tbody></table></div></div>
 </div>
 
-<!-- ANIMATIONS -->
-<div class="section" id="sec-animations">
-<div class="section-title">Animacje <small>Animation Schedule · Harmonogram animacji</small></div>
-<div class="section-desc">Tygodniowy harmonogram animacji i atrakcji – źródło: piątek-niedziela marzec.pdf, poniedziałek-czwartek marzec.pdf</div>
-
-<div class="note-card">
-<strong>ℹ️ Informacja:</strong> Na wszystkie animacje i atrakcje obowiązują opaski wstępu wydawane w recepcji podczas check-in w zależności od wybranego pakietu. Hotel zastrzega sobie możliwość zmiany harmonogramu.<br>
-<small style="color:#a16207"><em>Für alle Animationen und Attraktionen sind Eintrittsbänder erforderlich, die je nach gewähltem Paket beim Check-in an der Rezeption ausgegeben werden.</em></small>
-</div>
-
-<div class="kpi-strip" id="animKpis"></div>
-
-<div class="card">
-<div class="card-title">Widok tygodniowy <small>Weekly Overview Grid</small></div>
-<div style="overflow-x:auto;margin-top:12px"><div class="anim-week-grid" id="animWeekGrid"></div></div>
-</div>
-
-<div class="card">
-<div class="card-title">Harmonogram dnia <small>Daily Schedule Timeline</small></div>
-<div class="anim-day-tabs" id="animDayTabs"></div>
-<div class="anim-timeline" id="animTimeline"></div>
-</div>
-
-<div class="card">
-<div class="card-title">Lokalizacje animacji <small>Animation Venues</small></div>
-<div class="kpi-strip" style="margin-top:12px" id="animVenues"></div>
-</div>
-
-<div class="card">
-<div class="card-title">Pełna tabela <small>Full Schedule Table · source: piątek-niedziela marzec.pdf + poniedziałek-czwartek marzec.pdf</small></div>
-<div class="tbl-wrap"><table id="animFullTable"><thead></thead><tbody></tbody></table></div>
-</div>
-</div>
-
-<!-- OCCUPANCY -->
+<!-- ===== OCCUPANCY ===== -->
 <div class="section" id="sec-occupancy">
-<div class="section-title">Obłożenie <small>Occupancy Forecast · Package Forecast</small></div>
-<div class="section-desc">30-dniowa prognoza obłożenia.</div>
+<div class="section-title">Obłożenie <small>Occupancy Forecast</small></div>
 <div class="kpi-strip" id="occKpis"></div>
-<div class="card"><div class="card-title">Obłożenie 30 dni</div><div class="chart-wrap" style="height:280px"><canvas id="chart30occ"></canvas></div></div>
-<div class="card"><div class="card-title">Tabela dzienna <small>source: Package Forecast</small></div><div class="tbl-wrap"><table id="occTable"><thead></thead><tbody></tbody></table></div></div>
+<div class="card"><div class="card-title">Obłożenie – pełny okres</div><div class="chart-wrap" style="height:280px"><canvas id="chart30occ"></canvas></div></div>
+<div class="card"><div class="card-title">Tabela dzienna <small>source: Package Forecast PDF</small></div><div class="tbl-wrap"><table id="occTable"><thead></thead><tbody></tbody></table></div></div>
 </div>
 
-<!-- MEALS -->
+<!-- ===== MEALS ===== -->
 <div class="section" id="sec-meals">
-<div class="section-title">Wyżywienie <small>Meal Forecast · Package Forecast</small></div>
-<div class="section-desc">Śniadania, obiady, kolacje – 30 dni.</div>
+<div class="section-title">Wyżywienie <small>Meal Forecast</small></div>
 <div class="kpi-strip" id="mealKpis"></div>
-<div class="card"><div class="card-title">Wyżywienie 30 dni</div><div class="chart-wrap" style="height:260px"><canvas id="chart30meals"></canvas></div></div>
-<div class="card"><div class="card-title">Tabela dzienna <small>source: Package Forecast</small></div><div class="tbl-wrap"><table id="mealTable"><thead></thead><tbody></tbody></table></div></div>
+<div class="card"><div class="card-title">Wyżywienie – pełny okres</div><div class="chart-wrap" style="height:260px"><canvas id="chart30meals"></canvas></div></div>
+<div class="card"><div class="card-title">Tabela dzienna</div><div class="tbl-wrap"><table id="mealTable"><thead></thead><tbody></tbody></table></div></div>
 </div>
 
-<!-- HSK -->
+<!-- ===== HSK ===== -->
 <div class="section" id="sec-hsk">
 <div class="section-title">HSK <small>Housekeeping Forecast</small></div>
-<div class="section-desc">Prognoza obciążenia housekeeping.</div>
 <div class="kpi-strip" id="hskKpis"></div>
-<div class="card"><div class="card-title">Obciążenie HSK 30 dni</div><div class="chart-wrap" style="height:260px"><canvas id="chart30hsk"></canvas></div></div>
-<div class="card"><div class="card-title">Tabela dzienna <small>source: Housekeeping Forecast</small></div><div class="tbl-wrap"><table id="hskTable"><thead></thead><tbody></tbody></table></div></div>
+<div class="card"><div class="card-title">Obciążenie HSK</div><div class="chart-wrap" style="height:260px"><canvas id="chart30hsk"></canvas></div></div>
+<div class="card"><div class="card-title">Tabela dzienna</div><div class="tbl-wrap"><table id="hskTable"><thead></thead><tbody></tbody></table></div></div>
 </div>
 
-<!-- ARRIVALS -->
+<!-- ===== ARRIVALS ===== -->
 <div class="section" id="sec-arrivals">
-<div class="section-title">Przyjazdy / Wyjazdy <small>Arrivals & Departures Flow</small></div>
-<div class="card"><div class="card-title">Przepływ gości 30 dni</div><div class="chart-wrap" style="height:260px"><canvas id="chart30flow"></canvas></div></div>
-<div class="card"><div class="card-title">Tabela przepływu <small>source: Package Forecast</small></div><div class="tbl-wrap"><table id="flowTable"><thead></thead><tbody></tbody></table></div></div>
+<div class="section-title">Przyjazdy / Wyjazdy <small>Arrivals & Departures</small></div>
+<div class="card"><div class="card-title">Przepływ gości</div><div class="chart-wrap" style="height:260px"><canvas id="chart30flow"></canvas></div></div>
+<div class="card"><div class="card-title">Tabela przepływu</div><div class="tbl-wrap"><table id="flowTable"><thead></thead><tbody></tbody></table></div></div>
 </div>
 
-<!-- PICKUP -->
-<div class="section" id="sec-pickup">
-<div class="section-title">Pickup Report <small>Reservations made yesterday · 17.03.2026</small></div>
-<div class="kpi-strip" id="pickupKpis"></div>
-<div class="card-grid">
-<div class="card"><div class="card-title">Źródła rezerwacji</div><div class="chart-wrap"><canvas id="chartPickupSrc"></canvas></div></div>
-<div class="card"><div class="card-title">Mix rynkowy</div><div class="chart-wrap"><canvas id="chartPickupMkt"></canvas></div></div>
-</div>
-<div class="card"><div class="card-title">Lista rezerwacji <small>source: Reservation made yesterday</small></div><div class="tbl-wrap"><table id="pickupTable"><thead></thead><tbody></tbody></table></div></div>
-</div>
-
-<!-- CANCELLATIONS -->
+<!-- ===== CANCELLATIONS ===== -->
 <div class="section" id="sec-cancellations">
-<div class="section-title">Anulacje <small>Reservation Cancellations · 19.03.2026</small></div>
+<div class="section-title">Anulacje <small>Reservation Cancellations</small></div>
 <div class="kpi-strip" id="cancelKpis"></div>
 <div class="card-grid">
 <div class="card"><div class="card-title">Utracony przychód wg powodu</div><div class="chart-wrap"><canvas id="chartCancelReason"></canvas></div></div>
 <div class="card"><div class="card-title">Anulacje wg źródła</div><div class="chart-wrap"><canvas id="chartCancelSource"></canvas></div></div>
 </div>
-<div class="card"><div class="card-title">Pickup vs Anulacje <small>Net Pickup</small></div><div class="kpi-strip" style="margin-top:12px;margin-bottom:0" id="netPickupKpis"></div></div>
-<div class="card"><div class="card-title">Szczegóły anulacji <small>source: Reservation Cancellations 20.03.pdf</small></div><div class="tbl-wrap"><table id="cancelTable"><thead></thead><tbody></tbody></table></div></div>
-<div class="card"><div class="card-title">Analiza przyczyn</div><div class="reason-bars" id="reasonBars"></div></div>
+<div class="card"><div class="card-title">Szczegóły anulacji</div><div class="tbl-wrap"><table id="cancelTable"><thead></thead><tbody></tbody></table></div></div>
 </div>
 
-<!-- CHANNELS -->
-<div class="section" id="sec-channels">
-<div class="section-title">Kanały sprzedaży <small>Sales Channel Analysis</small></div>
-<div class="card-grid">
-<div class="card"><div class="card-title">Rezerwacje wg kanału</div><div class="chart-wrap"><canvas id="chartChBook"></canvas></div></div>
-<div class="card"><div class="card-title">Przychód wg kanału</div><div class="chart-wrap"><canvas id="chartChRev"></canvas></div></div>
-</div>
-</div>
-
-<!-- IMPORT -->
+<!-- ===== IMPORT ===== -->
 <div class="section" id="sec-import">
-<div class="section-title">Import danych <small>Data Import</small></div>
+<div class="section-title">Import danych <small>Wgraj PDFy z Opera PMS</small></div>
+<div class="section-desc">Wybierz pliki PDF wyeksportowane z systemu Opera PMS. Dane zostaną automatycznie sparsowane w przeglądarce i zapisane. <strong>Żadne dane nie są wysyłane na serwer.</strong></div>
+
 <div class="card">
-<div class="card-title">Pliki źródłowe</div>
-<div class="admin-form-row" style="margin-top:12px">
-<div class="field"><label>Package Forecast</label><input type="file" accept=".pdf,.csv"></div>
-<div class="field"><label>HSK Forecast</label><input type="file" accept=".pdf,.csv"></div>
-<div class="field"><label>Reservations Yesterday</label><input type="file" accept=".pdf,.csv"></div>
-<div class="field"><label>Cancellations</label><input type="file" accept=".pdf,.csv"></div>
-<div class="field"><label>Harmonogram animacji</label><input type="file" accept=".pdf,.csv"></div>
+<div class="card-title">📂 Wgraj raporty</div>
+<div style="margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+
+<div class="upload-zone" id="dropPkg" onclick="document.getElementById('filePkg').click()">
+  <div style="font-size:2rem;margin-bottom:8px">📊</div>
+  <div style="font-weight:700;font-size:.85rem;margin-bottom:4px">Package Forecast</div>
+  <div style="font-size:.65rem;color:#94a3b8;margin-bottom:8px">pkgforecast · obłożenie, posiłki, przyjazdy</div>
+  <input type="file" id="filePkg" accept=".pdf" style="display:none" onchange="handleFileSelect('pkg',this)">
+  <div style="font-size:.7rem;color:#3b82f6;font-weight:600">Kliknij aby wybrać PDF</div>
+  <div id="statusPkg" style="margin-top:8px;font-size:.7rem;color:#94a3b8"></div>
 </div>
-<button class="admin-btn primary" style="margin-top:12px">Importuj i przetwórz</button>
+
+<div class="upload-zone" id="dropHsk" onclick="document.getElementById('fileHsk').click()">
+  <div style="font-size:2rem;margin-bottom:8px">🧹</div>
+  <div style="font-weight:700;font-size:.85rem;margin-bottom:4px">Housekeeping Forecast</div>
+  <div style="font-size:.65rem;color:#94a3b8;margin-bottom:8px">resforecasthk · obciążenie pięter</div>
+  <input type="file" id="fileHsk" accept=".pdf" style="display:none" onchange="handleFileSelect('hsk',this)">
+  <div style="font-size:.7rem;color:#3b82f6;font-weight:600">Kliknij aby wybrać PDF</div>
+  <div id="statusHsk" style="margin-top:8px;font-size:.7rem;color:#94a3b8"></div>
+</div>
+
+<div class="upload-zone" id="dropCancel" onclick="document.getElementById('fileCancel').click()">
+  <div style="font-size:2rem;margin-bottom:8px">❌</div>
+  <div style="font-weight:700;font-size:.85rem;margin-bottom:4px">Reservation Cancellations</div>
+  <div style="font-size:.65rem;color:#94a3b8;margin-bottom:8px">rescancel · anulacje rezerwacji</div>
+  <input type="file" id="fileCancel" accept=".pdf" style="display:none" onchange="handleFileSelect('cancel',this)">
+  <div style="font-size:.7rem;color:#3b82f6;font-weight:600">Kliknij aby wybrać PDF</div>
+  <div id="statusCancel" style="margin-top:8px;font-size:.7rem;color:#94a3b8"></div>
 </div>
 </div>
 
-<!-- ADMIN -->
+<div style="margin-top:20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+  <button class="admin-btn primary" onclick="processAllFiles()" style="padding:12px 28px;font-size:.85rem" id="btnProcess">⚡ Przetwórz i zaktualizuj dashboard</button>
+  <button class="admin-btn danger" onclick="clearImportedData()">🗑️ Wyczyść zaimportowane dane</button>
+  <span id="importStatus" style="font-size:.75rem;color:#94a3b8"></span>
+</div>
+</div>
+
+<div class="card" style="margin-top:16px">
+<div class="card-title">📋 Status danych</div>
+<div id="dataStatusInfo" style="margin-top:12px;font-size:.75rem;color:#64748b">Sprawdzanie...</div>
+</div>
+
+<div class="card" style="margin-top:16px">
+<div class="card-title">🔍 Podgląd sparsowanych danych <small>Debug</small></div>
+<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+  <button class="admin-btn secondary" onclick="previewParsed('pkg')">PKG</button>
+  <button class="admin-btn secondary" onclick="previewParsed('hsk')">HSK</button>
+  <button class="admin-btn secondary" onclick="previewParsed('cancel')">Anulacje</button>
+  <button class="admin-btn secondary" onclick="previewParsed('raw')">Surowy tekst PDF</button>
+</div>
+<pre id="previewArea" style="margin-top:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;font-size:.65rem;max-height:400px;overflow:auto;white-space:pre-wrap;display:none"></pre>
+</div>
+</div>
+
+<!-- ===== ADMIN ===== -->
 <div class="section" id="sec-admin">
 <div class="section-title">Administracja <small>Admin Panel</small></div>
 <div class="admin-card"><h3>Zarządzanie użytkownikami</h3><table class="admin-table" id="adminUsersTable"><thead><tr><th>Login</th><th>Rola</th><th>Status</th><th>Ostatnie logowanie</th><th>Akcje</th></tr></thead><tbody></tbody></table></div>
-<div class="admin-card"><h3>Dodaj użytkownika</h3><div class="admin-form-row"><div class="field"><label>Login</label><input type="text" id="newUserLogin"></div><div class="field"><label>Hasło</label><input type="password" id="newUserPass"></div><div class="field"><label>Rola</label><select id="newUserRole"><option value="Administrator">Administrator</option><option value="Operacja" selected>Operacja</option><option value="Recepcja">Recepcja</option><option value="HSK">HSK</option><option value="F&B">F&B</option><option value="Animacje">Animacje</option><option value="Revenue">Revenue</option><option value="Viewer">Viewer</option></select></div><button class="admin-btn primary" onclick="adminAddUser()">Dodaj</button></div></div>
-<div class="admin-card"><h3>Zmiana hasła</h3><div class="admin-form-row"><div class="field"><label>Login</label><input type="text" id="chPassLogin"></div><div class="field"><label>Nowe hasło</label><input type="password" id="chPassNew"></div><button class="admin-btn primary" onclick="adminChangePass()">Zmień</button></div></div>
-<div class="admin-card"><h3>Dziennik logowań</h3><table class="admin-table" id="sessionLogTable"><thead><tr><th>Data/godz.</th><th>Login</th><th>Rola</th><th>Akcja</th></tr></thead><tbody></tbody></table></div>
-<div class="admin-card"><h3>Ustawienia</h3><div class="admin-form-row"><div class="field"><label>Nazwa</label><input type="text" value="Bel Mare Resort"></div><div class="field"><label>Pokoje</label><input type="number" value="360"></div><button class="admin-btn primary" onclick="alert('Zapisano')">Zapisz</button></div></div>
+<div class="admin-card"><h3>Dodaj użytkownika</h3><div class="admin-form-row"><div class="field"><label>Login</label><input type="text" id="newUserLogin"></div><div class="field"><label>Hasło</label><input type="password" id="newUserPass"></div><div class="field"><label>Rola</label><select id="newUserRole"><option value="Administrator">Administrator</option><option value="Operacja" selected>Operacja</option><option value="Recepcja">Recepcja</option><option value="HSK">HSK</option><option value="Viewer">Viewer</option></select></div><button class="admin-btn primary" onclick="adminAddUser()">Dodaj</button></div></div>
+<div class="admin-card"><h3>Dziennik logowań</h3><table class="admin-table" id="sessionLogTable"><thead><tr><th>Data</th><th>Login</th><th>Rola</th><th>Akcja</th></tr></thead><tbody></tbody></table></div>
 </div>
 
-</div>
+</div><!-- /main -->
 
 <script>
 /* ================================================================
-   BEL MARE RESORT – FULL OPERATIONAL DASHBOARD
-   with Animations Schedule
+   BEL MARE RESORT – OPERATIONAL DASHBOARD
+   Z WBUDOWANYM PARSEREM PDF
    ================================================================ */
 
-// AUTH
-const DEFAULT_USERS=[{login:'admin',password:'belmare2026!',role:'Administrator',active:true,lastLogin:null},{login:'operacja',password:'belmare2026!',role:'Operacja',active:true,lastLogin:null}];
+// ═══════ AUTH ═══════
+const DEFAULT_USERS=[
+  {login:'admin',password:'belmare2026!',role:'Administrator',active:true,lastLogin:null},
+  {login:'operacja',password:'belmare2026!',role:'Operacja',active:true,lastLogin:null},
+  {login:'recepcja',password:'belmare2026!',role:'Recepcja',active:true,lastLogin:null}
+];
 function getUsers(){let u=localStorage.getItem('bm_users');if(!u){localStorage.setItem('bm_users',JSON.stringify(DEFAULT_USERS));return JSON.parse(JSON.stringify(DEFAULT_USERS))}return JSON.parse(u)}
 function saveUsers(a){localStorage.setItem('bm_users',JSON.stringify(a))}
 function getSessionLog(){let l=localStorage.getItem('bm_sessions');return l?JSON.parse(l):[]}
 function addSessionLog(l,r,a){let log=getSessionLog();log.unshift({time:new Date().toLocaleString('pl-PL'),login:l,role:r,action:a});if(log.length>100)log=log.slice(0,100);localStorage.setItem('bm_sessions',JSON.stringify(log))}
-function handleLogin(){const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value,e=document.getElementById('loginError');if(!u||!p){e.textContent='Wprowadź login i hasło.';return}const users=getUsers(),f=users.find(x=>x.login===u&&x.password===p);if(!f){e.textContent='Nieprawidłowy login lub hasło.';addSessionLog(u,'—','Nieudane logowanie');return}if(!f.active){e.textContent='Konto dezaktywowane.';return}f.lastLogin=new Date().toLocaleString('pl-PL');saveUsers(users);addSessionLog(f.login,f.role,'Zalogowano');sessionStorage.setItem('bm_current_user',JSON.stringify({login:f.login,role:f.role}));e.textContent='';activateUI(f)}
-function activateUI(u){document.getElementById('loginOverlay').classList.add('hidden');document.getElementById('sidebar').style.display='flex';document.getElementById('topbar').style.display='flex';document.getElementById('mainContent').style.display='block';document.getElementById('userName').textContent=u.login;document.getElementById('userRole').textContent=u.role;document.getElementById('userAvatar').textContent=u.login.charAt(0).toUpperCase();document.querySelector('.nav-admin').style.display=u.role==='Administrator'?'flex':'none';initDashboard()}
-function handleLogout(){const c=sessionStorage.getItem('bm_current_user');if(c){const u=JSON.parse(c);addSessionLog(u.login,u.role,'Wylogowano')}sessionStorage.removeItem('bm_current_user');document.getElementById('loginOverlay').classList.remove('hidden');['sidebar','topbar','mainContent'].forEach(id=>document.getElementById(id).style.display='none');document.getElementById('loginUser').value='';document.getElementById('loginPass').value=''}
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!document.getElementById('loginOverlay').classList.contains('hidden'))handleLogin()});
-function checkSession(){const c=sessionStorage.getItem('bm_current_user');if(c){const u=JSON.parse(c),users=getUsers(),f=users.find(x=>x.login===u.login&&x.active);if(f){activateUI(f);return}}document.getElementById('loginOverlay').classList.remove('hidden')}
 
-// ADMIN
+function handleLogin(){
+  const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value,e=document.getElementById('loginError');
+  if(!u||!p){e.textContent='Wprowadź login i hasło.';return}
+  const users=getUsers(),f=users.find(x=>x.login===u&&x.password===p);
+  if(!f){e.textContent='Nieprawidłowy login lub hasło.';addSessionLog(u,'—','Nieudane logowanie');return}
+  if(!f.active){e.textContent='Konto dezaktywowane.';return}
+  f.lastLogin=new Date().toLocaleString('pl-PL');saveUsers(users);
+  addSessionLog(f.login,f.role,'Zalogowano');
+  sessionStorage.setItem('bm_current_user',JSON.stringify({login:f.login,role:f.role}));
+  e.textContent='';activateUI(f);
+}
+
+function activateUI(u){
+  document.getElementById('loginOverlay').classList.add('hidden');
+  document.getElementById('sidebar').style.display='flex';
+  document.getElementById('topbar').style.display='flex';
+  document.getElementById('mainContent').style.display='block';
+  document.getElementById('userName').textContent=u.login;
+  document.getElementById('userRole').textContent=u.role;
+  document.getElementById('userAvatar').textContent=u.login.charAt(0).toUpperCase();
+  document.querySelector('.nav-admin').style.display=u.role==='Administrator'?'flex':'none';
+  initDashboard();
+}
+
+function handleLogout(){
+  const c=sessionStorage.getItem('bm_current_user');
+  if(c){const u=JSON.parse(c);addSessionLog(u.login,u.role,'Wylogowano')}
+  sessionStorage.removeItem('bm_current_user');
+  document.getElementById('loginOverlay').classList.remove('hidden');
+  ['sidebar','topbar','mainContent'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('loginUser').value='';document.getElementById('loginPass').value='';
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!document.getElementById('loginOverlay').classList.contains('hidden'))handleLogin()});
+
+function checkSession(){
+  const c=sessionStorage.getItem('bm_current_user');
+  if(c){const u=JSON.parse(c),users=getUsers(),f=users.find(x=>x.login===u.login&&x.active);if(f){activateUI(f);return}}
+}
+
+// ═══════ ADMIN ═══════
 function adminRenderUsers(){const t=document.querySelector('#adminUsersTable tbody'),u=getUsers();t.innerHTML=u.map((x,i)=>`<tr><td><strong>${x.login}</strong></td><td>${x.role}</td><td><span class="status-badge ${x.active?'active':'inactive'}">${x.active?'Aktywny':'Nieaktywny'}</span></td><td>${x.lastLogin||'—'}</td><td><button class="admin-btn secondary" onclick="adminToggle(${i})">${x.active?'Dezaktywuj':'Aktywuj'}</button> <button class="admin-btn danger" onclick="adminDel(${i})">Usuń</button></td></tr>`).join('')}
 function adminToggle(i){const u=getUsers();u[i].active=!u[i].active;saveUsers(u);adminRenderUsers()}
 function adminDel(i){const u=getUsers();if(u[i].login==='admin')return alert('Nie można usunąć admin.');if(!confirm(`Usunąć "${u[i].login}"?`))return;u.splice(i,1);saveUsers(u);adminRenderUsers()}
-function adminAddUser(){const l=document.getElementById('newUserLogin').value.trim(),p=document.getElementById('newUserPass').value,r=document.getElementById('newUserRole').value;if(!l||!p)return alert('Podaj login i hasło.');if(p.length<6)return alert('Min. 6 znaków.');const u=getUsers();if(u.find(x=>x.login===l))return alert('Login zajęty.');u.push({login:l,password:p,role:r,active:true,lastLogin:null});saveUsers(u);document.getElementById('newUserLogin').value='';document.getElementById('newUserPass').value='';adminRenderUsers();alert(`Dodano "${l}".`)}
-function adminChangePass(){const l=document.getElementById('chPassLogin').value.trim(),p=document.getElementById('chPassNew').value;if(!l||!p)return alert('Uzupełnij pola.');if(p.length<6)return alert('Min. 6 znaków.');const u=getUsers(),f=u.find(x=>x.login===l);if(!f)return alert('Brak użytkownika.');f.password=p;saveUsers(u);document.getElementById('chPassLogin').value='';document.getElementById('chPassNew').value='';alert('Hasło zmienione.')}
+function adminAddUser(){const l=document.getElementById('newUserLogin').value.trim(),p=document.getElementById('newUserPass').value,r=document.getElementById('newUserRole').value;if(!l||!p)return alert('Podaj login i hasło.');const u=getUsers();if(u.find(x=>x.login===l))return alert('Login zajęty.');u.push({login:l,password:p,role:r,active:true,lastLogin:null});saveUsers(u);document.getElementById('newUserLogin').value='';document.getElementById('newUserPass').value='';adminRenderUsers();alert(`Dodano "${l}".`)}
 function adminRenderSessions(){document.querySelector('#sessionLogTable tbody').innerHTML=getSessionLog().slice(0,30).map(e=>`<tr><td>${e.time}</td><td>${e.login}</td><td>${e.role}</td><td>${e.action}</td></tr>`).join('')}
 
-// NAV
-function showSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('sec-'+id).classList.add('active');document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));const n=document.querySelector(`.nav-item[data-section="${id}"]`);if(n)n.classList.add('active');if(id==='admin'){adminRenderUsers();adminRenderSessions()}}
+// ═══════ NAV ═══════
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const n=document.querySelector(`.nav-item[data-section="${id}"]`);if(n)n.classList.add('active');
+  if(id==='admin'){adminRenderUsers();adminRenderSessions()}
+  if(id==='import')updateDataStatus();
+}
 
-// DATA
+// ═══════ CONSTANTS ═══════
 const TOTAL_ROOMS=360;
-const pkgData=[{d:'2026-03-18',occ:155,adu:198,ch:67,arrR:42,arrP:56,depR:18,depP:24,bfk:178,lun:12,din:145},{d:'2026-03-19',occ:162,adu:207,ch:71,arrR:35,arrP:47,depR:28,depP:36,bfk:185,lun:10,din:152},{d:'2026-03-20',occ:173,adu:221,ch:79,arrR:118,arrP:154,depR:21,depP:28,bfk:207,lun:8,din:168},{d:'2026-03-21',occ:189,adu:243,ch:88,arrR:48,arrP:63,depR:32,depP:42,bfk:225,lun:11,din:183},{d:'2026-03-22',occ:201,adu:258,ch:94,arrR:38,arrP:50,depR:26,depP:34,bfk:241,lun:15,din:196},{d:'2026-03-23',occ:195,adu:251,ch:90,arrR:22,arrP:29,depR:28,depP:37,bfk:234,lun:9,din:190},{d:'2026-03-24',occ:184,adu:237,ch:84,arrR:15,arrP:20,depR:26,depP:34,bfk:218,lun:7,din:178},{d:'2026-03-25',occ:178,adu:228,ch:80,arrR:18,arrP:24,depR:24,depP:31,bfk:210,lun:6,din:170},{d:'2026-03-26',occ:170,adu:218,ch:76,arrR:14,arrP:19,depR:22,depP:29,bfk:201,lun:8,din:163},{d:'2026-03-27',occ:175,adu:225,ch:78,arrR:21,arrP:28,depR:16,depP:21,bfk:207,lun:10,din:168},{d:'2026-03-28',occ:192,adu:247,ch:90,arrR:35,arrP:46,depR:18,depP:24,bfk:230,lun:14,din:187},{d:'2026-03-29',occ:210,adu:270,ch:99,arrR:40,arrP:52,depR:22,depP:29,bfk:252,lun:18,din:205},{d:'2026-03-30',occ:225,adu:290,ch:107,arrR:38,arrP:50,depR:23,depP:30,bfk:270,lun:15,din:220},{d:'2026-03-31',occ:240,adu:309,ch:115,arrR:35,arrP:46,depR:20,depP:26,bfk:288,lun:12,din:235},{d:'2026-04-01',occ:258,adu:332,ch:124,arrR:42,arrP:55,depR:24,depP:31,bfk:310,lun:14,din:252},{d:'2026-04-02',occ:280,adu:361,ch:135,arrR:48,arrP:63,depR:26,depP:34,bfk:336,lun:16,din:274},{d:'2026-04-03',occ:310,adu:399,ch:149,arrR:55,arrP:72,depR:25,depP:33,bfk:372,lun:18,din:303},{d:'2026-04-04',occ:347,adu:447,ch:167,arrR:62,arrP:81,depR:25,depP:33,bfk:416,lun:22,din:340},{d:'2026-04-05',occ:345,adu:444,ch:166,arrR:28,arrP:37,depR:30,depP:39,bfk:414,lun:25,din:338},{d:'2026-04-06',occ:340,adu:438,ch:163,arrR:18,arrP:24,depR:23,depP:30,bfk:408,lun:20,din:333},{d:'2026-04-07',occ:320,adu:412,ch:154,arrR:12,arrP:16,depR:32,depP:42,bfk:384,lun:15,din:313},{d:'2026-04-08',occ:295,adu:380,ch:142,arrR:15,arrP:20,depR:40,depP:52,bfk:354,lun:12,din:288},{d:'2026-04-09',occ:270,adu:348,ch:130,arrR:18,arrP:24,depR:43,depP:56,bfk:324,lun:10,din:264},{d:'2026-04-10',occ:250,adu:322,ch:120,arrR:20,arrP:26,depR:40,depP:52,bfk:300,lun:8,din:244},{d:'2026-04-11',occ:235,adu:303,ch:113,arrR:18,arrP:24,depR:33,depP:43,bfk:282,lun:10,din:230},{d:'2026-04-12',occ:220,adu:283,ch:106,arrR:15,arrP:20,depR:30,depP:39,bfk:264,lun:8,din:215},{d:'2026-04-13',occ:210,adu:270,ch:99,arrR:12,arrP:16,depR:22,depP:29,bfk:252,lun:7,din:205},{d:'2026-04-14',occ:198,adu:255,ch:93,arrR:10,arrP:13,depR:22,depP:29,bfk:238,lun:6,din:193},{d:'2026-04-15',occ:185,adu:238,ch:87,arrR:12,arrP:16,depR:25,depP:33,bfk:222,lun:8,din:180},{d:'2026-04-16',occ:178,adu:229,ch:83,arrR:14,arrP:18,depR:21,depP:28,bfk:214,lun:7,din:174},{d:'2026-04-17',occ:172,adu:221,ch:80,arrR:12,arrP:16,depR:18,depP:24,bfk:206,lun:6,din:168},{d:'2026-04-18',occ:168,adu:216,ch:78,arrR:15,arrP:20,depR:19,depP:25,bfk:202,lun:8,din:164}];
-const hskData=[{d:'2026-03-18',morn:95,arr:42,dep:18,eve:155,guests:265},{d:'2026-03-19',morn:100,arr:35,dep:28,eve:162,guests:278},{d:'2026-03-20',morn:108,arr:118,dep:21,eve:173,guests:300},{d:'2026-03-21',morn:115,arr:48,dep:32,eve:189,guests:331},{d:'2026-03-22',morn:122,arr:38,dep:26,eve:201,guests:352},{d:'2026-03-23',morn:118,arr:22,dep:28,eve:195,guests:341},{d:'2026-03-24',morn:112,arr:15,dep:26,eve:184,guests:321},{d:'2026-03-25',morn:108,arr:18,dep:24,eve:178,guests:308},{d:'2026-03-26',morn:103,arr:14,dep:22,eve:170,guests:294},{d:'2026-03-27',morn:106,arr:21,dep:16,eve:175,guests:303},{d:'2026-03-28',morn:116,arr:35,dep:18,eve:192,guests:337},{d:'2026-03-29',morn:128,arr:40,dep:22,eve:210,guests:369},{d:'2026-03-30',morn:137,arr:38,dep:23,eve:225,guests:397},{d:'2026-03-31',morn:146,arr:35,dep:20,eve:240,guests:424},{d:'2026-04-01',morn:157,arr:42,dep:24,eve:258,guests:456},{d:'2026-04-02',morn:171,arr:48,dep:26,eve:280,guests:496},{d:'2026-04-03',morn:189,arr:55,dep:25,eve:310,guests:548},{d:'2026-04-04',morn:212,arr:62,dep:25,eve:347,guests:614},{d:'2026-04-05',morn:210,arr:28,dep:30,eve:345,guests:610},{d:'2026-04-06',morn:207,arr:18,dep:23,eve:340,guests:601},{d:'2026-04-07',morn:195,arr:12,dep:32,eve:320,guests:566},{d:'2026-04-08',morn:180,arr:15,dep:40,eve:295,guests:522},{d:'2026-04-09',morn:165,arr:18,dep:43,eve:270,guests:478},{d:'2026-04-10',morn:153,arr:20,dep:40,eve:250,guests:442},{d:'2026-04-11',morn:143,arr:18,dep:33,eve:235,guests:416},{d:'2026-04-12',morn:134,arr:15,dep:30,eve:220,guests:389},{d:'2026-04-13',morn:128,arr:12,dep:22,eve:210,guests:369},{d:'2026-04-14',morn:121,arr:10,dep:22,eve:198,guests:348},{d:'2026-04-15',morn:113,arr:12,dep:25,eve:185,guests:325},{d:'2026-04-16',morn:108,arr:14,dep:21,eve:178,guests:312},{d:'2026-04-17',morn:105,arr:12,dep:18,eve:172,guests:301},{d:'2026-04-18',morn:102,arr:15,dep:19,eve:168,guests:294}];
-const pickupRes=[{id:1,name:'Kowalski',rooms:2,nights:4,guests:3,src:'Booking.com',mkt:'Leisure-PL',rate:420},{id:2,name:'Müller',rooms:1,nights:7,guests:2,src:'HRS',mkt:'Leisure-DE',rate:385},{id:3,name:'Nowak',rooms:1,nights:3,guests:2,src:'Direct-Web',mkt:'Leisure-PL',rate:490},{id:4,name:'Schmidt',rooms:2,nights:5,guests:4,src:'Booking.com',mkt:'Leisure-DE',rate:410},{id:5,name:'Wiśniewski',rooms:1,nights:2,guests:1,src:'Direct-Tel',mkt:'Business-PL',rate:520},{id:6,name:'Fischer',rooms:1,nights:4,guests:2,src:'Expedia',mkt:'Leisure-DE',rate:370},{id:7,name:'Zielińska',rooms:3,nights:7,guests:6,src:'Direct-Web',mkt:'Leisure-PL',rate:450},{id:8,name:'Weber',rooms:1,nights:3,guests:2,src:'Booking.com',mkt:'Leisure-DE',rate:395},{id:9,name:'Lewandowski',rooms:1,nights:5,guests:2,src:'Direct-Web',mkt:'Leisure-PL',rate:480},{id:10,name:'Becker',rooms:1,nights:4,guests:2,src:'HRS',mkt:'Leisure-DE',rate:375},{id:11,name:'INVENTUM (grupa)',rooms:10,nights:3,guests:20,src:'Direct-Sales',mkt:'MICE',rate:140},{id:12,name:'KONFERENCJA',rooms:5,nights:2,guests:12,src:'Direct-Sales',mkt:'MICE',rate:168.50},{id:13,name:'Dąbrowski',rooms:1,nights:3,guests:2,src:'Booking.com',mkt:'Leisure-PL',rate:430},{id:14,name:'Szymańska',rooms:1,nights:4,guests:3,src:'Direct-Tel',mkt:'Leisure-PL',rate:510},{id:15,name:'Hoffmann',rooms:2,nights:5,guests:4,src:'Expedia',mkt:'Leisure-DE',rate:365}];
-const pSum={bookings:100,roomNights:372,guests:241,totalRev:158420};
-const cancelData=[{cancelNo:113655,cancelDate:'19.03.2026',cancelTime:'09:38',name:'Pawlak, Szymon M R',source:'AVAILPRO',roomType:'DEL',arrDate:'23.03.2026',leadTime:4,rooms:1,nights:2,mktCode:'A',rateCode:'NRBB',rateAmt:455.20,revenueLoss:1118.03,depositPaid:0,cancelReason:'REL',cancelDesc:'Release – Non Guaranteed Booking'},{cancelNo:113679,cancelDate:'19.03.2026',cancelTime:'15:06',name:'Schneider, Adam Mr.',source:'PANA',roomType:'APOB',arrDate:'29.03.2026',leadTime:10,rooms:1,nights:5,mktCode:'BF',rateCode:'PWI',rateAmt:1402.60,revenueLoss:6717.10,depositPaid:0,cancelReason:'TRIP',cancelDesc:'Trip Cancelled'},{cancelNo:113690,cancelDate:'19.03.2026',cancelTime:'15:37',name:'Böljes, Stephanie MRS',source:'AVAILPRO',roomType:'DELOB',arrDate:'02.04.2026',leadTime:14,rooms:1,nights:2,mktCode:'A',rateCode:'STBB',rateAmt:1109.00,revenueLoss:2143.13,depositPaid:0,cancelReason:'TRIP',cancelDesc:'Trip Cancelled – zaliczka bezzwrotna'}];
-const cancelSummary={totalCancels:3,totalRoomNights:9,totalRevLoss:9978.26,totalDeposit:0,avgLeadTime:'9.3'};
+const MONTHS_PL=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'];
 
-// ANIMATION DATA (from PDFs)
-const ANIM_SCHEDULE = {
-  poniedzialek: {
-    dayPL:'Poniedziałek', dayDE:'Montag', slots:[
-      {time:'9:30-10:30',pl:'Gry i zabawy na rozpoczęcie dnia',de:'Spiele und Aktivitäten zum Start in den Tag',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'sport'},
-      {time:'11:00-12:00',pl:'Lamy – zajęcia kreatywne',de:'Lamas – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
-      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung ab 4 Jahren',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
-      {time:'15:00-16:00',pl:'Kubek z czekoladą – zajęcia plastyczne',de:'Tasse mit Schokolade – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
-      {time:'18:30-19:00',pl:'Kolorowe tatuaże brokatowe',de:'Bunte Glitzer-Tattoos',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'fun'},
-      {time:'19:00-19:30',pl:'Mini Disco',de:'Mini-Disco',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'disco'}
-    ]
-  },
-  wtorek: {
-    dayPL:'Wtorek', dayDE:'Dienstag', slots:[
-      {time:'9:30-10:30',pl:'Sportowe wyzwania',de:'Sportliche Herausforderungen',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'sport'},
-      {time:'11:00-12:00',pl:'Sensoryka – zajęcia kreatywne',de:'Sensorik – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
-      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung ab 4 Jahren',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
-      {time:'15:00-16:00',pl:'Łapacze snów – zajęcia plastyczne',de:'Traumfänger – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
-      {time:'18:30-19:00',pl:'Malowanie buziek',de:'Kinderschminken',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'fun'},
-      {time:'19:00-19:30',pl:'Mini Disco',de:'Mini-Disco',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'disco'}
-    ]
-  },
-  sroda: {
-    dayPL:'Środa', dayDE:'Mittwoch', slots:[
-      {time:'9:30-10:30',pl:'Tor przeszkód i zabawy ruchowe',de:'Hindernisparcours und Bewegungsspiele',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'sport'},
-      {time:'11:00-12:00',pl:'Motylki – zajęcia kreatywne',de:'Schmetterlinge – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
-      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung ab 4 Jahren',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
-      {time:'15:00-16:00',pl:'Tort – zajęcia plastyczne',de:'Torte – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
-      {time:'18:30-19:00',pl:'Balonowe figurki',de:'Ballonfiguren',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'fun'},
-      {time:'19:00-19:30',pl:'Pokaz talentów',de:'Talentshow',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'show'}
-    ]
-  },
-  czwartek: {
-    dayPL:'Czwartek', dayDE:'Donnerstag', slots:[
-      {time:'9:30-10:30',pl:'Kolorowa chusta i ulubione zabawy',de:'Buntes Schwungtuch und Lieblingsspiele',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'sport'},
-      {time:'11:00-12:00',pl:'Morskie butelki – zajęcia kreatywne',de:'Meeresflaschen – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
-      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung ab 4 Jahren',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
-      {time:'15:00-16:00',pl:'Mozaika – zajęcia plastyczne',de:'Mosaik – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
-      {time:'18:30-19:00',pl:'Tatuaże brokatowe',de:'Glitzer-Tattoos',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'fun'},
-      {time:'19:00-19:30',pl:'Mini Disco',de:'Mini-Disco',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'disco'}
-    ]
-  },
-  piatek: {
-    dayPL:'Piątek', dayDE:'Freitag', slots:[
-      {time:'8:15-9:15',pl:'Przywitanie z maskotką',de:'Begrüßung mit dem Maskottchen',loc:'HOL GŁÓWNY',locDE:'HAUPTHALLE',cat:'welcome'},
-      {time:'9:30-10:30',pl:'Gry i zabawy na rozpoczęcie dnia',de:'Spiele und Spaß zum Start in den Tag',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'sport'},
-      {time:'11:00-12:00',pl:'Korony – zajęcia kreatywne',de:'Kronen – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
-      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung für Kinder über 4 Jahre',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
-      {time:'15:00-16:00',pl:'Serduszka – zajęcia plastyczne',de:'Herzchen – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
-      {time:'16:30-17:30',pl:'1,2,3 gonisz Ty! Zabawy',de:'1, 2, 3 – Du bist dran! Spiele',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'sport'},
-      {time:'18:30-19:00',pl:'Kolorowe tatuaże brokatowe',de:'Bunte Glitzer-Tattoos',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'fun'},
-      {time:'19:30-20:00',pl:'Mini Disco',de:'Mini-Disco',loc:'NITE MARE',locDE:'NITE MARE',cat:'disco'},
-      {time:'20:00-20:30',pl:'Quiz Bajkowy',de:'Märchen-Quiz',loc:'NITE MARE',locDE:'NITE MARE',cat:'show'},
-      {time:'21:00-24:00',pl:'Pool Party (dodatkowo płatne)',de:'Pool Party (zusätzlich kostenpflichtig)',loc:'AQUA PARK',locDE:'AQUA PARK',cat:'party'}
-    ]
-  },
-  sobota: {
-    dayPL:'Sobota', dayDE:'Samstag', slots:[
-      {time:'8:15-9:15',pl:'Przywitanie z maskotką',de:'Begrüßung mit dem Maskottchen',loc:'HOL GŁÓWNY',locDE:'HAUPTHALLE',cat:'welcome'},
-      {time:'9:30-10:30',pl:'Sportowe wyzwania',de:'Sportliche Herausforderungen',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'sport'},
-      {time:'11:00-12:00',pl:'Bransoletki przyjaźni – zajęcia kreatywne',de:'Freundschaftsarmbänder – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
-      {time:'12:00-13:00',pl:'Spacer z Animatorem',de:'Spaziergang mit dem Animateur',loc:'RECEPCJA (zbiórka)',locDE:'REZEPTION (Treffpunkt)',cat:'outdoor'},
-      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung für Kinder über 4 Jahre',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
-      {time:'15:00-16:00',pl:'Pszczółki – zajęcia plastyczne',de:'Bienchen – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
-      {time:'17:00-18:00',pl:'Kolorowe zabawy z chustą',de:'Bunte Spiele mit dem Schwungtuch',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'sport'},
-      {time:'18:00-19:00',pl:'Malowanie buziek',de:'Kinderschminken',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'fun'},
-      {time:'19:30-20:00',pl:'Mini Disco',de:'Mini-Disco',loc:'NITE MARE',locDE:'NITE MARE',cat:'disco'},
-      {time:'20:00-21:00',pl:'Dyskoteka rodzinna',de:'Familiendisco',loc:'NITE MARE',locDE:'NITE MARE',cat:'party'},
-      {time:'21:00-24:00',pl:'Dyskoteka dla dorosłych',de:'Disco für Erwachsene',loc:'NITE MARE',locDE:'NITE MARE',cat:'party'}
-    ]
-  },
-  niedziela: {
-    dayPL:'Niedziela', dayDE:'Sonntag', slots:[
-      {time:'8:15-9:15',pl:'Przywitanie z maskotką',de:'Begrüßung mit dem Maskottchen',loc:'HOL GŁÓWNY',locDE:'HAUPTHALLE',cat:'welcome'},
-      {time:'9:30-10:30',pl:'Tor przeszkód i zabawy ruchowe',de:'Hindernisparcours und Bewegungsspiele',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'sport'},
-      {time:'11:00-12:00',pl:'Maski – zajęcia kreatywne',de:'Masken – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
-      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung für Kinder über 4 Jahre',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
-      {time:'19:00-19:30',pl:'Mini Disco',de:'Mini-Disco',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'disco'}
-    ]
-  }
-};
+// ═══════ DEFAULT DATA (fallback) ═══════
+let pkgData=[
+{d:'2026-03-20',date:'20.03',day:'Pt',occ:191,adu:391,ch:236,arrR:132,depR:22,arrP:437,depP:54,bfk:217,din:238,lun:21,wstawki:4,total:480},
+{d:'2026-03-21',date:'21.03',day:'Sob',occ:193,adu:397,ch:239,arrR:23,depR:21,arrP:76,depP:67,bfk:521,din:239,lun:23,wstawki:0,total:783},
+{d:'2026-03-22',date:'22.03',day:'Nd',occ:65,adu:135,ch:78,arrR:22,depR:150,arrP:75,depP:498,bfk:520,din:102,lun:11,wstawki:0,total:633},
+{d:'2026-03-23',date:'23.03',day:'Pon',occ:75,adu:151,ch:99,arrR:28,depR:18,arrP:94,depP:57,bfk:181,din:118,lun:6,wstawki:0,total:305},
+{d:'2026-03-24',date:'24.03',day:'Wt',occ:74,adu:146,ch:102,arrR:8,depR:9,arrP:29,depP:31,bfk:209,din:117,lun:7,wstawki:0,total:333},
+{d:'2026-03-25',date:'25.03',day:'Śr',occ:75,adu:142,ch:103,arrR:20,depR:19,arrP:51,depP:54,bfk:210,din:128,lun:11,wstawki:0,total:349},
+{d:'2026-03-26',date:'26.03',day:'Czw',occ:87,adu:171,ch:118,arrR:33,depR:21,arrP:111,depP:67,bfk:210,din:127,lun:7,wstawki:0,total:344},
+{d:'2026-03-27',date:'27.03',day:'Pt',occ:187,adu:359,ch:241,arrR:121,depR:21,arrP:383,depP:72,bfk:254,din:273,lun:13,wstawki:0,total:540},
+{d:'2026-03-28',date:'28.03',day:'Sob',occ:272,adu:536,ch:318,arrR:108,depR:23,arrP:331,depP:77,bfk:518,din:380,lun:46,wstawki:0,total:944},
+{d:'2026-03-29',date:'29.03',day:'Nd',occ:162,adu:316,ch:230,arrR:49,depR:159,arrP:175,depP:483,bfk:763,din:296,lun:22,wstawki:0,total:1081},
+{d:'2026-03-30',date:'30.03',day:'Pon',occ:240,adu:454,ch:362,arrR:102,depR:24,arrP:345,depP:75,bfk:477,din:431,lun:30,wstawki:1,total:939},
+{d:'2026-03-31',date:'31.03',day:'Wt',occ:229,adu:428,ch:355,arrR:21,depR:32,arrP:63,depP:96,bfk:701,din:440,lun:23,wstawki:0,total:1164},
+{d:'2026-04-01',date:'01.04',day:'Śr',occ:174,adu:341,ch:299,arrR:28,depR:83,arrP:110,depP:253,bfk:696,din:383,lun:20,wstawki:2,total:1101},
+{d:'2026-04-02',date:'02.04',day:'Czw',occ:161,adu:330,ch:257,arrR:48,depR:61,arrP:164,depP:217,bfk:584,din:418,lun:25,wstawki:31,total:1058},
+{d:'2026-04-03',date:'03.04',day:'Pt',occ:315,adu:673,ch:380,arrR:225,depR:71,arrP:732,depP:266,bfk:560,din:879,lun:0,wstawki:156,total:1595},
+{d:'2026-04-04',date:'04.04',day:'Sob',occ:365,adu:788,ch:417,arrR:75,depR:25,arrP:247,depP:95,bfk:1049,din:1029,lun:0,wstawki:48,total:2126},
+{d:'2026-04-05',date:'05.04',day:'Nd',occ:352,adu:761,ch:391,arrR:5,depR:18,arrP:14,depP:67,bfk:1205,din:1005,lun:0,wstawki:0,total:2210},
+{d:'2026-04-06',date:'06.04',day:'Pon',occ:215,adu:441,ch:275,arrR:84,depR:221,arrP:277,depP:713,bfk:1152,din:536,lun:0,wstawki:0,total:1688},
+{d:'2026-04-07',date:'07.04',day:'Wt',occ:172,adu:326,ch:241,arrR:60,depR:103,arrP:193,depP:342,bfk:682,din:294,lun:0,wstawki:1,total:977},
+{d:'2026-04-08',date:'08.04',day:'Śr',occ:155,adu:291,ch:226,arrR:11,depR:28,arrP:40,depP:90,bfk:512,din:256,lun:22,wstawki:0,total:790},
+{d:'2026-04-09',date:'09.04',day:'Czw',occ:133,adu:252,ch:193,arrR:9,depR:31,arrP:32,depP:104,bfk:466,din:212,lun:25,wstawki:0,total:703},
+{d:'2026-04-10',date:'10.04',day:'Pt',occ:103,adu:206,ch:122,arrR:35,depR:65,arrP:97,depP:214,bfk:403,din:129,lun:13,wstawki:0,total:545},
+{d:'2026-04-11',date:'11.04',day:'Sob',occ:64,adu:147,ch:52,arrR:11,depR:50,arrP:38,depP:167,bfk:271,din:59,lun:12,wstawki:0,total:342},
+{d:'2026-04-12',date:'12.04',day:'Nd',occ:12,adu:27,ch:14,arrR:5,depR:57,arrP:20,depP:178,bfk:166,din:33,lun:6,wstawki:0,total:205},
+{d:'2026-04-13',date:'13.04',day:'Pon',occ:10,adu:23,ch:11,arrR:2,depR:4,arrP:6,depP:13,bfk:37,din:24,lun:0,wstawki:0,total:61},
+{d:'2026-04-14',date:'14.04',day:'Wt',occ:150,adu:437,ch:14,arrR:141,depR:1,arrP:419,depP:2,bfk:26,din:25,lun:0,wstawki:0,total:51},
+{d:'2026-04-15',date:'15.04',day:'Śr',occ:149,adu:435,ch:12,arrR:0,depR:1,arrP:0,depP:4,bfk:443,din:21,lun:0,wstawki:0,total:464},
+{d:'2026-04-16',date:'16.04',day:'Czw',occ:150,adu:440,ch:10,arrR:5,depR:4,arrP:16,depP:13,bfk:439,din:17,lun:0,wstawki:0,total:456},
+{d:'2026-04-17',date:'17.04',day:'Pt',occ:67,adu:113,ch:35,arrR:61,depR:144,arrP:129,depP:431,bfk:438,din:72,lun:0,wstawki:0,total:510},
+{d:'2026-04-18',date:'18.04',day:'Sob',occ:67,adu:113,ch:35,arrR:3,depR:3,arrP:7,depP:7,bfk:125,din:72,lun:9,wstawki:0,total:206},
+{d:'2026-04-19',date:'19.04',day:'Nd',occ:5,adu:9,ch:4,arrR:0,depR:62,arrP:0,depP:135,bfk:125,din:3,lun:0,wstawki:0,total:128},
+{d:'2026-04-20',date:'20.04',day:'Pon',occ:8,adu:16,ch:8,arrR:5,depR:2,arrP:15,depP:4,bfk:11,din:5,lun:0,wstawki:0,total:16}
+];
 
-const ANIM_DAYS_ORDER=['poniedzialek','wtorek','sroda','czwartek','piatek','sobota','niedziela'];
-const CAT_ICONS={welcome:'👋',sport:'🏃',creative:'🎨',care:'👶',craft:'✂️',fun:'✨',disco:'💃',show:'🎤',party:'🎉',outdoor:'🚶'};
-const CAT_NAMES={welcome:'Powitanie',sport:'Sport/Zabawy',creative:'Kreatywne',care:'Przedszkole',craft:'Plastyczne',fun:'Atrakcje',disco:'Mini Disco',show:'Pokaz',party:'Impreza',outdoor:'Na zewnątrz'};
+let hskData=[
+{d:'2026-03-20',date:'20.03',day:'Pt',guests:627,morn:81,arr:132,dep:22,eve:191},
+{d:'2026-03-21',date:'21.03',day:'Sob',guests:636,morn:191,arr:23,dep:21,eve:193},
+{d:'2026-03-22',date:'22.03',day:'Nd',guests:213,morn:193,arr:22,dep:150,eve:65},
+{d:'2026-03-23',date:'23.03',day:'Pon',guests:250,morn:65,arr:28,dep:18,eve:75},
+{d:'2026-03-24',date:'24.03',day:'Wt',guests:248,morn:75,arr:8,dep:9,eve:74},
+{d:'2026-03-25',date:'25.03',day:'Śr',guests:245,morn:74,arr:20,dep:19,eve:75},
+{d:'2026-03-26',date:'26.03',day:'Czw',guests:289,morn:75,arr:33,dep:21,eve:87},
+{d:'2026-03-27',date:'27.03',day:'Pt',guests:600,morn:87,arr:121,dep:21,eve:187},
+{d:'2026-03-28',date:'28.03',day:'Sob',guests:854,morn:187,arr:108,dep:23,eve:272},
+{d:'2026-03-29',date:'29.03',day:'Nd',guests:546,morn:272,arr:49,dep:159,eve:162},
+{d:'2026-03-30',date:'30.03',day:'Pon',guests:816,morn:162,arr:102,dep:24,eve:240},
+{d:'2026-03-31',date:'31.03',day:'Wt',guests:783,morn:240,arr:21,dep:32,eve:229},
+{d:'2026-04-01',date:'01.04',day:'Śr',guests:640,morn:229,arr:28,dep:83,eve:174},
+{d:'2026-04-02',date:'02.04',day:'Czw',guests:587,morn:174,arr:48,dep:61,eve:161},
+{d:'2026-04-03',date:'03.04',day:'Pt',guests:1053,morn:161,arr:225,dep:71,eve:315},
+{d:'2026-04-04',date:'04.04',day:'Sob',guests:1205,morn:315,arr:75,dep:25,eve:365},
+{d:'2026-04-05',date:'05.04',day:'Nd',guests:1152,morn:365,arr:5,dep:18,eve:352},
+{d:'2026-04-06',date:'06.04',day:'Pon',guests:716,morn:352,arr:84,dep:221,eve:215},
+{d:'2026-04-07',date:'07.04',day:'Wt',guests:567,morn:215,arr:60,dep:103,eve:172},
+{d:'2026-04-08',date:'08.04',day:'Śr',guests:517,morn:172,arr:11,dep:28,eve:155},
+{d:'2026-04-09',date:'09.04',day:'Czw',guests:445,morn:155,arr:9,dep:31,eve:133},
+{d:'2026-04-10',date:'10.04',day:'Pt',guests:328,morn:133,arr:35,dep:65,eve:103},
+{d:'2026-04-11',date:'11.04',day:'Sob',guests:199,morn:103,arr:11,dep:50,eve:64},
+{d:'2026-04-12',date:'12.04',day:'Nd',guests:41,morn:64,arr:5,dep:57,eve:12},
+{d:'2026-04-13',date:'13.04',day:'Pon',guests:34,morn:12,arr:2,dep:4,eve:10},
+{d:'2026-04-14',date:'14.04',day:'Wt',guests:451,morn:10,arr:141,dep:1,eve:150},
+{d:'2026-04-15',date:'15.04',day:'Śr',guests:447,morn:150,arr:0,dep:1,eve:149},
+{d:'2026-04-16',date:'16.04',day:'Czw',guests:450,morn:149,arr:5,dep:4,eve:150},
+{d:'2026-04-17',date:'17.04',day:'Pt',guests:148,morn:150,arr:61,dep:144,eve:67},
+{d:'2026-04-18',date:'18.04',day:'Sob',guests:148,morn:67,arr:3,dep:3,eve:67},
+{d:'2026-04-19',date:'19.04',day:'Nd',guests:13,morn:67,arr:0,dep:62,eve:5},
+{d:'2026-04-20',date:'20.04',day:'Pon',guests:24,morn:5,arr:5,dep:2,eve:8}
+];
 
-function getTimeClass(t){const h=parseInt(t);if(h<12)return'time-morning';if(h<15)return'time-midday';if(h<18)return'time-afternoon';if(h<21)return'time-evening';return'time-night'}
-function getLocClass(loc){if(loc.includes('HOL'))return'loc-hol';if(loc.includes('SALA')||loc.includes('WSPINACZ'))return'loc-sala';if(loc.includes('KIDS CLUB')||loc.includes('TUI'))return'loc-kids';if(loc.includes('KIDS PLAY'))return'loc-play';if(loc.includes('NITE'))return'loc-nite';if(loc.includes('AQUA'))return'loc-aqua';return''}
+let cancelData=[
+{cancelNo:113655,cancelDate:'19.03.26',cancelTime:'09:38',name:'Pawlak, Szymon M R',source:'AVAILPRO',roomType:'DEL',arrDate:'23.03.26',leadTime:4,rooms:1,nights:2,mktCode:'A',rateCode:'NRBB',rateAmt:455.20,revenueLoss:1118.03,depositPaid:0,cancelReason:'REL',cancelDesc:'Release – Non Guaranteed Booking'},
+{cancelNo:113679,cancelDate:'19.03.26',cancelTime:'15:06',name:'Schneider, Adam Mr.',source:'PANA',roomType:'APOB',arrDate:'29.03.26',leadTime:10,rooms:1,nights:5,mktCode:'BF',rateCode:'PWI',rateAmt:1402.60,revenueLoss:6717.10,depositPaid:0,cancelReason:'TRIP',cancelDesc:'Trip Cancelled'},
+{cancelNo:113690,cancelDate:'19.03.26',cancelTime:'15:37',name:'Böljes, Stephanie MRS',source:'AVAILPRO',roomType:'DELOB',arrDate:'02.04.26',leadTime:14,rooms:1,nights:2,mktCode:'A',rateCode:'STBB',rateAmt:1109.00,revenueLoss:2143.13,depositPaid:0,cancelReason:'TRIP',cancelDesc:'Trip Cancelled – zaliczka bezzwrotna'}
+];
 
-function getTodayDayKey(){const dow=new Date('2026-03-20').getDay();return[null,'poniedzialek','wtorek','sroda','czwartek','piatek','sobota','niedziela'][dow]||'piatek'}
+let cancelSummary={totalCancels:3,totalRoomNights:9,totalRevLoss:9978.26};
 
-// EVENTS
-const EVENTS_2026=[{start:'2026-01-01',end:'2026-01-01',pl:'Nowy Rok',de:'Neujahr',country:'PL+DE',type:'holiday',impact:'Wysoki'},{start:'2026-01-06',end:'2026-01-06',pl:'Trzech Króli',de:'Heilige Drei Könige',country:'PL',type:'holiday',impact:'Średni'},{start:'2026-01-12',end:'2026-01-25',pl:'Ferie zimowe (1. tura PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},{start:'2026-01-19',end:'2026-02-01',pl:'Ferie zimowe (2. tura PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},{start:'2026-02-02',end:'2026-02-20',pl:'Ferie zimowe (3./4. tura PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},{start:'2026-02-09',end:'2026-02-20',pl:'Ferie zimowe Meklemburgia',de:'Winterferien MV',country:'DE',type:'de',impact:'Średni'},{start:'2026-02-02',end:'2026-02-07',pl:'Ferie zimowe Berlin/Brandenburg',de:'Winterferien BE/BB',country:'DE',type:'de',impact:'Średni'},{start:'2026-03-30',end:'2026-04-08',pl:'Ferie wiosenne Meklemburgia',de:'Osterferien MV',country:'DE',type:'de',impact:'Wysoki'},{start:'2026-03-30',end:'2026-04-11',pl:'Ferie wiosenne Berlin/Brandenburg',de:'Osterferien BE/BB',country:'DE',type:'de',impact:'Wysoki'},{start:'2026-04-03',end:'2026-04-03',pl:'Wielki Piątek (DE)',de:'Karfreitag',country:'DE',type:'holiday',impact:'Wysoki'},{start:'2026-04-05',end:'2026-04-06',pl:'Wielkanoc',de:'Ostern',country:'PL+DE',type:'holiday',impact:'Bardzo wysoki'},{start:'2026-04-09',end:'2026-04-14',pl:'Ferie wielkanocne (PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},{start:'2026-05-01',end:'2026-05-01',pl:'Święto Pracy',de:'Tag der Arbeit',country:'PL+DE',type:'holiday',impact:'Średni'},{start:'2026-05-03',end:'2026-05-03',pl:'Konstytucja 3 Maja',de:'',country:'PL',type:'holiday',impact:'Wysoki'},{start:'2026-05-14',end:'2026-05-14',pl:'Wniebowstąpienie (DE)',de:'Christi Himmelfahrt',country:'DE',type:'holiday',impact:'Średni'},{start:'2026-05-24',end:'2026-05-25',pl:'Zielone Świątki',de:'Pfingsten',country:'PL+DE',type:'holiday',impact:'Wysoki'},{start:'2026-06-04',end:'2026-06-04',pl:'Boże Ciało',de:'Fronleichnam',country:'PL',type:'holiday',impact:'Wysoki'},{start:'2026-06-27',end:'2026-08-31',pl:'Wakacje letnie (PL)',de:'Sommerferien PL',country:'PL',type:'season',impact:'Bardzo wysoki'},{start:'2026-07-09',end:'2026-08-22',pl:'Wakacje Berlin/Brandenburg',de:'Sommerferien BE/BB',country:'DE',type:'de',impact:'Bardzo wysoki'},{start:'2026-07-13',end:'2026-08-22',pl:'Wakacje Meklemburgia',de:'Sommerferien MV',country:'DE',type:'de',impact:'Bardzo wysoki'},{start:'2026-08-15',end:'2026-08-15',pl:'Wniebowzięcie NMP',de:'Mariä Himmelfahrt',country:'PL',type:'holiday',impact:'Średni'},{start:'2026-10-15',end:'2026-10-24',pl:'Ferie jesienne Meklemburgia',de:'Herbstferien MV',country:'DE',type:'de',impact:'Średni'},{start:'2026-11-01',end:'2026-11-01',pl:'Wszystkich Świętych',de:'Allerheiligen',country:'PL',type:'holiday',impact:'Średni'},{start:'2026-11-11',end:'2026-11-11',pl:'Święto Niepodległości',de:'',country:'PL',type:'holiday',impact:'Średni'},{start:'2026-12-24',end:'2026-12-26',pl:'Boże Narodzenie',de:'Weihnachten',country:'PL+DE',type:'holiday',impact:'Bardzo wysoki'},{start:'2026-12-31',end:'2026-12-31',pl:'Sylwester',de:'Silvester',country:'PL+DE',type:'season',impact:'Bardzo wysoki'}];
+// ═══════ EVENTS 2026 ═══════
+const EVENTS_2026=[
+{start:'2026-03-30',end:'2026-04-08',pl:'Ferie wiosenne Meklemburgia',de:'Osterferien MV',country:'DE',type:'de',impact:'Wysoki'},
+{start:'2026-03-30',end:'2026-04-11',pl:'Ferie wiosenne Berlin/Brandenburg',de:'Osterferien BE/BB',country:'DE',type:'de',impact:'Wysoki'},
+{start:'2026-04-03',end:'2026-04-03',pl:'Wielki Piątek (DE)',de:'Karfreitag',country:'DE',type:'holiday',impact:'Wysoki'},
+{start:'2026-04-05',end:'2026-04-06',pl:'Wielkanoc',de:'Ostern',country:'PL+DE',type:'holiday',impact:'Bardzo wysoki'},
+{start:'2026-04-09',end:'2026-04-14',pl:'Ferie wielkanocne PL',de:'',country:'PL',type:'pl',impact:'Wysoki'},
+{start:'2026-05-01',end:'2026-05-01',pl:'Święto Pracy',de:'Tag der Arbeit',country:'PL+DE',type:'holiday',impact:'Średni'},
+{start:'2026-05-03',end:'2026-05-03',pl:'Konstytucja 3 Maja',de:'',country:'PL',type:'holiday',impact:'Wysoki'},
+{start:'2026-05-14',end:'2026-05-14',pl:'Wniebowstąpienie',de:'Christi Himmelfahrt',country:'DE',type:'holiday',impact:'Średni'},
+{start:'2026-05-24',end:'2026-05-25',pl:'Zielone Świątki',de:'Pfingsten',country:'PL+DE',type:'holiday',impact:'Wysoki'},
+{start:'2026-06-04',end:'2026-06-04',pl:'Boże Ciało',de:'Fronleichnam',country:'PL',type:'holiday',impact:'Wysoki'},
+{start:'2026-06-27',end:'2026-08-31',pl:'Wakacje letnie PL',de:'Sommerferien',country:'PL',type:'season',impact:'PEAK'},
+{start:'2026-07-09',end:'2026-08-22',pl:'Wakacje Berlin/Brandenburg',de:'Sommerferien BE/BB',country:'DE',type:'season',impact:'PEAK'},
+{start:'2026-07-13',end:'2026-08-22',pl:'Wakacje Meklemburgia',de:'Sommerferien MV',country:'DE',type:'season',impact:'PEAK'},
+{start:'2026-10-15',end:'2026-10-24',pl:'Ferie jesienne Meklemburgia',de:'Herbstferien MV',country:'DE',type:'de',impact:'Średni'},
+{start:'2026-11-01',end:'2026-11-01',pl:'Wszystkich Świętych',de:'',country:'PL',type:'holiday',impact:'Średni'},
+{start:'2026-12-24',end:'2026-12-26',pl:'Boże Narodzenie',de:'Weihnachten',country:'PL+DE',type:'holiday',impact:'Bardzo wysoki'},
+{start:'2026-12-31',end:'2026-12-31',pl:'Sylwester',de:'Silvester',country:'PL+DE',type:'season',impact:'Bardzo wysoki'}
+];
+
 function getEventsForDate(ds){return EVENTS_2026.filter(e=>ds>=e.start&&ds<=e.end)}
 function evtDotsHTML(ev){if(!ev.length)return'';return'<span class="evt-dots">'+ev.map(e=>{let c=e.type==='holiday'?'holiday':e.type==='season'?'season':(e.country.includes('DE')?'de':'pl');return`<span class="evt-dot ${c}" title="${e.pl}${e.de?' / '+e.de:''}"></span>`}).join('')+'</span>'}
 
-// WEATHER
-async function loadWeather(){try{const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=53.93&longitude=14.45&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,weathercode&timezone=Europe%2FWarsaw&forecast_days=7');const d=(await r.json()).daily;const ic={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌧️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'🌨️',75:'🌨️',80:'🌦️',81:'🌧️',82:'🌧️',95:'⛈️'};const ds={0:'Bezchmurnie',1:'Pogodnie',2:'Cz. zachmurzenie',3:'Pochmurno',45:'Mgła',51:'Mżawka',61:'Deszcz',63:'Deszcz',65:'Silny deszcz',71:'Śnieg',80:'Przelotny deszcz',95:'Burza'};document.getElementById('weatherStrip').innerHTML=d.time.map((t,i)=>{const dt=new Date(t);return`<div class="weather-day"><div class="wd-date">${dt.toLocaleDateString('pl-PL',{weekday:'short'})}, ${dt.toLocaleDateString('pl-PL',{day:'numeric',month:'short'})}</div><div class="wd-icon">${ic[d.weathercode[i]]||'🌡️'}</div><div class="wd-temp">${d.temperature_2m_max[i]}°/${d.temperature_2m_min[i]}°</div><div class="wd-desc">${ds[d.weathercode[i]]||''}</div><div class="wd-detail">Opad:${d.precipitation_sum[i]}mm Wiatr:${d.windspeed_10m_max[i]}km/h</div></div>`}).join('')}catch(e){document.getElementById('weatherStrip').innerHTML='<div style="padding:20px;color:#ef4444;font-size:.8rem">Brak połączenia z API pogody.</div>'}}
-function scheduleWeatherRefresh(){const n=new Date(),x=new Date(n);x.setHours(6,0,0,0);if(n>=x)x.setDate(x.getDate()+1);setTimeout(()=>{loadWeather();setInterval(loadWeather,864e5)},x-n)}
+// ═══════ WEATHER ═══════
+async function loadWeather(){try{const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=53.93&longitude=14.45&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,weathercode&timezone=Europe%2FWarsaw&forecast_days=7');const d=(await r.json()).daily;const ic={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌧️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'🌨️',75:'🌨️',80:'🌦️',81:'🌧️',82:'🌧️',95:'⛈️'};const ds={0:'Bezchmurnie',1:'Pogodnie',2:'Cz. zachmurzenie',3:'Pochmurno',45:'Mgła',51:'Mżawka',61:'Deszcz',63:'Deszcz',65:'Silny deszcz',71:'Śnieg',80:'Przelotny deszcz',95:'Burza'};document.getElementById('weatherStrip').innerHTML=d.time.map((t,i)=>{const dt=new Date(t);return`<div class="weather-day"><div class="wd-date">${dt.toLocaleDateString('pl-PL',{weekday:'short'})}, ${dt.toLocaleDateString('pl-PL',{day:'numeric',month:'short'})}</div><div class="wd-icon">${ic[d.weathercode[i]]||'🌡️'}</div><div class="wd-temp">${d.temperature_2m_max[i]}°/${d.temperature_2m_min[i]}°</div><div class="wd-desc">${ds[d.weathercode[i]]||''}</div><div class="wd-detail">💧${d.precipitation_sum[i]}mm 💨${d.windspeed_10m_max[i]}km/h</div></div>`}).join('')}catch(e){document.getElementById('weatherStrip').innerHTML='<div style="padding:20px;color:#ef4444;font-size:.8rem">Brak połączenia z API pogody.</div>'}}
 
-// HELPERS
+// ═══════ HELPERS ═══════
 function fmtDate(d){return new Date(d).toLocaleDateString('pl-PL',{day:'2-digit',month:'2-digit'})}
 function fmtDay(d){return new Date(d).toLocaleDateString('pl-PL',{weekday:'short'})}
 function occPct(r){return((r/TOTAL_ROOMS)*100).toFixed(1)}
 function occColor(p){return p<40?'#10b981':p<70?'#3b82f6':p<90?'#f59e0b':'#ef4444'}
 function fmtPLN(v){return v.toLocaleString('pl-PL',{minimumFractionDigits:2,maximumFractionDigits:2})+' PLN'}
 
-// ===== MAIN INIT =====
-let chartsBuilt=false;
+// ═══════ CHART REGISTRY (destroy before recreate) ═══════
+const chartRegistry={};
+function makeChart(id,config){if(chartRegistry[id]){chartRegistry[id].destroy()}const c=new Chart(document.getElementById(id),config);chartRegistry[id]=c;return c}
+
+// ═══════ MAIN INIT ═══════
+let dashboardBuilt=false;
+
 function initDashboard(){
-if(chartsBuilt)return;chartsBuilt=true;
-document.getElementById('topbarDate').textContent=new Date().toLocaleDateString('pl-PL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-loadWeather();scheduleWeatherRefresh();
+  if(dashboardBuilt) return;
+  dashboardBuilt=true;
 
-const tp=pkgData[2],th=hskData[2]; // 2026-03-20
+  // Apply imported data if exists
+  applyImportedData();
+  updateDataStatus();
+  updateTopbarBadge();
 
-// DASHBOARD KPIs
-document.getElementById('todayKpis').innerHTML=`
-<div class="kpi-card blue"><div class="kpi-label">Przyjazdy<small>Arrivals rooms</small></div><div class="kpi-value">${tp.arrR}</div><div class="kpi-sub">${tp.arrP} osób</div></div>
-<div class="kpi-card amber"><div class="kpi-label">Wyjazdy<small>Departures</small></div><div class="kpi-value">${tp.depR}</div><div class="kpi-sub">${tp.depP} osób</div></div>
-<div class="kpi-card green"><div class="kpi-label">Pokoje dziś<small>Rooms tonight</small></div><div class="kpi-value">${tp.occ}</div><div class="kpi-sub">${occPct(tp.occ)}%</div></div>
-<div class="kpi-card purple"><div class="kpi-label">Goście<small>Guests</small></div><div class="kpi-value">${tp.adu+tp.ch}</div><div class="kpi-sub">${tp.adu} dor. ${tp.ch} dz.</div></div>
-<div class="kpi-card cyan"><div class="kpi-label">Posiłki<small>Meals</small></div><div class="kpi-value">${tp.bfk+tp.lun+tp.din}</div><div class="kpi-sub">Śn:${tp.bfk} Ob:${tp.lun} Kol:${tp.din}</div></div>
-<div class="kpi-card red"><div class="kpi-label">HSK<small>Workload</small></div><div class="kpi-value">${th.morn+th.arr+th.dep}</div></div>
-<div class="kpi-card blue"><div class="kpi-label">Pickup wczoraj<small>Bookings</small></div><div class="kpi-value">${pSum.bookings}</div><div class="kpi-sub">${pSum.roomNights} RN</div></div>
-<div class="kpi-card green"><div class="kpi-label">Szczyt<small>Peak ahead</small></div><div class="kpi-value">96.4%</div><div class="kpi-sub">04.04</div></div>`;
+  document.getElementById('topbarDate').textContent=new Date().toLocaleDateString('pl-PL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  loadWeather();
 
-// Dashboard cancel
-document.getElementById('dashCancelKpis').innerHTML=`
-<div class="kpi-card red"><div class="kpi-label">Anulacje<small>Cancellations</small></div><div class="kpi-value">${cancelSummary.totalCancels}</div></div>
-<div class="kpi-card rose"><div class="kpi-label">Utracone RN<small>Lost room nights</small></div><div class="kpi-value">${cancelSummary.totalRoomNights}</div></div>
-<div class="kpi-card red"><div class="kpi-label">Utrata<small>Revenue Loss</small></div><div class="kpi-value negative">-${fmtPLN(cancelSummary.totalRevLoss)}</div></div>`;
-
-// Dashboard anim today
-const todayKey=getTodayDayKey();
-const todayAnim=ANIM_SCHEDULE[todayKey];
-if(todayAnim){
-  document.getElementById('dashAnimToday').innerHTML=`
-    <div style="font-size:.75rem;font-weight:600;margin-bottom:8px;color:#8b5cf6">${todayAnim.dayPL} <span style="color:#94a3b8;font-weight:400">· ${todayAnim.dayDE} · ${todayAnim.slots.length} aktywności</span></div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap">${todayAnim.slots.map(s=>`<div style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:8px;padding:6px 10px;font-size:.65rem;flex-shrink:0"><strong>${s.time}</strong> ${CAT_ICONS[s.cat]||''} ${s.pl}<br><span style="color:#94a3b8;font-size:.55rem">${s.loc}</span></div>`).join('')}</div>`;
+  buildDashboardView();
+  buildOccupancyView();
+  buildMealsView();
+  buildHskView();
+  buildArrivalsView();
+  buildCancellationsView();
+  buildCalendar();
 }
 
-// 7-day charts
-const d7=pkgData.slice(0,7);
-new Chart(document.getElementById('chart7occ'),{type:'bar',data:{labels:d7.map(r=>fmtDate(r.d)),datasets:[{label:'Pokoje',data:d7.map(r=>r.occ),backgroundColor:'#3b82f6',borderRadius:4},{label:'Goście',data:d7.map(r=>r.adu+r.ch),backgroundColor:'#93c5fd',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true}}}});
-new Chart(document.getElementById('chart7meals'),{type:'bar',data:{labels:d7.map(r=>fmtDate(r.d)),datasets:[{label:'Śniadania',data:d7.map(r=>r.bfk),backgroundColor:'#f59e0b',borderRadius:4},{label:'Obiady',data:d7.map(r=>r.lun),backgroundColor:'#10b981',borderRadius:4},{label:'Kolacje',data:d7.map(r=>r.din),backgroundColor:'#8b5cf6',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
+function rebuildAllViews(){
+  // Destroy all charts
+  Object.keys(chartRegistry).forEach(k=>{chartRegistry[k].destroy();delete chartRegistry[k]});
+  buildDashboardView();
+  buildOccupancyView();
+  buildMealsView();
+  buildHskView();
+  buildArrivalsView();
+  buildCancellationsView();
+}
 
-// OCCUPANCY
-const peakD=pkgData.reduce((a,b)=>a.occ>b.occ?a:b),lowD=pkgData.reduce((a,b)=>a.occ<b.occ?a:b),avgO=Math.round(pkgData.reduce((s,r)=>s+r.occ,0)/pkgData.length);
-document.getElementById('occKpis').innerHTML=`<div class="kpi-card blue"><div class="kpi-label">Średnie<small>Avg</small></div><div class="kpi-value">${occPct(avgO)}%</div></div><div class="kpi-card red"><div class="kpi-label">Szczyt<small>Peak</small></div><div class="kpi-value">${occPct(peakD.occ)}%</div><div class="kpi-sub">${fmtDate(peakD.d)}</div></div><div class="kpi-card green"><div class="kpi-label">Min<small>Low</small></div><div class="kpi-value">${occPct(lowD.occ)}%</div><div class="kpi-sub">${fmtDate(lowD.d)}</div></div>`;
-new Chart(document.getElementById('chart30occ'),{type:'bar',data:{labels:pkgData.map(r=>fmtDate(r.d)),datasets:[{data:pkgData.map(r=>r.occ),backgroundColor:pkgData.map(r=>occColor(parseFloat(occPct(r.occ)))),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:TOTAL_ROOMS}}}});
-const oT=document.getElementById('occTable');oT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Pokoje<small>OCC</small></th><th>%</th><th>Dor.<small>Adults</small></th><th>Dz.<small>Ch.</small></th><th>Goście</th><th>Wyd.</th></tr>';oT.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.occ}</td><td style="color:${occColor(parseFloat(occPct(r.occ)))};font-weight:700">${occPct(r.occ)}%</td><td>${r.adu}</td><td>${r.ch}</td><td>${r.adu+r.ch}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
+function findTodayIndex(){
+  const today=new Date().toISOString().split('T')[0];
+  let idx=pkgData.findIndex(r=>r.d===today);
+  return idx>=0?idx:0;
+}
 
-// MEALS
-const tB=pkgData.reduce((s,r)=>s+r.bfk,0),tL=pkgData.reduce((s,r)=>s+r.lun,0),tD=pkgData.reduce((s,r)=>s+r.din,0);
-document.getElementById('mealKpis').innerHTML=`<div class="kpi-card amber"><div class="kpi-label">Śniadania<small>BFKST</small></div><div class="kpi-value">${tB.toLocaleString('pl')}</div></div><div class="kpi-card green"><div class="kpi-label">Obiady<small>LUNCH</small></div><div class="kpi-value">${tL.toLocaleString('pl')}</div></div><div class="kpi-card purple"><div class="kpi-label">Kolacje<small>DINNER</small></div><div class="kpi-value">${tD.toLocaleString('pl')}</div></div>`;
-new Chart(document.getElementById('chart30meals'),{type:'line',data:{labels:pkgData.map(r=>fmtDate(r.d)),datasets:[{label:'BFKST',data:pkgData.map(r=>r.bfk),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.1)',fill:true,tension:.3},{label:'DINNER',data:pkgData.map(r=>r.din),borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,.1)',fill:true,tension:.3},{label:'LUNCH',data:pkgData.map(r=>r.lun),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.1)',fill:true,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true}}}});
-const mT=document.getElementById('mealTable');mT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Śn.<small>BFKST</small></th><th>Ob.<small>LUNCH</small></th><th>Kol.<small>DINNER</small></th><th>Razem</th><th>Wyd.</th></tr>';mT.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.bfk}</td><td>${r.lun}</td><td>${r.din}</td><td><strong>${r.bfk+r.lun+r.din}</strong></td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
+// ═══════ DASHBOARD VIEW ═══════
+function buildDashboardView(){
+  const ti=findTodayIndex();
+  const tp=pkgData[ti]||pkgData[0];
+  const th=hskData[ti]||hskData[0];
 
-// HSK
-const mxH=hskData.reduce((a,b)=>(a.morn+a.arr+a.dep)>(b.morn+b.arr+b.dep)?a:b);
-document.getElementById('hskKpis').innerHTML=`<div class="kpi-card blue"><div class="kpi-label">Dziś<small>Today</small></div><div class="kpi-value">${th.morn+th.arr+th.dep}</div></div><div class="kpi-card red"><div class="kpi-label">Szczyt<small>Peak</small></div><div class="kpi-value">${mxH.morn+mxH.arr+mxH.dep}</div><div class="kpi-sub">${fmtDate(mxH.d)}</div></div><div class="kpi-card green"><div class="kpi-label">Goście<small>Guests</small></div><div class="kpi-value">${th.guests}</div></div>`;
-new Chart(document.getElementById('chart30hsk'),{type:'bar',data:{labels:hskData.map(r=>fmtDate(r.d)),datasets:[{label:'Poranki',data:hskData.map(r=>r.morn),backgroundColor:'#3b82f6',borderRadius:2},{label:'Przyjazdy',data:hskData.map(r=>r.arr),backgroundColor:'#10b981',borderRadius:2},{label:'Wyjazdy',data:hskData.map(r=>r.dep),backgroundColor:'#f59e0b',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
-const hT=document.getElementById('hskTable');hT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Por.<small>Morn</small></th><th>Prz.<small>Arr</small></th><th>Wyj.<small>Dep</small></th><th>Wiecz.<small>Eve</small></th><th>Goście</th><th>Wyd.</th></tr>';hT.querySelector('tbody').innerHTML=hskData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.morn}</td><td>${r.arr}</td><td>${r.dep}</td><td>${r.eve}</td><td>${r.guests}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
+  document.getElementById('dashKpis').innerHTML=`
+    <div class="kpi-card blue"><div class="kpi-label">Przyjazdy<small>Arr. Rooms</small></div><div class="kpi-value">${tp.arrR}</div><div class="kpi-sub">${tp.arrP} osób</div></div>
+    <div class="kpi-card amber"><div class="kpi-label">Wyjazdy<small>Dep. Rooms</small></div><div class="kpi-value">${tp.depR}</div><div class="kpi-sub">${tp.depP} osób</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Pokoje dziś<small>Rooms tonight</small></div><div class="kpi-value">${tp.occ}</div><div class="kpi-sub">${occPct(tp.occ)}% z ${TOTAL_ROOMS}</div></div>
+    <div class="kpi-card purple"><div class="kpi-label">Goście<small>Adults+Children</small></div><div class="kpi-value">${tp.adu+tp.ch}</div><div class="kpi-sub">${tp.adu} dor. · ${tp.ch} dz.</div></div>
+    <div class="kpi-card cyan"><div class="kpi-label">Posiłki<small>BFK+LUN+DIN</small></div><div class="kpi-value">${tp.bfk+tp.lun+tp.din}</div><div class="kpi-sub">Śn:${tp.bfk} Ob:${tp.lun} Kol:${tp.din}</div></div>
+    <div class="kpi-card red"><div class="kpi-label">HSK<small>Pokoje do sprzątania</small></div><div class="kpi-value">${th.morn+th.arr+th.dep}</div><div class="kpi-sub">Por:${th.morn} Prz:${th.arr} Wyj:${th.dep}</div></div>
+    <div class="kpi-card slate"><div class="kpi-label">Szczyt<small>Peak ahead</small></div><div class="kpi-value">${occPct(pkgData.reduce((a,b)=>a.occ>b.occ?a:b).occ)}%</div><div class="kpi-sub">${pkgData.reduce((a,b)=>a.occ>b.occ?a:b).date}</div></div>`;
 
-// ARRIVALS
-new Chart(document.getElementById('chart30flow'),{type:'bar',data:{labels:pkgData.map(r=>fmtDate(r.d)),datasets:[{label:'Przyjazdy',data:pkgData.map(r=>r.arrR),backgroundColor:'#10b981',borderRadius:2},{label:'Wyjazdy',data:pkgData.map(r=>-r.depR),backgroundColor:'#ef4444',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true}}}});
-const fT=document.getElementById('flowTable');fT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Prz.pok.<small>Arr</small></th><th>Prz.os.</th><th>Wyj.pok.<small>Dep</small></th><th>Wyj.os.</th><th>Netto</th><th>Wyd.</th></tr>';fT.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);const n=r.arrR-r.depR;return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.arrR}</td><td>${r.arrP}</td><td>${r.depR}</td><td>${r.depP}</td><td style="font-weight:700;color:${n>=0?'#10b981':'#ef4444'}">${n>=0?'+':''}${n}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
+  document.getElementById('dashCancelKpis').innerHTML=`
+    <div class="kpi-card red"><div class="kpi-label">Anulacje<small>Cancellations</small></div><div class="kpi-value">${cancelSummary.totalCancels}</div></div>
+    <div class="kpi-card rose"><div class="kpi-label">Utracone RN<small>Lost nights</small></div><div class="kpi-value">${cancelSummary.totalRoomNights}</div></div>
+    <div class="kpi-card red"><div class="kpi-label">Utrata przychodu<small>Revenue Loss</small></div><div class="kpi-value negative">-${fmtPLN(cancelSummary.totalRevLoss)}</div></div>`;
 
-// PICKUP
-document.getElementById('pickupKpis').innerHTML=`<div class="kpi-card blue"><div class="kpi-label">Rezerwacje<small>Bookings</small></div><div class="kpi-value">${pSum.bookings}</div></div><div class="kpi-card green"><div class="kpi-label">RN<small>Room nights</small></div><div class="kpi-value">${pSum.roomNights}</div></div><div class="kpi-card purple"><div class="kpi-label">Goście<small>Guests</small></div><div class="kpi-value">${pSum.guests}</div></div><div class="kpi-card amber"><div class="kpi-label">Przychód<small>Revenue</small></div><div class="kpi-value">${pSum.totalRev.toLocaleString('pl')} PLN</div></div>`;
-const srcM={},mktM={};pickupRes.forEach(r=>{srcM[r.src]=(srcM[r.src]||0)+1;mktM[r.mkt]=(mktM[r.mkt]||0)+1});
-const sC=['#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#ec4899'];
-new Chart(document.getElementById('chartPickupSrc'),{type:'doughnut',data:{labels:Object.keys(srcM),datasets:[{data:Object.values(srcM),backgroundColor:sC}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
-new Chart(document.getElementById('chartPickupMkt'),{type:'doughnut',data:{labels:Object.keys(mktM),datasets:[{data:Object.values(mktM),backgroundColor:sC}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
-const pT=document.getElementById('pickupTable');pT.querySelector('thead').innerHTML='<tr><th>#</th><th>Rezerwacja</th><th>Pok.</th><th>Noce</th><th>Goście</th><th>Źródło</th><th>Rynek</th><th>Stawka</th></tr>';pT.querySelector('tbody').innerHTML=pickupRes.map(r=>`<tr><td>${r.id}</td><td><strong>${r.name}</strong></td><td>${r.rooms}</td><td>${r.nights}</td><td>${r.guests}</td><td><span class="pill pill-blue">${r.src}</span></td><td><span class="pill pill-green">${r.mkt}</span></td><td>${r.rate.toLocaleString('pl')} PLN</td></tr>`).join('');
+  const d7=pkgData.slice(ti,ti+7).length>=7?pkgData.slice(ti,ti+7):pkgData.slice(0,7);
+  makeChart('chart7occ',{type:'bar',data:{labels:d7.map(r=>r.date+' '+r.day),datasets:[{label:'Pokoje',data:d7.map(r=>r.occ),backgroundColor:'#3b82f6',borderRadius:4},{label:'Goście',data:d7.map(r=>r.adu+r.ch),backgroundColor:'#93c5fd',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true}}}});
+  makeChart('chart7meals',{type:'bar',data:{labels:d7.map(r=>r.date+' '+r.day),datasets:[{label:'Śniadania',data:d7.map(r=>r.bfk),backgroundColor:'#f59e0b',borderRadius:4},{label:'Obiady',data:d7.map(r=>r.lun),backgroundColor:'#10b981',borderRadius:4},{label:'Kolacje',data:d7.map(r=>r.din),backgroundColor:'#8b5cf6',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
+}
 
-// CANCELLATIONS
-document.getElementById('cancelKpis').innerHTML=`<div class="kpi-card red"><div class="kpi-label">Anulacje<small>Cancelled</small></div><div class="kpi-value">${cancelSummary.totalCancels}</div></div><div class="kpi-card rose"><div class="kpi-label">Utracone RN<small>Lost</small></div><div class="kpi-value">${cancelSummary.totalRoomNights}</div></div><div class="kpi-card red"><div class="kpi-label">Utrata<small>Rev. Loss</small></div><div class="kpi-value negative">-${fmtPLN(cancelSummary.totalRevLoss)}</div></div><div class="kpi-card slate"><div class="kpi-label">Śr. Lead<small>Avg days</small></div><div class="kpi-value">${cancelSummary.avgLeadTime}d</div></div>`;
-const nRN=pSum.roomNights-cancelSummary.totalRoomNights,nRev=pSum.totalRev-cancelSummary.totalRevLoss;
-document.getElementById('netPickupKpis').innerHTML=`<div class="kpi-card green"><div class="kpi-label">Nowy pickup<small>New</small></div><div class="kpi-value" style="color:#10b981">+${pSum.bookings}</div></div><div class="kpi-card red"><div class="kpi-label">Anulacje<small>Cancel</small></div><div class="kpi-value negative">-${cancelSummary.totalCancels}</div></div><div class="kpi-card blue"><div class="kpi-label">Netto RN</div><div class="kpi-value" style="color:#10b981">+${nRN}</div></div><div class="kpi-card blue"><div class="kpi-label">Netto przychód</div><div class="kpi-value" style="color:#10b981">+${fmtPLN(nRev)}</div></div>`;
-const rMap={},soMap={};cancelData.forEach(c=>{rMap[c.cancelReason]=(rMap[c.cancelReason]||0)+c.revenueLoss;soMap[c.source]=(soMap[c.source]||0)+c.revenueLoss});
-new Chart(document.getElementById('chartCancelReason'),{type:'bar',data:{labels:Object.keys(rMap).map(k=>k==='REL'?'Release':'Trip Cancelled'),datasets:[{data:Object.values(rMap),backgroundColor:['#f59e0b','#ef4444'],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}}}});
-new Chart(document.getElementById('chartCancelSource'),{type:'doughnut',data:{labels:Object.keys(soMap),datasets:[{data:Object.values(soMap),backgroundColor:['#3b82f6','#f59e0b']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
-const cT=document.getElementById('cancelTable');cT.querySelector('thead').innerHTML='<tr><th>Nr<small>Cancel No.</small></th><th>Gość</th><th>Typ<small>Room</small></th><th>Przyjazd<small>Arr</small></th><th>Lead</th><th>Pok.</th><th>Noce</th><th>Stawka<small>Rate</small></th><th>Utrata<small>Rev.Loss</small></th><th>Źródło<small>Source</small></th><th>Powód<small>Reason</small></th></tr>';
-cT.querySelector('tbody').innerHTML=cancelData.map(c=>`<tr class="row-cancel"><td><strong>${c.cancelNo}</strong></td><td>${c.name}</td><td><span class="pill pill-slate">${c.roomType}</span></td><td>${c.arrDate}</td><td>${c.leadTime}d</td><td>${c.rooms}</td><td>${c.nights}</td><td>${fmtPLN(c.rateAmt)}</td><td style="color:#
+// ═══════ OCCUPANCY VIEW ═══════
+function buildOccupancyView(){
+  const peak=pkgData.reduce((a,b)=>a.occ>b.occ?a:b), low=pkgData.reduce((a,b)=>a.occ<b.occ?a:b);
+  const avgO=Math.round(pkgData.reduce((s,r)=>s+r.occ,0)/pkgData.length);
+  document.getElementById('occKpis').innerHTML=`<div class="kpi-card blue"><div class="kpi-label">Średnie<small>Avg Occ.</small></div><div class="kpi-value">${occPct(avgO)}%</div></div><div class="kpi-card red"><div class="kpi-label">Szczyt<small>Peak</small></div><div class="kpi-value">${occPct(peak.occ)}%</div><div class="kpi-sub">${peak.date} ${peak.day}</div></div><div class="kpi-card green"><div class="kpi-label">Minimum<small>Low</small></div><div class="kpi-value">${occPct(low.occ)}%</div><div class="kpi-sub">${low.date} ${low.day}</div></div><div class="kpi-card purple"><div class="kpi-label">Dni danych<small>Days</small></div><div class="kpi-value">${pkgData.length}</div></div>`;
+
+  makeChart('chart30occ',{type:'bar',data:{labels:pkgData.map(r=>r.date),datasets:[{data:pkgData.map(r=>r.occ),backgroundColor:pkgData.map(r=>occColor(parseFloat(occPct(r.occ)))),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:TOTAL_ROOMS}}}});
+
+  const t=document.getElementById('occTable');
+  t.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Pokoje<small>Rooms</small></th><th>%</th><th>Dorośli<small>Adults</small></th><th>Dzieci<small>Children</small></th><th>Goście</th><th>Wyd.</th></tr>';
+  t.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);const p=parseFloat(occPct(r.occ));return`<tr class="${ev.length?'row-event':''}"><td><strong>${r.date}</strong></td><td>${r.day}</td><td>${r.occ}</td><td style="color:${occColor(p)};font-weight:700">${p}%</td><td>${r.adu}</td><td>${r.ch}</td><td>${r.adu+r.ch}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
+}
+
+// ═══════ MEALS VIEW ═══════
+function buildMealsView(){
+  const tB=pkgData.reduce((s,r)=>s+r.bfk,0),tL=pkgData.reduce((s,r)=>s+r.lun,0),tD=pkgData.reduce((s,r)=>s+r.din,0);
+  document.getElementById('mealKpis').innerHTML=`<div class="kpi-card amber"><div class="kpi-label">Śniadania<small>BFKST total</small></div><div class="kpi-value">${tB.toLocaleString('pl')}</div></div><div class="kpi-card green"><div class="kpi-label">Obiady<small>LUNCH total</small></div><div class="kpi-value">${tL.toLocaleString('pl')}</div></div><div class="kpi-card purple"><div class="kpi-label">Kolacje<small>DINNER total</small></div><div class="kpi-value">${tD.toLocaleString('pl')}</div></div><div class="kpi-card cyan"><div class="kpi-label">Razem<small>Total meals</small></div><div class="kpi-value">${(tB+tL+tD).toLocaleString('pl')}</div></div>`;
+
+  makeChart('chart30meals',{type:'line',data:{labels:pkgData.map(r=>r.date),datasets:[{label:'BFKST',data:pkgData.map(r=>r.bfk),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.1)',fill:true,tension:.3},{label:'DINNER',data:pkgData.map(r=>r.din),borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,.1)',fill:true,tension:.3},{label:'LUNCH',data:pkgData.map(r=>r.lun),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.1)',fill:true,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true}}}});
+
+  const t=document.getElementById('mealTable');
+  t.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Śniad.<small>BFKST</small></th><th>Obiady<small>LUNCH</small></th><th>Kolacje<small>DINNER</small></th><th>Wstawki</th><th>Razem</th><th>Wyd.</th></tr>';
+  t.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${r.date}</strong></td><td>${r.day}</td><td>${r.bfk}</td><td>${r.lun}</td><td>${r.din}</td><td>${r.wstawki||0}</td><td><strong>${r.total||r.bfk+r.lun+r.din}</strong></td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
+}
+
+// ═══════ HSK VIEW ═══════
+function buildHskView(){
+  const ti=findTodayIndex();const th=hskData[ti]||hskData[0];
+  const peak=hskData.reduce((a,b)=>(a.morn+a.arr+a.dep)>(b.morn+b.arr+b.dep)?a:b);
+  document.getElementById('hskKpis').innerHTML=`<div class="kpi-card blue"><div class="kpi-label">Dziś<small>Today total</small></div><div class="kpi-value">${th.morn+th.arr+th.dep}</div></div><div class="kpi-card red"><div class="kpi-label">Szczyt<small>Peak</small></div><div class="kpi-value">${peak.morn+peak.arr+peak.dep}</div><div class="kpi-sub">${peak.date} ${peak.day}</div></div><div class="kpi-card green"><div class="kpi-label">Goście dziś<small>Guests</small></div><div class="kpi-value">${th.guests}</div></div><div class="kpi-card purple"><div class="kpi-label">Dni danych<small>Days</small></div><div class="kpi-value">${hskData.length}</div></div>`;
+
+  makeChart('chart30hsk',{type:'bar',data:{labels:hskData.map(r=>r.date),datasets:[{label:'Poranki',data:hskData.map(r=>r.morn),backgroundColor:'#3b82f6',borderRadius:2},{label:'Przyjazdy',data:hskData.map(r=>r.arr),backgroundColor:'#10b981',borderRadius:2},{label:'Wyjazdy',data:hskData.map(r=>r.dep),backgroundColor:'#f59e0b',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
+
+  const t=document.getElementById('hskTable');
+  t.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Poranki<small>Morning</small></th><th>Przyjazdy<small>Arrival</small></th><th>Wyjazdy<small>Departure</small></th><th>Wieczór<small>Evening</small></th><th>Goście<small>Guests</small></th><th>Wyd.</th></tr>';
+  t.querySelector('tbody').innerHTML=hskData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${r.date}</strong></td><td>${r.day}</td><td>${r.morn}</td><td>${r.arr}</td><td>${r.dep}</td><td>${r.eve}</td><td>${r.guests}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
+}
+
+// ═══════ ARRIVALS VIEW ═══════
+function buildArrivalsView(){
+  makeChart('chart30flow',{type:'bar',data:{labels:pkgData.map(r=>r.date),datasets:[{label:'Przyjazdy',data:pkgData.map(r=>r.arrR),backgroundColor:'#10b981',borderRadius:2},{label:'Wyjazdy',data:pkgData.map(r=>-r.depR),backgroundColor:'#ef4444',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true}}}});
+
+  const t=document.getElementById('flowTable');
+  t.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Prz. pok.<small>Arr.Rms</small></th><th>Prz. os.<small>Arr.Prs</small></th><th>Wyj. pok.<small>Dep.Rms</small></th><th>Wyj. os.<small>Dep.Prs</small></th><th>Netto</th><th>Wyd.</th></tr>';
+  t.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);const n=r.arrR-r.depR;return`<tr class="${ev.length?'row-event':''}"><td><strong>${r.date}</strong></td><td>${r.day}</td><td style="color:#10b981;font-weight:600">${r.arrR}</td><td>${r.arrP}</td><td style="color:#ef4444;font-weight:600">${r.depR}</td><td>${r.depP}</td><td style="font-weight:700;color:${n>=0?'#10b981':'#ef4444'}">${n>=0?'+':''}${n}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
+}
+
+// ═══════ CANCELLATIONS VIEW ═══════
+function buildCancellationsView(){
+  document.getElementById('cancelKpis').innerHTML=`<div class="kpi-card red"><div class="kpi-label">Anulacje<small>Total</small></div><div class="kpi-value">${cancelSummary.totalCancels}</div></div><div class="kpi-card rose"><div class="kpi-label">Utracone RN<small>Lost room nights</small></div><div class="kpi-value">${cancelSummary.totalRoomNights}</div></div><div class="kpi-card red"><div class="kpi-label">Utrata przychodu<small>Revenue Loss</small></div><div class="kpi-value negative">-${fmtPLN(cancelSummary.totalRevLoss)}</div></div>`;
+
+  const rMap={},sMap={};
+  cancelData.forEach(c=>{
+    const r=c.cancelReason||'INNE';rMap[r]=(rMap[r]||0)+c.revenueLoss;
+    const s=c.source||'INNE';sMap[s]=(sMap[s]||0)+c.revenueLoss;
+  });
+  const colors=['#3b82f6','#ef4444','#f59e0b','#10b981','#8b5cf6','#ec4899'];
+  if(Object.keys(rMap).length>0){
+    makeChart('chartCancelReason',{type:'bar',data:{labels:Object.keys(rMap),datasets:[{data:Object.values(rMap).map(v=>Math.round(v)),backgroundColor:colors,borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}}}});
+    makeChart('chartCancelSource',{type:'doughnut',data:{labels:Object.keys(sMap),datasets:[{data:Object.values(sMap).map(v=>Math.round(v)),backgroundColor:colors}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
+  }
+
+  const t=document.getElementById('cancelTable');
+  t.querySelector('thead').innerHTML='<tr><th>Nr</th><th>Gość</th><th>Typ</th><th>Przyjazd</th><th>Lead</th><th>Pok.</th><th>Noce</th><th>Stawka</th><th>Utrata</th><th>Źródło</th><th>Powód</th></tr>';
+  t.querySelector('tbody').innerHTML=cancelData.map(c=>`<tr class="row-cancel"><td><strong>${c.cancelNo}</strong></td><td>${c.name}</td><td><span class="pill pill-slate">${c.roomType}</span></td><td>${c.arrDate}</td><td>${c.leadTime}d</td><td>${c.rooms}</td><td>${c.nights}</td><td>${fmtPLN(c.rateAmt)}</td><td style="color:#ef4444;font-weight:600">-${fmtPLN(c.revenueLoss)}</td><td><span class="pill pill-blue">${c.source}</span></td><td><span class="pill pill-amber">${c.cancelReason}</span> ${c.cancelDesc}</td></tr>`).join('');
+}
+
+// ═══════ CALENDAR ═══════
+function buildCalendar(){
+  const monthsEl=document.getElementById('calMonths');
+  const months=[[2026,2,'Mar'],[2026,3,'Kwi'],[2026,4,'Maj'],[2026,5,'Cze'],[2026,6,'Lip'],[2026,7,'Sie'],[2026,8,'Wrz'],[2026,9,'Paź'],[2026,10,'Lis'],[2026,11,'Gru']];
+  monthsEl.innerHTML=months.map((m,i)=>`<button class="cal-month-btn${i===0?' active':''}" onclick="showCalMonth(${m[0]},${m[1]},this)">${m[2]}</button>`).join('');
+  showCalMonth(2026,2,monthsEl.children[0]);
+
+  // Events table
+  document.querySelector('#eventsTable tbody').innerHTML=EVENTS_2026.map(e=>{
+    const s=e.start.split('-'),en=e.end.split('-');
+    const cls=e.type==='holiday'?'holiday':e.type==='season'?'season':e.country.includes('DE')?'de':'pl';
+    return`<tr><td style="white-space:nowrap;font-weight:600">${s[2]}.${s[1]} – ${en[2]}.${en[1]}</td><td>${e.pl}</td><td style="color:#64748b;font-style:italic">${e.de||'—'}</td><td><span class="cal-evt-tag ${cls}">${e.country}</span></td><td>${e.impact}</td></tr>`;
+  }).join('');
+}
+
+function showCalMonth(y,m,btn){
+  document.querySelectorAll('.cal-month-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+
+  const grid=document.getElementById('calGrid');
+  const dayHeaders=['Pon','Wt','Śr','Czw','Pt','Sob','Nd'];
+  let html=dayHeaders.map(d=>`<div class="cal-header">${d}</div>`).join('');
+
+  const first=new Date(y,m,1);
+  let startDay=(first.getDay()+6)%7; // Monday=0
+  const lastDate=new Date(y,m+1,0).getDate();
+  const todayISO=new Date().toISOString().split('T')[0];
+
+  for(let i=0;i<startDay;i++)html+='<div class="cal-day empty"></div>';
+
+  for(let d=1;d<=lastDate;d++){
+    const iso=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const evts=getEventsForDate(iso);
+    const isToday=iso===todayISO;
+    const pkg=pkgData.find(r=>r.d===iso);
+    const occStr=pkg?`<div class="cal-day-occ">${pkg.occ} pok · ${occPct(pkg.occ)}%</div>`:'';
+    const evtTags=evts.map(e=>{const cls=e.type==='holiday'?'holiday':e.type==='season'?'season':e.country.includes('DE')?'de':'pl';return`<span class="cal-evt-tag ${cls}">${e.pl.substring(0,18)}</span>`}).join('');
+
+    html+=`<div class="cal-day${isToday?' today':''}${evts.length?' has-event':''}"><div class="cal-day-num">${d}</div>${occStr}<div class="cal-day-events">${evtTags}</div></div>`;
+  }
+  grid.innerHTML=html;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// PDF PARSER
+// ═══════════════════════════════════════════════════════════════
+const pendingFiles={pkg:null,hsk:null,cancel:null};
+const parsedResults={pkg:null,hsk:null,cancel:null};
+let lastRawLines=[];
+
+function handleFileSelect(type,input){
+  const file=input.files[0];if(!file)return;
+  pendingFiles[type]=file;
+  const capType=type.charAt(0).toUpperCase()+type.slice(1);
+  document.getElementById('status'+capType).innerHTML=`<span style="color:#10b981;font-weight:600">✅ ${file.name}</span><br><span style="color:#94a3b8">${(file.size/1024).toFixed(0)} KB</span>`;
+  document.getElementById('drop'+capType).classList.add('loaded');
+}
+
+async function extractTextLines(file){
+  const ab=await file.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+  const allLines=[];
+  for(let i=1;i<=pdf.numPages;i++){
+    const page=await pdf.getPage(i);
+    const content=await page.getTextContent();
+    const lineMap={};
+    content.items.forEach(item=>{
+      const y=Math.round(item.transform[5]);
+      const x=item.transform[4];
+      if(!lineMap[y])lineMap[y]=[];
+      lineMap[y].push({x,text:item.str.trim()});
+    });
+    Object.keys(lineMap).map(Number).sort((a,b)=>b-a).forEach(y=>{
+      const items=lineMap[y].sort((a,b)=>a.x-b.x);
+      const texts=items.map(i=>i.text).filter(t=>t.length>0);
+      if(texts.length>0)allLines.push(texts);
+    });
+  }
+  lastRawLines=allLines;
+  return allLines;
+}
+
+function safeInt(v){if(!v)return 0;const n=parseInt(String(v).replace(/,/g,'').replace(/\s/g,''),10);return isNaN(n)?0:n}
+function safeFloat(v){if(!v)return 0;const n=parseFloat(String(v).replace(/,/g,'.').replace(/\s/g,''));return isNaN(n)?0:n}
+
+const DAYS_MAP={'Monday':'Pon','Tuesday':'Wt','Wednesday':'Śr','Thursday':'Czw','Friday':'Pt','Saturday':'Sob','Sunday':'Nd'};
+
+async function parsePkgForecast(file){
+  const lines=await extractTextLines(file);
+  const data=[];
+  const dateRx=/^(\d{2})\.(\d{2})\.(\d{2})$/;
+  const dayNames=Object.keys(DAYS_MAP);
+
+  for(const line of lines){
+    let dateStr=null,dateMatch=null;
+    for(const cell of line){const m=cell.match(dateRx);if(m){dateStr=m[1]+'.'+m[2];dateMatch=cell;break}}
+    if(!dateStr)continue;
+
+    const nums=[];let dayPL='';
+    for(const cell of line){
+      if(cell===dateMatch)continue;
+      if(dayNames.includes(cell)){dayPL=DAYS_MAP[cell];continue}
+      const cleaned=cell.replace(/,/g,'').replace(/\s/g,'');
+      if(/^-?\d+$/.test(cleaned))nums.push(parseInt(cleaned,10));
+    }
+
+    // Kolumny: Rooms, Adults, Children, ArrPrs, DepPrs, ArrRms, DepRms, BFKST, DINNER, LUNCH, WSTAWKI, Total
+    if(nums.length>=10){
+      const mm=dateStr.split('.')[1],dd=dateStr.split('.')[0];
+      data.push({
+        d:`2026-${mm}-${dd}`,date:dateStr,day:dayPL,
+        occ:nums[0],adu:nums[1],ch:nums[2],
+        arrP:nums[3],depP:nums[4],arrR:nums[5],depR:nums[6],
+        bfk:nums[7],din:nums[8],lun:nums[9],
+        wstawki:nums.length>10?nums[10]:0,
+        total:nums.length>11?nums[11]:(nums[7]+nums[8]+nums[9]+(nums.length>10?nums[10]:0))
+      });
+    }
+  }
+  return data;
+}
+
+async function parseHskForecast(file){
+  const lines=await extractTextLines(file);
+  const data=[];
+  const dateRx=/^(\d{2})\.(\d{2})\.(\d{2})$/;
+  const dayNames=Object.keys(DAYS_MAP);
+
+  for(const line of lines){
+    let dateStr=null,dateMatch=null;
+    for(const cell of line){const m=cell.match(dateRx);if(m){dateStr=m[1]+'.'+m[2];dateMatch=cell;break}}
+    if(!dateStr)continue;
+
+    const nums=[];let dayPL='';
+    for(const cell of line){
+      if(cell===dateMatch)continue;
+      if(dayNames.includes(cell)){dayPL=DAYS_MAP[cell];continue}
+      const cleaned=cell.replace(/,/g,'').replace(/\s/g,'');
+      if(/^-?\d+$/.test(cleaned))nums.push(parseInt(cleaned,10));
+    }
+
+    // Kolumny: TotalGuests, MorningRms, ArrivalRms, DepartureRms, EveningRms
+    if(nums.length>=5){
+      const mm=dateStr.split('.')[1],dd=dateStr.split('.')[0];
+      data.push({
+        d:`2026-${mm}-${dd}`,date:dateStr,day:dayPL,
+        guests:nums[0],morn:nums[1],arr:nums[2],dep:nums[3],eve:nums[4]
+      });
+    }
+  }
+  return data;
+}
+
+async function parseCancelReport(file){
+  const lines=await extractTextLines(file);
+  const data=[];
+  const cancelNoRx=/^1\d{5}$/;
+  let curr=null;
+
+  for(const line of lines){
+    const lineStr=line.join(' ');
+    if(lineStr.includes('Grand Total')||lineStr.includes('Filter')||lineStr.includes('Page '))continue;
+
+    for(const cell of line){
+      if(cancelNoRx.test(cell.trim())){
+        if(curr&&curr.cancelNo)data.push(curr);
+        curr={cancelNo:parseInt(cell),name:'',roomType:'',arrDate:'',leadTime:0,rooms:0,nights:0,mktCode:'',rateCode:'',rateAmt:0,revenueLoss:0,depositPaid:0,cancelReason:'',cancelDesc:'',source:'',cancelDate:'',cancelTime:''};
+        break;
+      }
+    }
+    if(!curr)continue;
+
+    for(const cell of line){
+      if(/^\d{2}\.\d{2}\.\d{2}$/.test(cell)){
+        if(!curr.cancelDate)curr.cancelDate=cell;
+        else if(!curr.arrDate)curr.arrDate=cell;
+      }
+      if(/^\d{2}:\d{2}$/.test(cell)&&!curr.cancelTime)curr.cancelTime=cell;
+      if(cell.includes(',')&&/[a-zA-ZąćęłńóśźżÄÖÜäöüß]/.test(cell)&&!curr.name)curr.name=cell;
+      if(['DEL','DELOB','APOB','DPOB','STD','SUP'].includes(cell.trim())&&!curr.roomType)curr.roomType=cell.trim();
+      if(['REL','TRIP','NOSH','OTHR','DUPL'].includes(cell.trim()))curr.cancelReason=cell.trim();
+      if(['A','B','BF','K','R'].includes(cell.trim())&&!curr.mktCode)curr.mktCode=cell.trim();
+    }
+
+    const amounts=[];
+    for(const cell of line){
+      const c=cell.replace(/\s/g,'').replace(/,/g,'');
+      if(/^\d+\.\d{2}$/.test(c))amounts.push(parseFloat(c));
+    }
+    if(amounts.length>=2&&curr.rateAmt===0){
+      curr.rateAmt=amounts[0];curr.revenueLoss=amounts[1];
+      if(amounts.length>=3)curr.depositPaid=amounts[2];
+    }
+
+    for(const cell of line){
+      const c=cell.trim();
+      if(c.startsWith('Release')||c.startsWith('Trip')||c.startsWith('No Show'))curr.cancelDesc=c;
+    }
+  }
+  if(curr&&curr.cancelNo)data.push(curr);
+  return data;
+}
+
+async function processAllFiles(){
+  const btn=document.getElementById('btnProcess');
+  const status=document.getElementById('importStatus');
+  btn.disabled=true;btn.textContent='⏳ Przetwarzam...';status.textContent='';
+
+  const results=[];
+  try{
+    if(pendingFiles.pkg){
+      status.textContent='Parsowanie Package Forecast...';
+      parsedResults.pkg=await parsePkgForecast(pendingFiles.pkg);
+      results.push(`PKG: ${parsedResults.pkg.length} dni`);
+    }
+    if(pendingFiles.hsk){
+      status.textContent='Parsowanie Housekeeping Forecast...';
+      parsedResults.hsk=await parseHskForecast(pendingFiles.hsk);
+      results.push(`HSK: ${parsedResults.hsk.length} dni`);
+    }
+    if(pendingFiles.cancel){
+      status.textContent='Parsowanie Anulacji...';
+      parsedResults.cancel=await parseCancelReport(pendingFiles.cancel);
+      results.push(`Anulacje: ${parsedResults.cancel.length}`);
+    }
+
+    if(!results.length){status.innerHTML='<span style="color:#f59e0b">⚠️ Nie wybrano plików.</span>';btn.disabled=false;btn.textContent='⚡ Przetwórz i zaktualizuj dashboard';return}
+
+    // Save
+    const saveObj={timestamp:new Date().toISOString()};
+    if(parsedResults.pkg)saveObj.pkg=parsedResults.pkg;
+    if(parsedResults.hsk)saveObj.hsk=parsedResults.hsk;
+    if(parsedResults.cancel)saveObj.cancel=parsedResults.cancel;
+
+    // Merge with existing
+    const existing=localStorage.getItem('bm_imported_data');
+    if(existing){
+      const ex=JSON.parse(existing);
+      if(!saveObj.pkg&&ex.pkg)saveObj.pkg=ex.pkg;
+      if(!saveObj.hsk&&ex.hsk)saveObj.hsk=ex.hsk;
+      if(!saveObj.cancel&&ex.cancel)saveObj.cancel=ex.cancel;
+    }
+
+    localStorage.setItem('bm_imported_data',JSON.stringify(saveObj));
+
+    status.innerHTML=`<span style="color:#10b981;font-weight:600">✅ Zaimportowano: ${results.join(' · ')}</span>`;
+
+    // Rebuild
+    applyImportedData();
+    dashboardBuilt=false;
+    Object.keys(chartRegistry).forEach(k=>{chartRegistry[k].destroy();delete chartRegistry[k]});
+    initDashboard();
+    updateDataStatus();
+    updateTopbarBadge();
+
+    alert('✅ Dane zaimportowane! Dashboard zaktualizowany.');
+
+  }catch(err){
+    status.innerHTML=`<span style="color:#ef4444">❌ Błąd: ${err.message}</span>`;
+    console.error(err);
+  }
+  btn.disabled=false;btn.textContent='⚡ Przetwórz i zaktualizuj dashboard';
+}
+
+function applyImportedData(){
+  const saved=localStorage.getItem('bm_imported_data');
+  if(!saved)return false;
+  const imp=JSON.parse(saved);
+
+  if(imp.pkg&&imp.pkg.length){pkgData.length=0;imp.pkg.forEach(r=>pkgData.push(r))}
+  if(imp.hsk&&imp.hsk.length){hskData.length=0;imp.hsk.forEach(r=>hskData.push(r))}
+  if(imp.cancel&&imp.cancel.length){
+    cancelData.length=0;imp.cancel.forEach(r=>cancelData.push(r));
+    cancelSummary.totalCancels=cancelData.length;
+    cancelSummary.totalRoomNights=cancelData.reduce((s,c)=>s+(c.nights||0),0);
+    cancelSummary.totalRevLoss=cancelData.reduce((s,c)=>s+(c.revenueLoss||0),0);
+  }
+  return true;
+}
+
+function clearImportedData(){
+  if(!confirm('Wyczyścić zaimportowane dane i wrócić do domyślnych?'))return;
+  localStorage.removeItem('bm_imported_data');
+  location.reload();
+}
+
+function previewParsed(type){
+  const pre=document.getElementById('previewArea');
+  pre.style.display='block';
+  if(type==='raw'){pre.textContent=lastRawLines.map((l,i)=>`[${i}] ${l.join(' | ')}`).join('\n');return}
+  const saved=localStorage.getItem('bm_imported_data');
+  if(saved){const imp=JSON.parse(saved);if(imp[type]){pre.textContent=JSON.stringify(imp[type],null,2);return}}
+  pre.textContent='Brak danych. Wgraj i przetwórz PDF.';
+}
+
+function updateDataStatus(){
+  const el=document.getElementById('dataStatusInfo');if(!el)return;
+  const saved=localStorage.getItem('bm_imported_data');
+  if(saved){
+    const imp=JSON.parse(saved);
+    const ts=new Date(imp.timestamp).toLocaleString('pl-PL');
+    let info=`<strong style="color:#10b981">✅ Dane zaimportowane z PDF</strong> · ${ts}<br>`;
+    if(imp.pkg)info+=`📊 Package Forecast: ${imp.pkg.length} dni (${imp.pkg[0]?.date} – ${imp.pkg[imp.pkg.length-1]?.date})<br>`;
+    if(imp.hsk)info+=`🧹 Housekeeping: ${imp.hsk.length} dni<br>`;
+    if(imp.cancel)info+=`❌ Anulacje: ${imp.cancel.length} rezerwacji<br>`;
+    el.innerHTML=info;
+  }else{
+    el.innerHTML='📌 Dane domyślne (wbudowane). Wgraj PDFy z Opera PMS żeby zaktualizować.';
+  }
+}
+
+function updateTopbarBadge(){
+  const badge=document.getElementById('topImportBadge');if(!badge)return;
+  const saved=localStorage.getItem('bm_imported_data');
+  if(saved){
+    const imp=JSON.parse(saved);
+    const ts=new Date(imp.timestamp);
+    badge.textContent='PDF: '+ts.toLocaleDateString('pl-PL');
+    badge.className='topbar-import-status has-data';
+  }else{
+    badge.textContent='Dane domyślne';
+    badge.className='topbar-import-status no-data';
+  }
+}
+
+// ═══════ STARTUP ═══════
+document.addEventListener('DOMContentLoaded',()=>{
+  checkSession();
+});
+</script>
+</body>
+</html>
