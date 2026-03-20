@@ -1,4 +1,4 @@
-/* ===== BEL MARE v3.0 - APP LOGIC ===== */
+/* ===== BEL MARE v3.1 - APP LOGIC - FIXED ===== */
 var TR=360,LAT=54.1139,LON=15.7744;
 var MPL=['Styczen','Luty','Marzec','Kwiecien','Maj','Czerwiec','Lipiec','Sierpien','Wrzesien','Pazdziernik','Listopad','Grudzien'];
 var EV26={'2026-04-03':'Wielki Piatek','2026-04-05':'Wielkanoc','2026-04-06':'Pon.Wielkanocny','2026-05-01':'1 Maja','2026-05-03':'3 Maja','2026-06-04':'Boze Cialo','2026-06-27':'Wakacje','2026-08-15':'15 Sierpnia','2026-08-31':'Koniec wakacji'};
@@ -8,7 +8,7 @@ var CU=null,CH={},calM=new Date().getMonth(),calY=new Date().getFullYear();
 var pkgData=[],hskData=[],cancelData=[],rotbData=[];
 var fPkg=[],fHsk=[];
 var selFiles={pkg:null,hsk:null,cancel:null,rotb:null};
-var history=[];
+var hist=[];
 
 function fmtD(s){if(!s)return'';var p=s.split('-');return p[2]+'.'+p[1]+'.'+p[0];}
 function fmtN(n){return(n||0).toLocaleString('pl-PL');}
@@ -16,10 +16,10 @@ function fmtPLN(n){return(n||0).toLocaleString('pl-PL',{minimumFractionDigits:2,
 function todStr(){return new Date().toISOString().slice(0,10);}
 function dataRange(){if(!pkgData.length)return{min:'',max:''};var d=pkgData.map(function(r){return r.date;}).sort();return{min:d[0],max:d[d.length-1]};}
 
-function loadHistory(){try{history=JSON.parse(localStorage.getItem('bm_hist')||'[]');}catch(e){history=[];}}
-function saveHistory(){if(history.length>30)history=history.slice(-30);try{localStorage.setItem('bm_hist',JSON.stringify(history));}catch(e){history=history.slice(-10);try{localStorage.setItem('bm_hist',JSON.stringify(history));}catch(e2){}}}
-function lastSnap(){return history.length?history[history.length-1]:null;}
-function prevSnap(){return history.length>1?history[history.length-2]:null;}
+function loadHistory(){try{hist=JSON.parse(localStorage.getItem('bm_hist')||'[]');}catch(e){hist=[];}}
+function saveHistory(){if(hist.length>30)hist=hist.slice(-30);try{localStorage.setItem('bm_hist',JSON.stringify(hist));}catch(e){hist=hist.slice(-10);try{localStorage.setItem('bm_hist',JSON.stringify(hist));}catch(e2){}}}
+function lastSnap(){return hist.length?hist[hist.length-1]:null;}
+function prevSnap(){return hist.length>1?hist[hist.length-2]:null;}
 
 function loadCurrentData(){
   var s=lastSnap();
@@ -64,7 +64,7 @@ function buildDeltaBanner(){
     '</div>'+(mdet?'<div style="margin-top:12px;font-size:12px">'+mdet+'</div>':'')+'</div>';
 }
 
-/* AUTH - BEZ HASLA */
+/* AUTH */
 function getUsers(){var u=localStorage.getItem('bm_users');if(!u){localStorage.setItem('bm_users',JSON.stringify(DEFUSERS));return JSON.parse(JSON.stringify(DEFUSERS));}return JSON.parse(u);}
 function saveUsers(u){localStorage.setItem('bm_users',JSON.stringify(u));}
 
@@ -200,14 +200,12 @@ function buildSubPages(){
   var d=fPkg,h=fHsk,td=todStr();if(!d.length)return;
   var lb=[];for(var i=0;i<d.length;i++)lb.push(d[i].date.slice(5).replace('-','.'));
 
-  /* OCC */
   var occP=[],occR=[];for(var i=0;i<d.length;i++){occP.push((d[i].occ/TR*100).toFixed(1));occR.push(d[i].occ);}
   dc('chOccD');CH.chOccD=new Chart(document.getElementById('chOccD'),{type:'bar',data:{labels:lb,datasets:[{type:'line',label:'%',data:occP,borderColor:'#ef4444',yAxisID:'y1',pointRadius:2,tension:.3,fill:false},{label:'Pokoje',data:occR,backgroundColor:'rgba(37,99,235,.6)',yAxisID:'y'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,max:TR+20},y1:{position:'right',min:0,max:110,grid:{drawOnChartArea:false}}}}});
   var t='<table><thead><tr><th>Data</th><th>Dzien</th><th>Pokoje</th><th>%</th><th>Dorosli</th><th>Dzieci</th><th>Prz.Pok</th><th>Wyj.Pok</th></tr></thead><tbody>';
   for(var i=0;i<d.length;i++){var r=d[i];var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+r.date.slice(5).replace('-','.')+'</td><td>'+r.day+'</td><td class="num"><strong>'+r.occ+'</strong></td><td class="num">'+(r.occ/TR*100).toFixed(1)+'%</td><td class="num">'+r.adu+'</td><td class="num">'+r.ch+'</td><td class="num">'+r.arrR+'</td><td class="num">'+r.depR+'</td></tr>';}
   t+='</tbody></table>';document.getElementById('tblOcc').innerHTML=t;
 
-  /* MEALS */
   var bD=[],dD=[],lD=[],wD=[];for(var i=0;i<d.length;i++){bD.push(d[i].bfk);dD.push(d[i].din);lD.push(d[i].lun);wD.push(d[i].wst||0);}
   dc('chMD');CH.chMD=new Chart(document.getElementById('chMD'),{type:'line',data:{labels:lb,datasets:[{label:'Sniadania',data:bD,borderColor:'#f59e0b',tension:.3,pointRadius:2},{label:'Kolacje',data:dD,borderColor:'#8b5cf6',tension:.3,pointRadius:2},{label:'Obiady',data:lD,borderColor:'#10b981',tension:.3,pointRadius:2},{label:'Wstawki',data:wD,borderColor:'#ec4899',tension:.3,pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}});
   var totD=[];for(var i=0;i<d.length;i++)totD.push(d[i].bfk+d[i].din+d[i].lun+(d[i].wst||0));
@@ -216,24 +214,21 @@ function buildSubPages(){
   for(var i=0;i<d.length;i++){var r=d[i];var tot=r.bfk+r.din+r.lun+(r.wst||0);var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+r.date.slice(5).replace('-','.')+'</td><td>'+r.day+'</td><td class="num">'+r.bfk+'</td><td class="num">'+r.din+'</td><td class="num">'+r.lun+'</td><td class="num">'+(r.wst||0)+'</td><td class="num"><strong>'+tot+'</strong></td></tr>';}
   t+='</tbody></table>';document.getElementById('tblMeals').innerHTML=t;
 
-  /* HSK */
   if(h.length){
     var hl=[];for(var i=0;i<h.length;i++)hl.push(h[i].date.slice(5).replace('-','.'));
-    var mD=[],aD=[],dpD=[],eD=[];for(var i=0;i<h.length;i++){mD.push(h[i].morn);aD.push(h[i].arr);dpD.push(h[i].dep);eD.push(h[i].eve);}
-    dc('chHD');CH.chHD=new Chart(document.getElementById('chHD'),{type:'bar',data:{labels:hl,datasets:[{label:'Poranne',data:mD,backgroundColor:'#60a5fa'},{label:'Przyjazdy',data:aD,backgroundColor:'#34d399'},{label:'Wyjazdy',data:dpD,backgroundColor:'#f87171'},{type:'line',label:'Wieczorne',data:eD,borderColor:'#8b5cf6',pointRadius:2,tension:.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}});
+    var mD=[],aD2=[],dpD=[],eD=[];for(var i=0;i<h.length;i++){mD.push(h[i].morn);aD2.push(h[i].arr);dpD.push(h[i].dep);eD.push(h[i].eve);}
+    dc('chHD');CH.chHD=new Chart(document.getElementById('chHD'),{type:'bar',data:{labels:hl,datasets:[{label:'Poranne',data:mD,backgroundColor:'#60a5fa'},{label:'Przyjazdy',data:aD2,backgroundColor:'#34d399'},{label:'Wyjazdy',data:dpD,backgroundColor:'#f87171'},{type:'line',label:'Wieczorne',data:eD,borderColor:'#8b5cf6',pointRadius:2,tension:.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}});
     t='<table><thead><tr><th>Data</th><th>Dzien</th><th>Goscie</th><th>Poranne</th><th>Przyjazdy</th><th>Wyjazdy</th><th>Wieczorne</th><th>Suma</th></tr></thead><tbody>';
     for(var i=0;i<h.length;i++){var r=h[i];var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+r.date.slice(5).replace('-','.')+'</td><td>'+r.day+'</td><td class="num">'+r.guests+'</td><td class="num">'+r.morn+'</td><td class="num">'+r.arr+'</td><td class="num">'+r.dep+'</td><td class="num">'+r.eve+'</td><td class="num"><strong>'+(r.morn+r.arr+r.dep)+'</strong></td></tr>';}
     t+='</tbody></table>';document.getElementById('tblHsk').innerHTML=t;
   }
 
-  /* ARRIVALS */
   var arrD=[],depD2=[];for(var i=0;i<d.length;i++){arrD.push(d[i].arrR);depD2.push(-d[i].depR);}
   dc('chArr');CH.chArr=new Chart(document.getElementById('chArr'),{type:'bar',data:{labels:lb,datasets:[{label:'Przyjazdy',data:arrD,backgroundColor:'#34d399'},{label:'Wyjazdy',data:depD2,backgroundColor:'#f87171'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
   t='<table><thead><tr><th>Data</th><th>Dzien</th><th>Prz.Pok</th><th>Prz.Os</th><th>Wyj.Pok</th><th>Wyj.Os</th><th>Bilans</th></tr></thead><tbody>';
   for(var i=0;i<d.length;i++){var r=d[i];var b=r.arrR-r.depR;var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+r.date.slice(5).replace('-','.')+'</td><td>'+r.day+'</td><td class="num">'+r.arrR+'</td><td class="num">'+r.arrP+'</td><td class="num">'+r.depR+'</td><td class="num">'+r.depP+'</td><td class="num" style="color:'+(b>0?'var(--ok)':b<0?'var(--err)':'inherit')+';font-weight:600">'+(b>0?'+':'')+b+'</td></tr>';}
   t+='</tbody></table>';document.getElementById('tblArr').innerHTML=t;
 
-  /* CANCEL */
   var cd=cancelData;var tLoss=0,tNts=0;for(var i=0;i<cd.length;i++){tLoss+=cd[i].revLoss||0;tNts+=cd[i].nts||0;}
   var reasons={};for(var i=0;i<cd.length;i++){var rr=cd[i].reason||'?';reasons[rr]=(reasons[rr]||0)+1;}
   var rStr='';for(var k in reasons)rStr+=k+':'+reasons[k]+' ';
@@ -263,8 +258,7 @@ function buildRotbPage(){
 
   var cards='';
   for(var i=0;i<d.length;i++){
-    var m=d[i];
-    var lyD2=(m.occPct-m.lyOccPct).toFixed(1);
+    var m=d[i];var lyD2=(m.occPct-m.lyOccPct).toFixed(1);
     cards+='<div class="ms-card'+(m===peak?' peak':'')+(m.totalRooms===0?' empty':'')+'"><h4>'+m.month+'</h4><div class="big">'+fmtN(m.totalRooms)+'</div><div class="meta">Occ: <strong>'+m.occPct+'%</strong> <span class="'+(lyD2>=0?'up':'dn')+'">('+( lyD2>=0?'+':'')+lyD2+'pp vs LY)</span><br>Rev: <strong>'+(m.revenue>0?fmtPLN(m.revenue):'-')+'</strong></div></div>';
   }
   document.getElementById('rotbCards').innerHTML=cards;
@@ -313,13 +307,13 @@ function buildCal(){
 /* CHANGES */
 function buildChanges(){
   var el=document.getElementById('changesContent');
-  if(history.length<2){el.innerHTML='<div class="alm"><h3>Brak danych do porownania</h3><p style="margin-top:8px">Potrzebujesz min. 2 importow.</p></div>';return;}
-  var h2='<div class="acard"><h3>Historia ('+history.length+' importow)</h3>';
-  for(var i=history.length-1;i>=0;i--){
-    var s=history[i];var prev2=i>0?history[i-1]:null;
+  if(hist.length<2){el.innerHTML='<div class="alm"><h3>Brak danych do porownania</h3><p style="margin-top:8px">Potrzebujesz min. 2 importow.</p></div>';return;}
+  var h2='<div class="acard"><h3>Historia ('+hist.length+' importow)</h3>';
+  for(var i=hist.length-1;i>=0;i--){
+    var s=hist[i];var prev2=i>0?hist[i-1]:null;
     var d2=calcDelta(s,prev2);
     var sign2=function(v){return v>0?'<span class="up">+'+fmtN(v)+'</span>':v<0?'<span class="dn">'+fmtN(v)+'</span>':'0';};
-    h2+='<div style="padding:16px;border-bottom:1px solid #f1f5f9;'+(i===history.length-1?'background:#eff6ff':'')+'"><strong>'+s.date+(i===history.length-1?' (AKTUALNY)':'')+'</strong>';
+    h2+='<div style="padding:16px;border-bottom:1px solid #f1f5f9;'+(i===hist.length-1?'background:#eff6ff':'')+'"><strong>'+s.date+(i===hist.length-1?' (AKTUALNY)':'')+'</strong>';
     if(d2){h2+=' | ROTB: '+sign2(d2.totalRoomsDiff)+' | Occ: '+sign2(d2.occDiff)+' | Posilki: '+sign2(d2.mealsDiff);}
     h2+='</div>';
   }
@@ -330,9 +324,10 @@ function buildChanges(){
 function fSel(type,input){
   if(input.files&&input.files[0]){
     selFiles[type]=input.files[0];
-    var el=document.getElementById('s'+type.charAt(0).toUpperCase()+type.slice(1));
+    var key=type.charAt(0).toUpperCase()+type.slice(1);
+    var el=document.getElementById('s'+key);
     if(el)el.textContent='OK: '+input.files[0].name;
-    document.getElementById('ic'+type.charAt(0).toUpperCase()+type.slice(1)).classList.add('has');
+    document.getElementById('ic'+key).classList.add('has');
   }
 }
 
@@ -340,15 +335,14 @@ async function processAll(){
   var btn=document.getElementById('procBtn');btn.disabled=true;btn.textContent='Przetwarzanie...';
   var status=document.getElementById('dataStatus');status.innerHTML='Przetwarzam...';
   try{
-    var newPkg=pkgData,newHsk=hskData,newCancel=cancelData,newRotb=rotbData;
-    if(selFiles.pkg){newPkg=await parsePkg(selFiles.pkg);if(newPkg.length)pkgData=newPkg;}
-    if(selFiles.hsk){newHsk=await parseHsk(selFiles.hsk);if(newHsk.length)hskData=newHsk;}
-    if(selFiles.cancel){newCancel=await parseCancel(selFiles.cancel);if(newCancel.length)cancelData=newCancel;}
-    if(selFiles.rotb){newRotb=await parseRotb(selFiles.rotb);if(newRotb.length)rotbData=newRotb;}
+    if(selFiles.pkg){var r=await parsePkg(selFiles.pkg);if(r.length)pkgData=r;}
+    if(selFiles.hsk){var r=await parseHsk(selFiles.hsk);if(r.length)hskData=r;}
+    if(selFiles.cancel){var r=await parseCancel(selFiles.cancel);if(r.length)cancelData=r;}
+    if(selFiles.rotb){var r=await parseRotb(selFiles.rotb);if(r.length)rotbData=r;}
     var snap={date:todStr(),ts:Date.now(),pkg:pkgData,hsk:hskData,cancel:cancelData,rotb:rotbData};
-    history.push(snap);saveHistory();
+    hist.push(snap);saveHistory();
     initFilters();buildDeltaBanner();buildHistList();
-    status.innerHTML='<strong style="color:var(--ok)">Sukces!</strong> PKG:'+pkgData.length+' HSK:'+hskData.length+' Cancel:'+cancelData.length+' ROTB:'+rotbData.length+' | Zapisano snapshot '+todStr();
+    status.innerHTML='<strong style="color:var(--ok)">Sukces!</strong> PKG:'+pkgData.length+' HSK:'+hskData.length+' Cancel:'+cancelData.length+' ROTB:'+rotbData.length+' | Snapshot '+todStr();
   }catch(err){status.innerHTML='<strong style="color:var(--err)">Blad:</strong> '+err.message;}
   btn.disabled=false;btn.textContent='Przetworz i zaktualizuj';
   selFiles={pkg:null,hsk:null,cancel:null,rotb:null};
@@ -357,17 +351,17 @@ async function processAll(){
 function clearAllData(){
   if(!confirm('Usunac wszystkie dane?'))return;
   localStorage.removeItem('bm_hist');localStorage.removeItem('bm_users');
-  history=[];pkgData=[];hskData=[];cancelData=[];rotbData=[];
+  hist=[];pkgData=[];hskData=[];cancelData=[];rotbData=[];
   loadCurrentData();initFilters();buildDeltaBanner();buildHistList();
   document.getElementById('dataStatus').innerHTML='Dane wyczyszczone.';
 }
 
 function buildHistList(){
   var el=document.getElementById('histList');if(!el)return;
-  if(!history.length){el.innerHTML='<p style="padding:16px;color:#94a3b8">Brak importow</p>';return;}
+  if(!hist.length){el.innerHTML='<p style="padding:16px;color:#94a3b8">Brak importow</p>';return;}
   var h3='<table><thead><tr><th>#</th><th>Data</th><th>PKG</th><th>HSK</th><th>Cancel</th><th>ROTB</th></tr></thead><tbody>';
-  for(var i=history.length-1;i>=0;i--){
-    var s2=history[i];
+  for(var i=hist.length-1;i>=0;i--){
+    var s2=hist[i];
     h3+='<tr><td>'+(i+1)+'</td><td>'+s2.date+'</td><td>'+(s2.pkg?s2.pkg.length:0)+'</td><td>'+(s2.hsk?s2.hsk.length:0)+'</td><td>'+(s2.cancel?s2.cancel.length:0)+'</td><td>'+(s2.rotb?s2.rotb.length:0)+'</td></tr>';
   }
   h3+='</tbody></table>';el.innerHTML=h3;
@@ -411,18 +405,19 @@ function printTbl(id){var c=document.getElementById(id);if(!c)return;var w=windo
 
 /* WEATHER */
 function fetchWeather(){
-  var xhr=new XMLHttpRequest();
-  xhr.open('GET','https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+'&current_weather=true&timezone=Europe%2FWarsaw');
-  xhr.onload=function(){
-    if(xhr.status===200){
-      try{
-        var w=JSON.parse(xhr.responseText).current_weather;
-        var ic=w.weathercode<=1?'☀️':w.weathercode<=3?'⛅':w.weathercode<=50?'☁️':w.weathercode<=65?'🌧️':'🌦️';
-        document.getElementById('wBadge').textContent=ic+' '+w.temperature+'°C';
-      }catch(e){}
-    }
-  };
-  xhr.send();
+  try{
+    fetch('https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+'&current=temperature_2m,weather_code&timezone=Europe%2FWarsaw')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data&&data.current){
+        var temp=data.current.temperature_2m;
+        var wc=data.current.weather_code;
+        var ic=wc<=1?'☀️':wc<=3?'⛅':wc<=50?'☁️':wc<=65?'🌧️':'🌦️';
+        document.getElementById('wBadge').textContent=ic+' '+temp+'C';
+      }
+    })
+    .catch(function(){document.getElementById('wBadge').textContent='Pogoda niedostepna';});
+  }catch(e){document.getElementById('wBadge').textContent='Pogoda niedostepna';}
 }
 
 function updateClock(){
@@ -430,7 +425,7 @@ function updateClock(){
   document.getElementById('clock').textContent=now.toLocaleTimeString('pl-PL',{hour:'2-digit',minute:'2-digit'});
 }
 
-/* REBUILD ALL */
+/* REBUILD */
 function rebuildAll(){
   buildKPI();buildMonthSummary();buildDashCharts();buildSubPages();
 }
