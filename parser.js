@@ -18,32 +18,22 @@ async function exTxt(file){
   }
   return txt;
 }
-
-var D2P={Mon:'Pon.',Tue:'Wt.',Wed:'Śr.',Thu:'Czw.',Fri:'Pt.',Sat:'Sob.',Sun:'Niedz.',Monday:'Pon.',Tuesday:'Wt.',Wednesday:'Śr.',Thursday:'Czw.',Friday:'Pt.',Saturday:'Sob.',Sunday:'Niedz.'};
-var DPL_P=['Niedz.','Pon.','Wt.','Śr.','Czw.','Pt.','Sob.'];
-
+var D2P={Mon:'Pon.',Tue:'Wt.',Wed:'Sr.',Thu:'Czw.',Fri:'Pt.',Sat:'Sob.',Sun:'Niedz.',Monday:'Pon.',Tuesday:'Wt.',Wednesday:'Sr.',Thursday:'Czw.',Friday:'Pt.',Saturday:'Sob.',Sunday:'Niedz.'};
+var DPL_P=['Niedz.','Pon.','Wt.','Sr.','Czw.','Pt.','Sob.'];
 function si(v){var n=parseInt(String(v).replace(/[^\d-]/g,''));return isNaN(n)?0:n;}
 function sf(v){var n=parseFloat(String(v).replace(/[^\d.,-]/g,'').replace(',','.'));return isNaN(n)?0:n;}
 
 async function parsePkg(file){
-  var txt=await exTxt(file);
-  var lines=txt.split('\n');
-  var res=[];var dc=0;
+  var txt=await exTxt(file);var lines=txt.split('\n');var res=[];var dc=0;
   for(var i=0;i<lines.length;i++){
     var line=lines[i].trim();if(!line)continue;
-    var dm=line.match(/(\d{1,2})[.\-\/](\d{1,2})[.\-\/](\d{2,4})/);
-    if(!dm)continue;
-    var dd=dm[1].padStart(2,'0'),mm=dm[2].padStart(2,'0'),yy=dm[3];
-    if(yy.length===2)yy='20'+yy;
+    var dm=line.match(/(\d{1,2})[.\-\/](\d{1,2})[.\-\/](\d{2,4})/);if(!dm)continue;
+    var dd=dm[1].padStart(2,'0'),mm=dm[2].padStart(2,'0'),yy=dm[3];if(yy.length===2)yy='20'+yy;
     var ds=yy+'-'+mm+'-'+dd;
-    var nums=line.match(/-?\d[\d,.]*/g);
-    if(!nums)continue;
-    var cn=[];
-    for(var j=0;j<nums.length;j++){if(nums[j]!==dm[1]&&nums[j]!==dm[2]&&nums[j]!==dm[3]&&nums[j]!==dd&&nums[j]!==mm&&nums[j]!==yy)cn.push(nums[j]);}
+    var nums=line.match(/-?\d[\d,.]*/g);if(!nums)continue;
+    var cn=[];for(var j=0;j<nums.length;j++){if(nums[j]!==dm[1]&&nums[j]!==dm[2]&&nums[j]!==dm[3]&&nums[j]!==dd&&nums[j]!==mm&&nums[j]!==yy)cn.push(nums[j]);}
     if(cn.length<6)continue;
-    var dn='';
-    var keys=Object.keys(D2P);
-    for(var k=0;k<keys.length;k++){if(line.toLowerCase().indexOf(keys[k].toLowerCase())>=0){dn=D2P[keys[k]];break;}}
+    var dn='';var keys=Object.keys(D2P);for(var k=0;k<keys.length;k++){if(line.toLowerCase().indexOf(keys[k].toLowerCase())>=0){dn=D2P[keys[k]];break;}}
     if(!dn){var d=new Date(ds);dn=DPL_P[d.getDay()];}
     dc++;var n=[];for(var j=0;j<cn.length;j++)n.push(si(cn[j]));
     res.push({d:dc,date:ds,day:dn,occ:n[0]||0,adu:n[1]||0,ch:n[2]||0,arrP:n[3]||0,depP:n[4]||0,arrR:n[5]||0,depR:n[6]||0,bfk:n[7]||0,din:n[8]||0,lun:n[9]||0,wst:n.length>=12?n[10]||0:0,total:n[n.length-1]||0});
@@ -52,14 +42,11 @@ async function parsePkg(file){
 }
 
 async function parseHsk(file){
-  var txt=await exTxt(file);
-  var lines=txt.split('\n');var res=[];
+  var txt=await exTxt(file);var lines=txt.split('\n');var res=[];
   for(var i=0;i<lines.length;i++){
     var line=lines[i].trim();if(!line)continue;
-    var dm=line.match(/(\d{1,2})[.\-\/](\d{1,2})[.\-\/](\d{2,4})/);
-    if(!dm)continue;
-    var dd=dm[1].padStart(2,'0'),mm=dm[2].padStart(2,'0'),yy=dm[3];
-    if(yy.length===2)yy='20'+yy;
+    var dm=line.match(/(\d{1,2})[.\-\/](\d{1,2})[.\-\/](\d{2,4})/);if(!dm)continue;
+    var dd=dm[1].padStart(2,'0'),mm=dm[2].padStart(2,'0'),yy=dm[3];if(yy.length===2)yy='20'+yy;
     var ds=yy+'-'+mm+'-'+dd;
     var nums=line.match(/-?\d[\d,.]*/g);if(!nums)continue;
     var cn=[];for(var j=0;j<nums.length;j++){if(nums[j]!==dm[1]&&nums[j]!==dm[2]&&nums[j]!==dm[3]&&nums[j]!==dd&&nums[j]!==mm&&nums[j]!==yy)cn.push(nums[j]);}
@@ -80,7 +67,7 @@ async function parseCancel(file){
     var ctx='';for(var j=Math.max(0,i-2);j<Math.min(lines.length,i+3);j++)ctx+=lines[j]+' ';
     var dates=ctx.match(/(\d{1,2}\.\d{1,2}\.\d{2,4})/g)||[];
     var amts=ctx.match(/[\d,]+\.\d{2}/g)||[];
-    var nm=ctx.match(/([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+\s*,\s*[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)/);
+    var nm=ctx.match(/([A-Z][a-z]+\s*,\s*[A-Z][a-z]+)/);
     var rts=['DEL','DELOB','APOB','APM','STDO','STDB','SUI','FAM','STBB'];
     var rt='-';for(var k=0;k<rts.length;k++){if(ctx.indexOf(rts[k])>=0){rt=rts[k];break;}}
     var rsns=['REL','TRIP','NOSHOW','RATE','OTHER','DUPL'];
@@ -92,7 +79,7 @@ async function parseCancel(file){
 
 async function parseRotb(file){
   var txt=await exTxt(file);var lines=txt.split('\n');
-  var mN={March:'Marzec',April:'Kwiecień',May:'Maj',June:'Czerwiec',July:'Lipiec',August:'Sierpień',September:'Wrzesień',October:'Październik',November:'Listopad',December:'Grudzień',January:'Styczeń',February:'Luty'};
+  var mN={March:'Marzec',April:'Kwiecien',May:'Maj',June:'Czerwiec',July:'Lipiec',August:'Sierpien',September:'Wrzesien',October:'Pazdziernik',November:'Listopad',December:'Grudzien',January:'Styczen',February:'Luty'};
   var mI={March:2,April:3,May:4,June:5,July:6,August:7,September:8,October:9,November:10,December:11,January:0,February:1};
   var res=[],cur=null,days=[];
   for(var i=0;i<lines.length;i++){
@@ -102,8 +89,7 @@ async function parseRotb(file){
       if(line.indexOf(keys[k])>=0){
         if(cur)res.push({month:cur.month,monthIdx:cur.monthIdx,year:cur.year,totalRooms:cur.totalRooms,occPct:cur.occPct,lyOccPct:cur.lyOccPct,revenue:cur.revenue,adr:cur.adr,daily:days.slice()});
         var yr=mI[keys[k]]<=1?2027:2026;
-        cur={month:mN[keys[k]]+' '+yr,monthIdx:mI[keys[k]],year:yr,totalRooms:0,occPct:0,lyOccPct:0,revenue:0,adr:0};
-        days=[];break;
+        cur={month:mN[keys[k]]+' '+yr,monthIdx:mI[keys[k]],year:yr,totalRooms:0,occPct:0,lyOccPct:0,revenue:0,adr:0};days=[];break;
       }
     }
     var pcts=line.match(/([\d.]+)%/g);
