@@ -34,10 +34,10 @@ body{font-family:'Inter',sans-serif;background:#f5f6fa;color:#1e293b;min-height:
 .sidebar-header .resort-name{font-size:1.1rem;font-weight:700;letter-spacing:.5px}
 .sidebar-header .resort-sub{font-size:.7rem;color:rgba(255,255,255,.5);margin-top:2px}
 .sidebar-nav{flex:1;overflow-y:auto;padding:12px 0}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,.7);cursor:pointer;font-size:.82rem;font-weight:500;transition:all .15s;border-left:3px solid transparent}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,.7);cursor:pointer;font-size:.8rem;font-weight:500;transition:all .15s;border-left:3px solid transparent}
 .nav-item:hover{background:rgba(255,255,255,.08);color:#fff}
 .nav-item.active{background:rgba(255,255,255,.12);color:#fff;border-left-color:#3b82f6}
-.nav-item .nav-icon{width:18px;text-align:center;font-size:.95rem}
+.nav-item .nav-icon{width:18px;text-align:center;font-size:.92rem}
 .nav-sep{height:1px;background:rgba(255,255,255,.08);margin:8px 20px}
 .sidebar-footer{padding:16px;border-top:1px solid rgba(255,255,255,.1);font-size:.7rem;color:rgba(255,255,255,.4)}
 .user-info{display:flex;align-items:center;gap:8px;margin-bottom:8px}
@@ -49,9 +49,7 @@ body{font-family:'Inter',sans-serif;background:#f5f6fa;color:#1e293b;min-height:
 /* TOPBAR */
 .topbar{height:52px;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:fixed;top:0;left:240px;right:0;z-index:90}
 .topbar-title{font-size:.95rem;font-weight:600;color:#1e293b}
-.topbar-right{display:flex;align-items:center;gap:16px}
 .topbar-date{font-size:.8rem;color:#64748b}
-.topbar-badge{background:#ef4444;color:#fff;font-size:.6rem;padding:2px 7px;border-radius:10px;font-weight:700}
 
 /* MAIN */
 .main{margin-left:240px;margin-top:52px;padding:20px 24px 40px;min-height:calc(100vh - 52px)}
@@ -65,16 +63,9 @@ body{font-family:'Inter',sans-serif;background:#f5f6fa;color:#1e293b;min-height:
 .kpi-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-bottom:20px}
 .kpi-card{background:#fff;border-radius:12px;padding:14px 16px;border:1px solid #e2e8f0;position:relative;overflow:hidden}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.kpi-card.blue::before{background:#3b82f6}
-.kpi-card.green::before{background:#10b981}
-.kpi-card.amber::before{background:#f59e0b}
-.kpi-card.red::before{background:#ef4444}
-.kpi-card.purple::before{background:#8b5cf6}
-.kpi-card.cyan::before{background:#06b6d4}
-.kpi-card.rose::before{background:#f43f5e}
-.kpi-card.slate::before{background:#64748b}
+.kpi-card.blue::before{background:#3b82f6}.kpi-card.green::before{background:#10b981}.kpi-card.amber::before{background:#f59e0b}.kpi-card.red::before{background:#ef4444}.kpi-card.purple::before{background:#8b5cf6}.kpi-card.cyan::before{background:#06b6d4}.kpi-card.rose::before{background:#f43f5e}.kpi-card.slate::before{background:#64748b}.kpi-card.pink::before{background:#ec4899}.kpi-card.orange::before{background:#f97316}
 .kpi-label{font-size:.68rem;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
-.kpi-label small{display:block;font-size:.58rem;color:#94a3b8;font-weight:400;text-transform:none;letter-spacing:0;margin-top:1px}
+.kpi-label small{display:block;font-size:.56rem;color:#94a3b8;font-weight:400;text-transform:none;letter-spacing:0;margin-top:1px}
 .kpi-value{font-size:1.5rem;font-weight:700;color:#1e293b;margin-top:4px}
 .kpi-value.negative{color:#ef4444}
 .kpi-sub{font-size:.62rem;color:#94a3b8;margin-top:2px}
@@ -90,31 +81,21 @@ body{font-family:'Inter',sans-serif;background:#f5f6fa;color:#1e293b;min-height:
 .tbl-wrap{overflow-x:auto;margin-top:12px}
 table{width:100%;border-collapse:collapse;font-size:.73rem}
 thead th{background:#f8fafc;padding:8px 10px;text-align:left;font-weight:600;color:#64748b;border-bottom:2px solid #e2e8f0;white-space:nowrap;font-size:.66rem;text-transform:uppercase;letter-spacing:.3px}
-thead th small{display:block;font-weight:400;text-transform:none;letter-spacing:0;color:#94a3b8;font-size:.58rem}
+thead th small{display:block;font-weight:400;text-transform:none;letter-spacing:0;color:#94a3b8;font-size:.56rem}
 tbody td{padding:7px 10px;border-bottom:1px solid #f1f5f9;color:#334155}
 tbody tr:hover{background:#f8fafc}
-.row-event{background:#fffbeb!important}
-.row-event:hover{background:#fef3c7!important}
-.row-cancel{background:#fef2f2!important}
-.row-cancel:hover{background:#fee2e2!important}
+.row-event{background:#fffbeb!important}.row-event:hover{background:#fef3c7!important}
+.row-cancel{background:#fef2f2!important}.row-cancel:hover{background:#fee2e2!important}
 
 /* PILLS */
 .pill{padding:2px 7px;border-radius:4px;font-size:.62rem;font-weight:600;white-space:nowrap}
-.pill-blue{background:#dbeafe;color:#1e40af}
-.pill-green{background:#d1fae5;color:#065f46}
-.pill-amber{background:#fef3c7;color:#92400e}
-.pill-red{background:#fee2e2;color:#991b1b}
-.pill-purple{background:#ede9fe;color:#5b21b6}
-.pill-slate{background:#f1f5f9;color:#475569}
+.pill-blue{background:#dbeafe;color:#1e40af}.pill-green{background:#d1fae5;color:#065f46}.pill-amber{background:#fef3c7;color:#92400e}.pill-red{background:#fee2e2;color:#991b1b}.pill-purple{background:#ede9fe;color:#5b21b6}.pill-slate{background:#f1f5f9;color:#475569}.pill-pink{background:#fce7f3;color:#9d174d}.pill-cyan{background:#cffafe;color:#155e75}.pill-orange{background:#ffedd5;color:#9a3412}
 
 /* EVENT DOTS */
 .evt-dots{display:flex;gap:3px;flex-wrap:wrap;max-width:120px}
 .evt-dot{width:8px;height:8px;border-radius:50%;display:inline-block;cursor:pointer;position:relative;flex-shrink:0}
-.evt-dot.pl{background:#fbbf24}
-.evt-dot.de{background:#60a5fa}
-.evt-dot.holiday{background:#f87171}
-.evt-dot.season{background:#34d399}
-.evt-dot:hover::after{content:attr(title);position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;font-size:.58rem;padding:3px 8px;border-radius:4px;white-space:nowrap;z-index:10;pointer-events:none}
+.evt-dot.pl{background:#fbbf24}.evt-dot.de{background:#60a5fa}.evt-dot.holiday{background:#f87171}.evt-dot.season{background:#34d399}
+.evt-dot:hover::after{content:attr(title);position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;font-size:.56rem;padding:3px 8px;border-radius:4px;white-space:nowrap;z-index:10;pointer-events:none}
 
 /* CALENDAR */
 .cal-months{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
@@ -122,18 +103,15 @@ tbody tr:hover{background:#f8fafc}
 .cal-month-btn:hover,.cal-month-btn.active{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .cal-header{text-align:center;font-size:.7rem;font-weight:600;color:#64748b;padding:6px}
-.cal-day{min-height:68px;border:1px solid #e2e8f0;border-radius:8px;padding:4px 6px;font-size:.7rem;background:#fff;position:relative}
+.cal-day{min-height:68px;border:1px solid #e2e8f0;border-radius:8px;padding:4px 6px;font-size:.7rem;background:#fff}
 .cal-day.empty{border-color:transparent;background:transparent}
 .cal-day.today{border-color:#3b82f6;box-shadow:0 0 0 2px rgba(59,130,246,.2)}
 .cal-day.has-event{background:#fffbeb}
 .cal-day-num{font-weight:600;color:#1e293b;font-size:.75rem}
-.cal-day-occ{font-size:.58rem;color:#64748b;margin-top:1px}
+.cal-day-occ{font-size:.56rem;color:#64748b;margin-top:1px}
 .cal-day-events{display:flex;flex-wrap:wrap;gap:2px;margin-top:3px}
 .cal-evt-tag{font-size:.48rem;padding:1px 4px;border-radius:3px;line-height:1.3;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cal-evt-tag.pl{background:#fef3c7;color:#92400e}
-.cal-evt-tag.de{background:#dbeafe;color:#1e40af}
-.cal-evt-tag.holiday{background:#fee2e2;color:#991b1b}
-.cal-evt-tag.season{background:#d1fae5;color:#065f46}
+.cal-evt-tag.pl{background:#fef3c7;color:#92400e}.cal-evt-tag.de{background:#dbeafe;color:#1e40af}.cal-evt-tag.holiday{background:#fee2e2;color:#991b1b}.cal-evt-tag.season{background:#d1fae5;color:#065f46}
 
 /* WEATHER */
 .weather-strip{display:flex;gap:10px;overflow-x:auto;padding:4px 0;margin-bottom:16px}
@@ -144,6 +122,48 @@ tbody tr:hover{background:#f8fafc}
 .weather-day .wd-desc{font-size:.56rem;color:#64748b;margin-top:2px}
 .weather-day .wd-detail{font-size:.52rem;color:#94a3b8;margin-top:4px;line-height:1.4}
 
+/* ANIMATION SCHEDULE */
+.anim-day-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.anim-day-btn{padding:8px 18px;border-radius:8px;border:2px solid #e2e8f0;background:#fff;font-size:.8rem;cursor:pointer;font-weight:600;font-family:inherit;transition:all .2s;color:#64748b}
+.anim-day-btn:hover{border-color:#8b5cf6;color:#8b5cf6}
+.anim-day-btn.active{background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:#fff;border-color:#8b5cf6;box-shadow:0 4px 12px rgba(139,92,246,.3)}
+.anim-day-btn .day-sub{display:block;font-size:.55rem;font-weight:400;opacity:.7;margin-top:1px}
+.anim-timeline{position:relative}
+.anim-slot{display:flex;align-items:stretch;gap:0;margin-bottom:2px;border-radius:10px;overflow:hidden;background:#fff;border:1px solid #e2e8f0;transition:transform .1s,box-shadow .1s}
+.anim-slot:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.anim-time{width:110px;padding:10px 12px;font-size:.72rem;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;text-align:center;line-height:1.3}
+.anim-content{flex:1;padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.anim-name-pl{font-size:.82rem;font-weight:700;color:#1e293b}
+.anim-name-de{font-size:.62rem;color:#94a3b8;font-style:italic}
+.anim-loc{display:inline-flex;align-items:center;gap:4px;margin-top:3px}
+.anim-loc-pill{padding:2px 8px;border-radius:4px;font-size:.58rem;font-weight:600;background:#f1f5f9;color:#475569}
+.anim-cat-icon{font-size:.9rem;margin-right:2px}
+
+/* Location colors */
+.loc-hol{background:#dbeafe;color:#1e40af}
+.loc-sala{background:#d1fae5;color:#065f46}
+.loc-kids{background:#fef3c7;color:#92400e}
+.loc-play{background:#ede9fe;color:#5b21b6}
+.loc-nite{background:#fce7f3;color:#9d174d}
+.loc-aqua{background:#cffafe;color:#155e75}
+
+/* Time slot colors */
+.time-morning{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
+.time-midday{background:linear-gradient(135deg,#3b82f6,#60a5fa)}
+.time-afternoon{background:linear-gradient(135deg,#10b981,#34d399)}
+.time-evening{background:linear-gradient(135deg,#8b5cf6,#a78bfa)}
+.time-night{background:linear-gradient(135deg,#1e293b,#475569)}
+
+/* Anim week overview */
+.anim-week-grid{display:grid;grid-template-columns:100px repeat(7,1fr);gap:2px;font-size:.62rem}
+.anim-week-header{padding:8px 6px;font-weight:700;text-align:center;color:#64748b;background:#f8fafc;border-radius:6px;font-size:.65rem}
+.anim-week-time{padding:8px 6px;font-weight:600;color:#475569;background:#f8fafc;border-radius:6px;font-size:.6rem;display:flex;align-items:center}
+.anim-week-cell{padding:6px;border-radius:6px;background:#fff;border:1px solid #f1f5f9;min-height:48px;font-size:.58rem;line-height:1.4;color:#334155}
+.anim-week-cell.has-activity{background:#faf5ff;border-color:#e9d5ff}
+.anim-week-cell .act-name{font-weight:600;color:#1e293b;font-size:.6rem}
+.anim-week-cell .act-loc{font-size:.5rem;color:#8b5cf6;margin-top:1px}
+.anim-week-cell.highlight{background:#ede9fe;border-color:#c4b5fd}
+
 /* ADMIN */
 .admin-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:16px}
 .admin-card h3{font-size:.9rem;font-weight:700;margin-bottom:12px;color:#1e293b}
@@ -152,843 +172,461 @@ tbody tr:hover{background:#f8fafc}
 .admin-form-row .field label{font-size:.65rem;font-weight:600;color:#64748b;text-transform:uppercase}
 .admin-form-row .field input,.admin-form-row .field select{padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.8rem;font-family:inherit}
 .admin-btn{padding:8px 16px;border-radius:8px;border:none;font-size:.75rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
-.admin-btn.primary{background:#3b82f6;color:#fff}
-.admin-btn.primary:hover{background:#2563eb}
-.admin-btn.danger{background:#ef4444;color:#fff}
-.admin-btn.danger:hover{background:#dc2626}
-.admin-btn.secondary{background:#f1f5f9;color:#475569}
-.admin-btn.secondary:hover{background:#e2e8f0}
+.admin-btn.primary{background:#3b82f6;color:#fff}.admin-btn.primary:hover{background:#2563eb}
+.admin-btn.danger{background:#ef4444;color:#fff}.admin-btn.danger:hover{background:#dc2626}
+.admin-btn.secondary{background:#f1f5f9;color:#475569}.admin-btn.secondary:hover{background:#e2e8f0}
 .admin-table{width:100%;border-collapse:collapse;font-size:.75rem;margin-top:8px}
 .admin-table th{background:#f8fafc;padding:8px 10px;text-align:left;font-weight:600;color:#64748b;border-bottom:2px solid #e2e8f0;font-size:.68rem}
 .admin-table td{padding:8px 10px;border-bottom:1px solid #f1f5f9}
 .status-badge{padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:600}
-.status-badge.active{background:#d1fae5;color:#065f46}
-.status-badge.inactive{background:#fee2e2;color:#991b1b}
+.status-badge.active{background:#d1fae5;color:#065f46}.status-badge.inactive{background:#fee2e2;color:#991b1b}
 
-/* CANCEL REASON BAR */
+/* Reason bars */
 .reason-bars{display:flex;flex-direction:column;gap:8px;margin-top:12px}
 .reason-bar-row{display:flex;align-items:center;gap:10px;font-size:.75rem}
 .reason-bar-label{width:180px;text-align:right;color:#64748b;font-weight:500;flex-shrink:0}
-.reason-bar-track{flex:1;height:24px;background:#f1f5f9;border-radius:6px;overflow:hidden;position:relative}
+.reason-bar-track{flex:1;height:24px;background:#f1f5f9;border-radius:6px;overflow:hidden}
 .reason-bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding:0 8px;font-size:.65rem;font-weight:600;color:#fff;min-width:fit-content;white-space:nowrap}
-.reason-bar-value{margin-left:8px;font-weight:700;color:#1e293b;font-size:.75rem;flex-shrink:0}
 
-@media print{
-  .sidebar,.topbar,#loginOverlay{display:none!important}
-  .main{margin:0;padding:10px}
-  .section{display:block!important;page-break-inside:avoid}
-}
+/* Note card */
+.note-card{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fde68a;border-radius:10px;padding:14px 18px;font-size:.75rem;color:#92400e;margin-bottom:16px;line-height:1.5}
+.note-card strong{color:#78350f}
+
+@media print{.sidebar,.topbar,#loginOverlay{display:none!important}.main{margin:0;padding:10px}.section{display:block!important;page-break-inside:avoid}}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div id="loginOverlay">
-  <div class="login-box">
-    <div class="logo-text">BEL MARE RESORT</div>
-    <div class="logo-sub">Międzyzdroje · Panel Operacyjny</div>
-    <h2>Logowanie</h2>
-    <div class="login-field">
-      <label>Login</label>
-      <input type="text" id="loginUser" placeholder="Wpisz login" autocomplete="username">
-    </div>
-    <div class="login-field">
-      <label>Hasło</label>
-      <input type="password" id="loginPass" placeholder="Wpisz hasło" autocomplete="current-password">
-    </div>
-    <button class="login-btn" onclick="handleLogin()">Zaloguj się</button>
-    <div class="login-error" id="loginError"></div>
-    <div class="login-hint">Dostęp wyłącznie dla autoryzowanego personelu Bel Mare Resort.</div>
-  </div>
+<div class="login-box">
+<div class="logo-text">BEL MARE RESORT</div>
+<div class="logo-sub">Międzyzdroje · Panel Operacyjny</div>
+<h2>Logowanie</h2>
+<div class="login-field"><label>Login</label><input type="text" id="loginUser" placeholder="Wpisz login" autocomplete="username"></div>
+<div class="login-field"><label>Hasło</label><input type="password" id="loginPass" placeholder="Wpisz hasło" autocomplete="current-password"></div>
+<button class="login-btn" onclick="handleLogin()">Zaloguj się</button>
+<div class="login-error" id="loginError"></div>
+<div class="login-hint">Dostęp wyłącznie dla autoryzowanego personelu Bel Mare Resort.</div>
+</div>
 </div>
 
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar" style="display:none">
-  <div class="sidebar-header">
-    <div class="resort-name">BEL MARE</div>
-    <div class="resort-sub">Panel Operacyjny · 2026</div>
-  </div>
-  <nav class="sidebar-nav" id="sidebarNav">
-    <div class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')">
-      <span class="nav-icon">📊</span> Pulpit główny
-    </div>
-    <div class="nav-item" data-section="calendar" onclick="showSection('calendar')">
-      <span class="nav-icon">📅</span> Kalendarz wydarzeń
-    </div>
-    <div class="nav-sep"></div>
-    <div class="nav-item" data-section="occupancy" onclick="showSection('occupancy')">
-      <span class="nav-icon">🏨</span> Obłożenie
-    </div>
-    <div class="nav-item" data-section="meals" onclick="showSection('meals')">
-      <span class="nav-icon">🍽️</span> Wyżywienie
-    </div>
-    <div class="nav-item" data-section="hsk" onclick="showSection('hsk')">
-      <span class="nav-icon">🧹</span> HSK
-    </div>
-    <div class="nav-item" data-section="arrivals" onclick="showSection('arrivals')">
-      <span class="nav-icon">🔄</span> Przyjazdy / Wyjazdy
-    </div>
-    <div class="nav-sep"></div>
-    <div class="nav-item" data-section="pickup" onclick="showSection('pickup')">
-      <span class="nav-icon">📥</span> Pickup Report
-    </div>
-    <div class="nav-item" data-section="cancellations" onclick="showSection('cancellations')">
-      <span class="nav-icon">❌</span> Anulacje
-    </div>
-    <div class="nav-item" data-section="channels" onclick="showSection('channels')">
-      <span class="nav-icon">📡</span> Kanały sprzedaży
-    </div>
-    <div class="nav-sep"></div>
-    <div class="nav-item" data-section="import" onclick="showSection('import')">
-      <span class="nav-icon">📂</span> Import danych
-    </div>
-    <div class="nav-item nav-admin" data-section="admin" onclick="showSection('admin')" style="display:none">
-      <span class="nav-icon">⚙️</span> Administracja
-    </div>
-  </nav>
-  <div class="sidebar-footer">
-    <div class="user-info">
-      <div class="user-avatar" id="userAvatar">A</div>
-      <div>
-        <div id="userName" style="font-weight:600;font-size:.75rem;color:#fff">—</div>
-        <div class="user-role" id="userRole">—</div>
-      </div>
-    </div>
-    <button class="logout-btn" onclick="handleLogout()">Wyloguj się</button>
-  </div>
+<div class="sidebar-header"><div class="resort-name">BEL MARE</div><div class="resort-sub">Panel Operacyjny · 2026</div></div>
+<nav class="sidebar-nav" id="sidebarNav">
+<div class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')"><span class="nav-icon">📊</span> Pulpit główny</div>
+<div class="nav-item" data-section="calendar" onclick="showSection('calendar')"><span class="nav-icon">📅</span> Kalendarz wydarzeń</div>
+<div class="nav-item" data-section="animations" onclick="showSection('animations')"><span class="nav-icon">🎭</span> Animacje</div>
+<div class="nav-sep"></div>
+<div class="nav-item" data-section="occupancy" onclick="showSection('occupancy')"><span class="nav-icon">🏨</span> Obłożenie</div>
+<div class="nav-item" data-section="meals" onclick="showSection('meals')"><span class="nav-icon">🍽️</span> Wyżywienie</div>
+<div class="nav-item" data-section="hsk" onclick="showSection('hsk')"><span class="nav-icon">🧹</span> HSK</div>
+<div class="nav-item" data-section="arrivals" onclick="showSection('arrivals')"><span class="nav-icon">🔄</span> Przyjazdy / Wyjazdy</div>
+<div class="nav-sep"></div>
+<div class="nav-item" data-section="pickup" onclick="showSection('pickup')"><span class="nav-icon">📥</span> Pickup Report</div>
+<div class="nav-item" data-section="cancellations" onclick="showSection('cancellations')"><span class="nav-icon">❌</span> Anulacje</div>
+<div class="nav-item" data-section="channels" onclick="showSection('channels')"><span class="nav-icon">📡</span> Kanały sprzedaży</div>
+<div class="nav-sep"></div>
+<div class="nav-item" data-section="import" onclick="showSection('import')"><span class="nav-icon">📂</span> Import danych</div>
+<div class="nav-item nav-admin" data-section="admin" onclick="showSection('admin')" style="display:none"><span class="nav-icon">⚙️</span> Administracja</div>
+</nav>
+<div class="sidebar-footer">
+<div class="user-info"><div class="user-avatar" id="userAvatar">A</div><div><div id="userName" style="font-weight:600;font-size:.75rem;color:#fff">—</div><div class="user-role" id="userRole">—</div></div></div>
+<button class="logout-btn" onclick="handleLogout()">Wyloguj się</button>
+</div>
 </div>
 
 <!-- TOPBAR -->
 <div class="topbar" id="topbar" style="display:none">
-  <div class="topbar-title">Bel Mare Resort – Raport Operacyjny</div>
-  <div class="topbar-right">
-    <div class="topbar-date" id="topbarDate"></div>
-  </div>
+<div class="topbar-title">Bel Mare Resort – Raport Operacyjny</div>
+<div class="topbar-date" id="topbarDate"></div>
 </div>
 
 <!-- MAIN -->
 <div class="main" id="mainContent" style="display:none">
 
-  <!-- DASHBOARD -->
-  <div class="section active" id="sec-dashboard">
-    <div class="section-title">Pulpit główny <small>Dashboard · Daily Overview</small></div>
-    <div class="section-desc">Podsumowanie operacyjne na dziś z kluczowymi wskaźnikami.</div>
+<!-- DASHBOARD -->
+<div class="section active" id="sec-dashboard">
+<div class="section-title">Pulpit główny <small>Dashboard · Daily Overview</small></div>
+<div class="section-desc">Podsumowanie operacyjne na dziś z kluczowymi wskaźnikami.</div>
+<div class="card" id="weatherCard"><div class="card-title">Pogoda – Międzyzdroje <small>Open-Meteo API · auto-odświeżanie 06:00</small></div><div class="weather-strip" id="weatherStrip"><div style="padding:20px;color:#94a3b8;font-size:.8rem">Ładowanie prognozy pogody...</div></div></div>
+<div class="kpi-strip" id="todayKpis"></div>
+<div class="card-grid">
+<div class="card"><div class="card-title">Obłożenie 7 dni <small>Rooms Occupied – 7 Day</small></div><div class="chart-wrap"><canvas id="chart7occ"></canvas></div></div>
+<div class="card"><div class="card-title">Wyżywienie 7 dni <small>Meals – 7 Day</small></div><div class="chart-wrap"><canvas id="chart7meals"></canvas></div></div>
+</div>
+<!-- Anim today mini -->
+<div class="card" style="border-left:4px solid #8b5cf6">
+<div class="card-title" style="color:#8b5cf6">🎭 Animacje dziś <small>Today's Animation Schedule</small></div>
+<div id="dashAnimToday" style="margin-top:10px"></div>
+</div>
+<!-- Cancel alert -->
+<div class="card" style="border-left:4px solid #ef4444">
+<div class="card-title" style="color:#ef4444">⚠️ Anulacje wczoraj <small>Reservation Cancellations · 19.03.2026</small></div>
+<div class="kpi-strip" style="margin-top:12px;margin-bottom:0" id="dashCancelKpis"></div>
+</div>
+</div>
 
-    <div class="card" id="weatherCard">
-      <div class="card-title">Pogoda – Międzyzdroje <small>Open-Meteo API · auto-odświeżanie 06:00</small></div>
-      <div class="weather-strip" id="weatherStrip">
-        <div style="padding:20px;color:#94a3b8;font-size:.8rem">Ładowanie prognozy pogody...</div>
-      </div>
-    </div>
+<!-- CALENDAR -->
+<div class="section" id="sec-calendar">
+<div class="section-title">Kalendarz wydarzeń <small>Events Calendar PL/DE 2026</small></div>
+<div class="section-desc">Święta, ferie, wakacje – Polska i Niemcy.</div>
+<div class="cal-months" id="calMonths"></div>
+<div class="card"><div class="cal-grid" id="calGrid"></div></div>
+<div class="card" style="margin-top:16px"><div class="card-title">Lista wydarzeń 2026</div><div class="tbl-wrap"><table id="eventsTable"><thead><tr><th>Okres</th><th>Wydarzenie (PL)</th><th>Nazwa (DE)</th><th>Kraj</th><th>Wpływ</th></tr></thead><tbody></tbody></table></div></div>
+</div>
 
-    <div class="kpi-strip" id="todayKpis"></div>
+<!-- ANIMATIONS -->
+<div class="section" id="sec-animations">
+<div class="section-title">Animacje <small>Animation Schedule · Harmonogram animacji</small></div>
+<div class="section-desc">Tygodniowy harmonogram animacji i atrakcji – źródło: piątek-niedziela marzec.pdf, poniedziałek-czwartek marzec.pdf</div>
 
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">Obłożenie 7 dni <small>Rooms Occupied – 7 Day</small></div>
-        <div class="chart-wrap"><canvas id="chart7occ"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Wyżywienie 7 dni <small>Meals – 7 Day</small></div>
-        <div class="chart-wrap"><canvas id="chart7meals"></canvas></div>
-      </div>
-    </div>
+<div class="note-card">
+<strong>ℹ️ Informacja:</strong> Na wszystkie animacje i atrakcje obowiązują opaski wstępu wydawane w recepcji podczas check-in w zależności od wybranego pakietu. Hotel zastrzega sobie możliwość zmiany harmonogramu.<br>
+<small style="color:#a16207"><em>Für alle Animationen und Attraktionen sind Eintrittsbänder erforderlich, die je nach gewähltem Paket beim Check-in an der Rezeption ausgegeben werden.</em></small>
+</div>
 
-    <!-- Mini cancellation alert on dashboard -->
-    <div class="card" style="border-left:4px solid #ef4444">
-      <div class="card-title" style="color:#ef4444">⚠️ Anulacje wczoraj <small>Reservation Cancellations · 19.03.2026</small></div>
-      <div class="kpi-strip" style="margin-top:12px;margin-bottom:0" id="dashCancelKpis"></div>
-    </div>
-  </div>
+<div class="kpi-strip" id="animKpis"></div>
 
-  <!-- CALENDAR -->
-  <div class="section" id="sec-calendar">
-    <div class="section-title">Kalendarz wydarzeń <small>Events Calendar PL/DE 2026</small></div>
-    <div class="section-desc">Święta, ferie, wakacje – Polska i Niemcy. Wydarzenia wpływające na obłożenie.</div>
-    <div class="cal-months" id="calMonths"></div>
-    <div class="card">
-      <div class="cal-grid" id="calGrid"></div>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <div class="card-title">Lista wydarzeń 2026</div>
-      <div class="tbl-wrap">
-        <table id="eventsTable"><thead><tr><th>Okres</th><th>Wydarzenie (PL)</th><th>Nazwa (DE)</th><th>Kraj</th><th>Wpływ</th></tr></thead><tbody></tbody></table>
-      </div>
-    </div>
-  </div>
+<div class="card">
+<div class="card-title">Widok tygodniowy <small>Weekly Overview Grid</small></div>
+<div style="overflow-x:auto;margin-top:12px"><div class="anim-week-grid" id="animWeekGrid"></div></div>
+</div>
 
-  <!-- OCCUPANCY -->
-  <div class="section" id="sec-occupancy">
-    <div class="section-title">Obłożenie <small>Occupancy Forecast · Package Forecast</small></div>
-    <div class="section-desc">30-dniowa prognoza obłożenia z podziałem dziennym.</div>
-    <div class="kpi-strip" id="occKpis"></div>
-    <div class="card">
-      <div class="card-title">Obłożenie 30 dni <small>30-Day Occupancy Chart</small></div>
-      <div class="chart-wrap" style="height:280px"><canvas id="chart30occ"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Tabela dzienna <small>Daily Breakdown · source: Package Forecast</small></div>
-      <div class="tbl-wrap"><table id="occTable"><thead></thead><tbody></tbody></table></div>
-    </div>
-  </div>
+<div class="card">
+<div class="card-title">Harmonogram dnia <small>Daily Schedule Timeline</small></div>
+<div class="anim-day-tabs" id="animDayTabs"></div>
+<div class="anim-timeline" id="animTimeline"></div>
+</div>
 
-  <!-- MEALS -->
-  <div class="section" id="sec-meals">
-    <div class="section-title">Wyżywienie <small>Meal Forecast · Package Forecast</small></div>
-    <div class="section-desc">Planowanie posiłków – śniadania, obiady, kolacje.</div>
-    <div class="kpi-strip" id="mealKpis"></div>
-    <div class="card">
-      <div class="card-title">Wyżywienie 30 dni <small>Meals 30-Day Chart</small></div>
-      <div class="chart-wrap" style="height:260px"><canvas id="chart30meals"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Tabela dzienna <small>Daily Meal Breakdown · source: Package Forecast</small></div>
-      <div class="tbl-wrap"><table id="mealTable"><thead></thead><tbody></tbody></table></div>
-    </div>
-  </div>
+<div class="card">
+<div class="card-title">Lokalizacje animacji <small>Animation Venues</small></div>
+<div class="kpi-strip" style="margin-top:12px" id="animVenues"></div>
+</div>
 
-  <!-- HSK -->
-  <div class="section" id="sec-hsk">
-    <div class="section-title">HSK <small>Housekeeping Forecast</small></div>
-    <div class="section-desc">Prognoza obciążenia housekeeping – poranki, przyjazdy, wyjazdy.</div>
-    <div class="kpi-strip" id="hskKpis"></div>
-    <div class="card">
-      <div class="card-title">Obciążenie HSK 30 dni <small>Housekeeping Workload Chart</small></div>
-      <div class="chart-wrap" style="height:260px"><canvas id="chart30hsk"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Tabela dzienna <small>Daily HSK · source: Housekeeping Forecast</small></div>
-      <div class="tbl-wrap"><table id="hskTable"><thead></thead><tbody></tbody></table></div>
-    </div>
-  </div>
+<div class="card">
+<div class="card-title">Pełna tabela <small>Full Schedule Table · source: piątek-niedziela marzec.pdf + poniedziałek-czwartek marzec.pdf</small></div>
+<div class="tbl-wrap"><table id="animFullTable"><thead></thead><tbody></tbody></table></div>
+</div>
+</div>
 
-  <!-- ARRIVALS -->
-  <div class="section" id="sec-arrivals">
-    <div class="section-title">Przyjazdy / Wyjazdy <small>Arrivals & Departures Flow</small></div>
-    <div class="section-desc">Dzienny ruch gości – przyjazdy, wyjazdy, zmiana netto.</div>
-    <div class="card">
-      <div class="card-title">Przepływ gości 30 dni <small>Guest Flow Chart</small></div>
-      <div class="chart-wrap" style="height:260px"><canvas id="chart30flow"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Tabela przepływu <small>Daily Flow · source: Package Forecast</small></div>
-      <div class="tbl-wrap"><table id="flowTable"><thead></thead><tbody></tbody></table></div>
-    </div>
-  </div>
+<!-- OCCUPANCY -->
+<div class="section" id="sec-occupancy">
+<div class="section-title">Obłożenie <small>Occupancy Forecast · Package Forecast</small></div>
+<div class="section-desc">30-dniowa prognoza obłożenia.</div>
+<div class="kpi-strip" id="occKpis"></div>
+<div class="card"><div class="card-title">Obłożenie 30 dni</div><div class="chart-wrap" style="height:280px"><canvas id="chart30occ"></canvas></div></div>
+<div class="card"><div class="card-title">Tabela dzienna <small>source: Package Forecast</small></div><div class="tbl-wrap"><table id="occTable"><thead></thead><tbody></tbody></table></div></div>
+</div>
 
-  <!-- PICKUP -->
-  <div class="section" id="sec-pickup">
-    <div class="section-title">Pickup Report <small>Reservations made yesterday · 17.03.2026</small></div>
-    <div class="section-desc">Nowe rezerwacje złożone wczoraj – analiza źródeł, rynków i przychodu.</div>
-    <div class="kpi-strip" id="pickupKpis"></div>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">Źródła rezerwacji <small>Source Mix</small></div>
-        <div class="chart-wrap"><canvas id="chartPickupSrc"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Mix rynkowy <small>Market Mix</small></div>
-        <div class="chart-wrap"><canvas id="chartPickupMkt"></canvas></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">Lista rezerwacji <small>Reservation List · source: Reservation made yesterday</small></div>
-      <div class="tbl-wrap"><table id="pickupTable"><thead></thead><tbody></tbody></table></div>
-    </div>
-  </div>
+<!-- MEALS -->
+<div class="section" id="sec-meals">
+<div class="section-title">Wyżywienie <small>Meal Forecast · Package Forecast</small></div>
+<div class="section-desc">Śniadania, obiady, kolacje – 30 dni.</div>
+<div class="kpi-strip" id="mealKpis"></div>
+<div class="card"><div class="card-title">Wyżywienie 30 dni</div><div class="chart-wrap" style="height:260px"><canvas id="chart30meals"></canvas></div></div>
+<div class="card"><div class="card-title">Tabela dzienna <small>source: Package Forecast</small></div><div class="tbl-wrap"><table id="mealTable"><thead></thead><tbody></tbody></table></div></div>
+</div>
 
-  <!-- ===== CANCELLATIONS (NEW) ===== -->
-  <div class="section" id="sec-cancellations">
-    <div class="section-title">Anulacje <small>Reservation Cancellations · 19.03.2026</small></div>
-    <div class="section-desc">Raport anulacji – utracone rezerwacje, przychód i przyczyny rezygnacji.</div>
+<!-- HSK -->
+<div class="section" id="sec-hsk">
+<div class="section-title">HSK <small>Housekeeping Forecast</small></div>
+<div class="section-desc">Prognoza obciążenia housekeeping.</div>
+<div class="kpi-strip" id="hskKpis"></div>
+<div class="card"><div class="card-title">Obciążenie HSK 30 dni</div><div class="chart-wrap" style="height:260px"><canvas id="chart30hsk"></canvas></div></div>
+<div class="card"><div class="card-title">Tabela dzienna <small>source: Housekeeping Forecast</small></div><div class="tbl-wrap"><table id="hskTable"><thead></thead><tbody></tbody></table></div></div>
+</div>
 
-    <div class="kpi-strip" id="cancelKpis"></div>
+<!-- ARRIVALS -->
+<div class="section" id="sec-arrivals">
+<div class="section-title">Przyjazdy / Wyjazdy <small>Arrivals & Departures Flow</small></div>
+<div class="card"><div class="card-title">Przepływ gości 30 dni</div><div class="chart-wrap" style="height:260px"><canvas id="chart30flow"></canvas></div></div>
+<div class="card"><div class="card-title">Tabela przepływu <small>source: Package Forecast</small></div><div class="tbl-wrap"><table id="flowTable"><thead></thead><tbody></tbody></table></div></div>
+</div>
 
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">Utracony przychód wg powodu <small>Revenue Loss by Cancel Reason</small></div>
-        <div class="chart-wrap"><canvas id="chartCancelReason"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Anulacje wg źródła <small>Cancellations by Source</small></div>
-        <div class="chart-wrap"><canvas id="chartCancelSource"></canvas></div>
-      </div>
-    </div>
+<!-- PICKUP -->
+<div class="section" id="sec-pickup">
+<div class="section-title">Pickup Report <small>Reservations made yesterday · 17.03.2026</small></div>
+<div class="kpi-strip" id="pickupKpis"></div>
+<div class="card-grid">
+<div class="card"><div class="card-title">Źródła rezerwacji</div><div class="chart-wrap"><canvas id="chartPickupSrc"></canvas></div></div>
+<div class="card"><div class="card-title">Mix rynkowy</div><div class="chart-wrap"><canvas id="chartPickupMkt"></canvas></div></div>
+</div>
+<div class="card"><div class="card-title">Lista rezerwacji <small>source: Reservation made yesterday</small></div><div class="tbl-wrap"><table id="pickupTable"><thead></thead><tbody></tbody></table></div></div>
+</div>
 
-    <div class="card">
-      <div class="card-title">Porównanie: Pickup vs Anulacje <small>Net Pickup Analysis</small></div>
-      <div class="kpi-strip" style="margin-top:12px;margin-bottom:0" id="netPickupKpis"></div>
-    </div>
+<!-- CANCELLATIONS -->
+<div class="section" id="sec-cancellations">
+<div class="section-title">Anulacje <small>Reservation Cancellations · 19.03.2026</small></div>
+<div class="kpi-strip" id="cancelKpis"></div>
+<div class="card-grid">
+<div class="card"><div class="card-title">Utracony przychód wg powodu</div><div class="chart-wrap"><canvas id="chartCancelReason"></canvas></div></div>
+<div class="card"><div class="card-title">Anulacje wg źródła</div><div class="chart-wrap"><canvas id="chartCancelSource"></canvas></div></div>
+</div>
+<div class="card"><div class="card-title">Pickup vs Anulacje <small>Net Pickup</small></div><div class="kpi-strip" style="margin-top:12px;margin-bottom:0" id="netPickupKpis"></div></div>
+<div class="card"><div class="card-title">Szczegóły anulacji <small>source: Reservation Cancellations 20.03.pdf</small></div><div class="tbl-wrap"><table id="cancelTable"><thead></thead><tbody></tbody></table></div></div>
+<div class="card"><div class="card-title">Analiza przyczyn</div><div class="reason-bars" id="reasonBars"></div></div>
+</div>
 
-    <div class="card">
-      <div class="card-title">Szczegóły anulacji <small>Cancellation Details · source: Reservation Cancellations 20.03.pdf</small></div>
-      <div class="tbl-wrap"><table id="cancelTable"><thead></thead><tbody></tbody></table></div>
-    </div>
+<!-- CHANNELS -->
+<div class="section" id="sec-channels">
+<div class="section-title">Kanały sprzedaży <small>Sales Channel Analysis</small></div>
+<div class="card-grid">
+<div class="card"><div class="card-title">Rezerwacje wg kanału</div><div class="chart-wrap"><canvas id="chartChBook"></canvas></div></div>
+<div class="card"><div class="card-title">Przychód wg kanału</div><div class="chart-wrap"><canvas id="chartChRev"></canvas></div></div>
+</div>
+</div>
 
-    <div class="card">
-      <div class="card-title">Analiza przyczyn <small>Cancel Reason Breakdown</small></div>
-      <div class="reason-bars" id="reasonBars"></div>
-    </div>
-  </div>
+<!-- IMPORT -->
+<div class="section" id="sec-import">
+<div class="section-title">Import danych <small>Data Import</small></div>
+<div class="card">
+<div class="card-title">Pliki źródłowe</div>
+<div class="admin-form-row" style="margin-top:12px">
+<div class="field"><label>Package Forecast</label><input type="file" accept=".pdf,.csv"></div>
+<div class="field"><label>HSK Forecast</label><input type="file" accept=".pdf,.csv"></div>
+<div class="field"><label>Reservations Yesterday</label><input type="file" accept=".pdf,.csv"></div>
+<div class="field"><label>Cancellations</label><input type="file" accept=".pdf,.csv"></div>
+<div class="field"><label>Harmonogram animacji</label><input type="file" accept=".pdf,.csv"></div>
+</div>
+<button class="admin-btn primary" style="margin-top:12px">Importuj i przetwórz</button>
+</div>
+</div>
 
-  <!-- CHANNELS -->
-  <div class="section" id="sec-channels">
-    <div class="section-title">Kanały sprzedaży <small>Sales Channel Analysis</small></div>
-    <div class="section-desc">Analiza kanałów rezerwacyjnych – wolumen i przychód.</div>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">Rezerwacje wg kanału <small>Bookings by Channel</small></div>
-        <div class="chart-wrap"><canvas id="chartChBook"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Przychód wg kanału <small>Revenue by Channel</small></div>
-        <div class="chart-wrap"><canvas id="chartChRev"></canvas></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- IMPORT -->
-  <div class="section" id="sec-import">
-    <div class="section-title">Import danych <small>Data Import</small></div>
-    <div class="section-desc">Wgraj pliki PDF/CSV z systemu PMS, aby zaktualizować dane panelu.</div>
-    <div class="card">
-      <div class="card-title">Pliki źródłowe</div>
-      <div class="admin-form-row" style="margin-top:12px">
-        <div class="field"><label>Package Forecast</label><input type="file" accept=".pdf,.csv"></div>
-        <div class="field"><label>HSK Forecast</label><input type="file" accept=".pdf,.csv"></div>
-        <div class="field"><label>Reservations Yesterday</label><input type="file" accept=".pdf,.csv"></div>
-        <div class="field"><label>Cancellations</label><input type="file" accept=".pdf,.csv"></div>
-      </div>
-      <button class="admin-btn primary" style="margin-top:12px">Importuj i przetwórz</button>
-    </div>
-  </div>
-
-  <!-- ADMIN -->
-  <div class="section" id="sec-admin">
-    <div class="section-title">Administracja <small>Admin Panel</small></div>
-    <div class="section-desc">Zarządzanie użytkownikami, hasłami i ustawieniami systemu.</div>
-    <div class="admin-card">
-      <h3>Zarządzanie użytkownikami</h3>
-      <table class="admin-table" id="adminUsersTable">
-        <thead><tr><th>Login</th><th>Rola</th><th>Status</th><th>Ostatnie logowanie</th><th>Akcje</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div class="admin-card">
-      <h3>Dodaj nowego użytkownika</h3>
-      <div class="admin-form-row">
-        <div class="field"><label>Login</label><input type="text" id="newUserLogin" placeholder="np. recepcja"></div>
-        <div class="field"><label>Hasło</label><input type="password" id="newUserPass" placeholder="Min. 6 znaków"></div>
-        <div class="field"><label>Rola</label>
-          <select id="newUserRole">
-            <option value="Administrator">Administrator</option>
-            <option value="Operacja" selected>Operacja</option>
-            <option value="Recepcja">Recepcja</option>
-            <option value="HSK">HSK</option>
-            <option value="F&B">F&B</option>
-            <option value="Revenue">Revenue</option>
-            <option value="Viewer">Viewer (tylko odczyt)</option>
-          </select>
-        </div>
-        <button class="admin-btn primary" onclick="adminAddUser()">Dodaj użytkownika</button>
-      </div>
-    </div>
-    <div class="admin-card">
-      <h3>Zmiana hasła użytkownika</h3>
-      <div class="admin-form-row">
-        <div class="field"><label>Login</label><input type="text" id="chPassLogin" placeholder="Login użytkownika"></div>
-        <div class="field"><label>Nowe hasło</label><input type="password" id="chPassNew" placeholder="Nowe hasło"></div>
-        <button class="admin-btn primary" onclick="adminChangePass()">Zmień hasło</button>
-      </div>
-    </div>
-    <div class="admin-card">
-      <h3>Dziennik logowań</h3>
-      <table class="admin-table" id="sessionLogTable">
-        <thead><tr><th>Data/godzina</th><th>Login</th><th>Rola</th><th>Akcja</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div class="admin-card">
-      <h3>Ustawienia resortu</h3>
-      <div class="admin-form-row">
-        <div class="field"><label>Nazwa resortu</label><input type="text" id="setResortName" value="Bel Mare Resort"></div>
-        <div class="field"><label>Liczba pokoi (total)</label><input type="number" id="setTotalRooms" value="360"></div>
-        <div class="field"><label>Lokalizacja pogody</label><input type="text" value="Międzyzdroje" disabled></div>
-        <button class="admin-btn primary" onclick="adminSaveSettings()">Zapisz ustawienia</button>
-      </div>
-    </div>
-  </div>
+<!-- ADMIN -->
+<div class="section" id="sec-admin">
+<div class="section-title">Administracja <small>Admin Panel</small></div>
+<div class="admin-card"><h3>Zarządzanie użytkownikami</h3><table class="admin-table" id="adminUsersTable"><thead><tr><th>Login</th><th>Rola</th><th>Status</th><th>Ostatnie logowanie</th><th>Akcje</th></tr></thead><tbody></tbody></table></div>
+<div class="admin-card"><h3>Dodaj użytkownika</h3><div class="admin-form-row"><div class="field"><label>Login</label><input type="text" id="newUserLogin"></div><div class="field"><label>Hasło</label><input type="password" id="newUserPass"></div><div class="field"><label>Rola</label><select id="newUserRole"><option value="Administrator">Administrator</option><option value="Operacja" selected>Operacja</option><option value="Recepcja">Recepcja</option><option value="HSK">HSK</option><option value="F&B">F&B</option><option value="Animacje">Animacje</option><option value="Revenue">Revenue</option><option value="Viewer">Viewer</option></select></div><button class="admin-btn primary" onclick="adminAddUser()">Dodaj</button></div></div>
+<div class="admin-card"><h3>Zmiana hasła</h3><div class="admin-form-row"><div class="field"><label>Login</label><input type="text" id="chPassLogin"></div><div class="field"><label>Nowe hasło</label><input type="password" id="chPassNew"></div><button class="admin-btn primary" onclick="adminChangePass()">Zmień</button></div></div>
+<div class="admin-card"><h3>Dziennik logowań</h3><table class="admin-table" id="sessionLogTable"><thead><tr><th>Data/godz.</th><th>Login</th><th>Rola</th><th>Akcja</th></tr></thead><tbody></tbody></table></div>
+<div class="admin-card"><h3>Ustawienia</h3><div class="admin-form-row"><div class="field"><label>Nazwa</label><input type="text" value="Bel Mare Resort"></div><div class="field"><label>Pokoje</label><input type="number" value="360"></div><button class="admin-btn primary" onclick="alert('Zapisano')">Zapisz</button></div></div>
+</div>
 
 </div>
 
 <script>
-// ===== AUTH =====
-const DEFAULT_USERS=[
-  {login:'admin',password:'belmare2026!',role:'Administrator',active:true,lastLogin:null},
-  {login:'operacja',password:'belmare2026!',role:'Operacja',active:true,lastLogin:null}
-];
+/* ================================================================
+   BEL MARE RESORT – FULL OPERATIONAL DASHBOARD
+   with Animations Schedule
+   ================================================================ */
+
+// AUTH
+const DEFAULT_USERS=[{login:'admin',password:'belmare2026!',role:'Administrator',active:true,lastLogin:null},{login:'operacja',password:'belmare2026!',role:'Operacja',active:true,lastLogin:null}];
 function getUsers(){let u=localStorage.getItem('bm_users');if(!u){localStorage.setItem('bm_users',JSON.stringify(DEFAULT_USERS));return JSON.parse(JSON.stringify(DEFAULT_USERS))}return JSON.parse(u)}
 function saveUsers(a){localStorage.setItem('bm_users',JSON.stringify(a))}
 function getSessionLog(){let l=localStorage.getItem('bm_sessions');return l?JSON.parse(l):[]}
-function addSessionLog(login,role,action){let log=getSessionLog();log.unshift({time:new Date().toLocaleString('pl-PL'),login,role,action});if(log.length>100)log=log.slice(0,100);localStorage.setItem('bm_sessions',JSON.stringify(log))}
-
-function handleLogin(){
-  const u=document.getElementById('loginUser').value.trim();
-  const p=document.getElementById('loginPass').value;
-  const err=document.getElementById('loginError');
-  if(!u||!p){err.textContent='Wprowadź login i hasło.';return}
-  const users=getUsers();
-  const found=users.find(x=>x.login===u&&x.password===p);
-  if(!found){err.textContent='Nieprawidłowy login lub hasło.';addSessionLog(u,'—','Nieudane logowanie');return}
-  if(!found.active){err.textContent='Konto dezaktywowane.';return}
-  found.lastLogin=new Date().toLocaleString('pl-PL');saveUsers(users);
-  addSessionLog(found.login,found.role,'Zalogowano');
-  sessionStorage.setItem('bm_current_user',JSON.stringify({login:found.login,role:found.role}));
-  err.textContent='';activateUI(found);
-}
-function activateUI(u){
-  document.getElementById('loginOverlay').classList.add('hidden');
-  document.getElementById('sidebar').style.display='flex';
-  document.getElementById('topbar').style.display='flex';
-  document.getElementById('mainContent').style.display='block';
-  document.getElementById('userName').textContent=u.login;
-  document.getElementById('userRole').textContent=u.role;
-  document.getElementById('userAvatar').textContent=u.login.charAt(0).toUpperCase();
-  document.querySelector('.nav-admin').style.display=u.role==='Administrator'?'flex':'none';
-  initDashboard();
-}
-function handleLogout(){
-  const c=sessionStorage.getItem('bm_current_user');
-  if(c){const u=JSON.parse(c);addSessionLog(u.login,u.role,'Wylogowano')}
-  sessionStorage.removeItem('bm_current_user');
-  document.getElementById('loginOverlay').classList.remove('hidden');
-  document.getElementById('sidebar').style.display='none';
-  document.getElementById('topbar').style.display='none';
-  document.getElementById('mainContent').style.display='none';
-  document.getElementById('loginUser').value='';document.getElementById('loginPass').value='';
-}
+function addSessionLog(l,r,a){let log=getSessionLog();log.unshift({time:new Date().toLocaleString('pl-PL'),login:l,role:r,action:a});if(log.length>100)log=log.slice(0,100);localStorage.setItem('bm_sessions',JSON.stringify(log))}
+function handleLogin(){const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value,e=document.getElementById('loginError');if(!u||!p){e.textContent='Wprowadź login i hasło.';return}const users=getUsers(),f=users.find(x=>x.login===u&&x.password===p);if(!f){e.textContent='Nieprawidłowy login lub hasło.';addSessionLog(u,'—','Nieudane logowanie');return}if(!f.active){e.textContent='Konto dezaktywowane.';return}f.lastLogin=new Date().toLocaleString('pl-PL');saveUsers(users);addSessionLog(f.login,f.role,'Zalogowano');sessionStorage.setItem('bm_current_user',JSON.stringify({login:f.login,role:f.role}));e.textContent='';activateUI(f)}
+function activateUI(u){document.getElementById('loginOverlay').classList.add('hidden');document.getElementById('sidebar').style.display='flex';document.getElementById('topbar').style.display='flex';document.getElementById('mainContent').style.display='block';document.getElementById('userName').textContent=u.login;document.getElementById('userRole').textContent=u.role;document.getElementById('userAvatar').textContent=u.login.charAt(0).toUpperCase();document.querySelector('.nav-admin').style.display=u.role==='Administrator'?'flex':'none';initDashboard()}
+function handleLogout(){const c=sessionStorage.getItem('bm_current_user');if(c){const u=JSON.parse(c);addSessionLog(u.login,u.role,'Wylogowano')}sessionStorage.removeItem('bm_current_user');document.getElementById('loginOverlay').classList.remove('hidden');['sidebar','topbar','mainContent'].forEach(id=>document.getElementById(id).style.display='none');document.getElementById('loginUser').value='';document.getElementById('loginPass').value=''}
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!document.getElementById('loginOverlay').classList.contains('hidden'))handleLogin()});
-function checkSession(){
-  const c=sessionStorage.getItem('bm_current_user');
-  if(c){const u=JSON.parse(c);const users=getUsers();const f=users.find(x=>x.login===u.login&&x.active);if(f){activateUI(f);return}}
-  document.getElementById('loginOverlay').classList.remove('hidden');
-}
+function checkSession(){const c=sessionStorage.getItem('bm_current_user');if(c){const u=JSON.parse(c),users=getUsers(),f=users.find(x=>x.login===u.login&&x.active);if(f){activateUI(f);return}}document.getElementById('loginOverlay').classList.remove('hidden')}
 
-// ===== ADMIN =====
-function adminRenderUsers(){const t=document.querySelector('#adminUsersTable tbody');const u=getUsers();t.innerHTML=u.map((x,i)=>`<tr><td><strong>${x.login}</strong></td><td>${x.role}</td><td><span class="status-badge ${x.active?'active':'inactive'}">${x.active?'Aktywny':'Nieaktywny'}</span></td><td>${x.lastLogin||'—'}</td><td><button class="admin-btn secondary" onclick="adminToggleUser(${i})" style="margin-right:4px">${x.active?'Dezaktywuj':'Aktywuj'}</button><button class="admin-btn danger" onclick="adminDeleteUser(${i})">Usuń</button></td></tr>`).join('')}
-function adminToggleUser(i){const u=getUsers();u[i].active=!u[i].active;saveUsers(u);adminRenderUsers()}
-function adminDeleteUser(i){const u=getUsers();if(u[i].login==='admin'){alert('Nie można usunąć konta admin.');return}if(!confirm(`Usunąć "${u[i].login}"?`))return;u.splice(i,1);saveUsers(u);adminRenderUsers()}
-function adminAddUser(){const l=document.getElementById('newUserLogin').value.trim(),p=document.getElementById('newUserPass').value,r=document.getElementById('newUserRole').value;if(!l||!p){alert('Podaj login i hasło.');return}if(p.length<6){alert('Min. 6 znaków hasła.');return}const u=getUsers();if(u.find(x=>x.login===l)){alert('Login zajęty.');return}u.push({login:l,password:p,role:r,active:true,lastLogin:null});saveUsers(u);document.getElementById('newUserLogin').value='';document.getElementById('newUserPass').value='';adminRenderUsers();alert(`Dodano "${l}".`)}
-function adminChangePass(){const l=document.getElementById('chPassLogin').value.trim(),p=document.getElementById('chPassNew').value;if(!l||!p){alert('Podaj login i hasło.');return}if(p.length<6){alert('Min. 6 znaków.');return}const u=getUsers();const f=u.find(x=>x.login===l);if(!f){alert(`Brak użytkownika "${l}".`);return}f.password=p;saveUsers(u);document.getElementById('chPassLogin').value='';document.getElementById('chPassNew').value='';alert(`Hasło zmienione dla "${l}".`)}
+// ADMIN
+function adminRenderUsers(){const t=document.querySelector('#adminUsersTable tbody'),u=getUsers();t.innerHTML=u.map((x,i)=>`<tr><td><strong>${x.login}</strong></td><td>${x.role}</td><td><span class="status-badge ${x.active?'active':'inactive'}">${x.active?'Aktywny':'Nieaktywny'}</span></td><td>${x.lastLogin||'—'}</td><td><button class="admin-btn secondary" onclick="adminToggle(${i})">${x.active?'Dezaktywuj':'Aktywuj'}</button> <button class="admin-btn danger" onclick="adminDel(${i})">Usuń</button></td></tr>`).join('')}
+function adminToggle(i){const u=getUsers();u[i].active=!u[i].active;saveUsers(u);adminRenderUsers()}
+function adminDel(i){const u=getUsers();if(u[i].login==='admin')return alert('Nie można usunąć admin.');if(!confirm(`Usunąć "${u[i].login}"?`))return;u.splice(i,1);saveUsers(u);adminRenderUsers()}
+function adminAddUser(){const l=document.getElementById('newUserLogin').value.trim(),p=document.getElementById('newUserPass').value,r=document.getElementById('newUserRole').value;if(!l||!p)return alert('Podaj login i hasło.');if(p.length<6)return alert('Min. 6 znaków.');const u=getUsers();if(u.find(x=>x.login===l))return alert('Login zajęty.');u.push({login:l,password:p,role:r,active:true,lastLogin:null});saveUsers(u);document.getElementById('newUserLogin').value='';document.getElementById('newUserPass').value='';adminRenderUsers();alert(`Dodano "${l}".`)}
+function adminChangePass(){const l=document.getElementById('chPassLogin').value.trim(),p=document.getElementById('chPassNew').value;if(!l||!p)return alert('Uzupełnij pola.');if(p.length<6)return alert('Min. 6 znaków.');const u=getUsers(),f=u.find(x=>x.login===l);if(!f)return alert('Brak użytkownika.');f.password=p;saveUsers(u);document.getElementById('chPassLogin').value='';document.getElementById('chPassNew').value='';alert('Hasło zmienione.')}
 function adminRenderSessions(){document.querySelector('#sessionLogTable tbody').innerHTML=getSessionLog().slice(0,30).map(e=>`<tr><td>${e.time}</td><td>${e.login}</td><td>${e.role}</td><td>${e.action}</td></tr>`).join('')}
-function adminSaveSettings(){alert('Ustawienia zapisane (demo).')}
 
-// ===== NAV =====
-function showSection(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById('sec-'+id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  const nav=document.querySelector(`.nav-item[data-section="${id}"]`);if(nav)nav.classList.add('active');
-  if(id==='admin'){adminRenderUsers();adminRenderSessions()}
-}
+// NAV
+function showSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('sec-'+id).classList.add('active');document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));const n=document.querySelector(`.nav-item[data-section="${id}"]`);if(n)n.classList.add('active');if(id==='admin'){adminRenderUsers();adminRenderSessions()}}
 
-// ===== DATA =====
+// DATA
 const TOTAL_ROOMS=360;
-const pkgData=[
-  {d:'2026-03-18',occ:155,adu:198,ch:67,arrR:42,arrP:56,depR:18,depP:24,bfk:178,lun:12,din:145},
-  {d:'2026-03-19',occ:162,adu:207,ch:71,arrR:35,arrP:47,depR:28,depP:36,bfk:185,lun:10,din:152},
-  {d:'2026-03-20',occ:173,adu:221,ch:79,arrR:118,arrP:154,depR:21,depP:28,bfk:207,lun:8,din:168},
-  {d:'2026-03-21',occ:189,adu:243,ch:88,arrR:48,arrP:63,depR:32,depP:42,bfk:225,lun:11,din:183},
-  {d:'2026-03-22',occ:201,adu:258,ch:94,arrR:38,arrP:50,depR:26,depP:34,bfk:241,lun:15,din:196},
-  {d:'2026-03-23',occ:195,adu:251,ch:90,arrR:22,arrP:29,depR:28,depP:37,bfk:234,lun:9,din:190},
-  {d:'2026-03-24',occ:184,adu:237,ch:84,arrR:15,arrP:20,depR:26,depP:34,bfk:218,lun:7,din:178},
-  {d:'2026-03-25',occ:178,adu:228,ch:80,arrR:18,arrP:24,depR:24,depP:31,bfk:210,lun:6,din:170},
-  {d:'2026-03-26',occ:170,adu:218,ch:76,arrR:14,arrP:19,depR:22,depP:29,bfk:201,lun:8,din:163},
-  {d:'2026-03-27',occ:175,adu:225,ch:78,arrR:21,arrP:28,depR:16,depP:21,bfk:207,lun:10,din:168},
-  {d:'2026-03-28',occ:192,adu:247,ch:90,arrR:35,arrP:46,depR:18,depP:24,bfk:230,lun:14,din:187},
-  {d:'2026-03-29',occ:210,adu:270,ch:99,arrR:40,arrP:52,depR:22,depP:29,bfk:252,lun:18,din:205},
-  {d:'2026-03-30',occ:225,adu:290,ch:107,arrR:38,arrP:50,depR:23,depP:30,bfk:270,lun:15,din:220},
-  {d:'2026-03-31',occ:240,adu:309,ch:115,arrR:35,arrP:46,depR:20,depP:26,bfk:288,lun:12,din:235},
-  {d:'2026-04-01',occ:258,adu:332,ch:124,arrR:42,arrP:55,depR:24,depP:31,bfk:310,lun:14,din:252},
-  {d:'2026-04-02',occ:280,adu:361,ch:135,arrR:48,arrP:63,depR:26,depP:34,bfk:336,lun:16,din:274},
-  {d:'2026-04-03',occ:310,adu:399,ch:149,arrR:55,arrP:72,depR:25,depP:33,bfk:372,lun:18,din:303},
-  {d:'2026-04-04',occ:347,adu:447,ch:167,arrR:62,arrP:81,depR:25,depP:33,bfk:416,lun:22,din:340},
-  {d:'2026-04-05',occ:345,adu:444,ch:166,arrR:28,arrP:37,depR:30,depP:39,bfk:414,lun:25,din:338},
-  {d:'2026-04-06',occ:340,adu:438,ch:163,arrR:18,arrP:24,depR:23,depP:30,bfk:408,lun:20,din:333},
-  {d:'2026-04-07',occ:320,adu:412,ch:154,arrR:12,arrP:16,depR:32,depP:42,bfk:384,lun:15,din:313},
-  {d:'2026-04-08',occ:295,adu:380,ch:142,arrR:15,arrP:20,depR:40,depP:52,bfk:354,lun:12,din:288},
-  {d:'2026-04-09',occ:270,adu:348,ch:130,arrR:18,arrP:24,depR:43,depP:56,bfk:324,lun:10,din:264},
-  {d:'2026-04-10',occ:250,adu:322,ch:120,arrR:20,arrP:26,depR:40,depP:52,bfk:300,lun:8,din:244},
-  {d:'2026-04-11',occ:235,adu:303,ch:113,arrR:18,arrP:24,depR:33,depP:43,bfk:282,lun:10,din:230},
-  {d:'2026-04-12',occ:220,adu:283,ch:106,arrR:15,arrP:20,depR:30,depP:39,bfk:264,lun:8,din:215},
-  {d:'2026-04-13',occ:210,adu:270,ch:99,arrR:12,arrP:16,depR:22,depP:29,bfk:252,lun:7,din:205},
-  {d:'2026-04-14',occ:198,adu:255,ch:93,arrR:10,arrP:13,depR:22,depP:29,bfk:238,lun:6,din:193},
-  {d:'2026-04-15',occ:185,adu:238,ch:87,arrR:12,arrP:16,depR:25,depP:33,bfk:222,lun:8,din:180},
-  {d:'2026-04-16',occ:178,adu:229,ch:83,arrR:14,arrP:18,depR:21,depP:28,bfk:214,lun:7,din:174},
-  {d:'2026-04-17',occ:172,adu:221,ch:80,arrR:12,arrP:16,depR:18,depP:24,bfk:206,lun:6,din:168},
-  {d:'2026-04-18',occ:168,adu:216,ch:78,arrR:15,arrP:20,depR:19,depP:25,bfk:202,lun:8,din:164}
-];
-const hskData=[
-  {d:'2026-03-18',morn:95,arr:42,dep:18,eve:155,guests:265},{d:'2026-03-19',morn:100,arr:35,dep:28,eve:162,guests:278},
-  {d:'2026-03-20',morn:108,arr:118,dep:21,eve:173,guests:300},{d:'2026-03-21',morn:115,arr:48,dep:32,eve:189,guests:331},
-  {d:'2026-03-22',morn:122,arr:38,dep:26,eve:201,guests:352},{d:'2026-03-23',morn:118,arr:22,dep:28,eve:195,guests:341},
-  {d:'2026-03-24',morn:112,arr:15,dep:26,eve:184,guests:321},{d:'2026-03-25',morn:108,arr:18,dep:24,eve:178,guests:308},
-  {d:'2026-03-26',morn:103,arr:14,dep:22,eve:170,guests:294},{d:'2026-03-27',morn:106,arr:21,dep:16,eve:175,guests:303},
-  {d:'2026-03-28',morn:116,arr:35,dep:18,eve:192,guests:337},{d:'2026-03-29',morn:128,arr:40,dep:22,eve:210,guests:369},
-  {d:'2026-03-30',morn:137,arr:38,dep:23,eve:225,guests:397},{d:'2026-03-31',morn:146,arr:35,dep:20,eve:240,guests:424},
-  {d:'2026-04-01',morn:157,arr:42,dep:24,eve:258,guests:456},{d:'2026-04-02',morn:171,arr:48,dep:26,eve:280,guests:496},
-  {d:'2026-04-03',morn:189,arr:55,dep:25,eve:310,guests:548},{d:'2026-04-04',morn:212,arr:62,dep:25,eve:347,guests:614},
-  {d:'2026-04-05',morn:210,arr:28,dep:30,eve:345,guests:610},{d:'2026-04-06',morn:207,arr:18,dep:23,eve:340,guests:601},
-  {d:'2026-04-07',morn:195,arr:12,dep:32,eve:320,guests:566},{d:'2026-04-08',morn:180,arr:15,dep:40,eve:295,guests:522},
-  {d:'2026-04-09',morn:165,arr:18,dep:43,eve:270,guests:478},{d:'2026-04-10',morn:153,arr:20,dep:40,eve:250,guests:442},
-  {d:'2026-04-11',morn:143,arr:18,dep:33,eve:235,guests:416},{d:'2026-04-12',morn:134,arr:15,dep:30,eve:220,guests:389},
-  {d:'2026-04-13',morn:128,arr:12,dep:22,eve:210,guests:369},{d:'2026-04-14',morn:121,arr:10,dep:22,eve:198,guests:348},
-  {d:'2026-04-15',morn:113,arr:12,dep:25,eve:185,guests:325},{d:'2026-04-16',morn:108,arr:14,dep:21,eve:178,guests:312},
-  {d:'2026-04-17',morn:105,arr:12,dep:18,eve:172,guests:301},{d:'2026-04-18',morn:102,arr:15,dep:19,eve:168,guests:294}
-];
-const pickupRes=[
-  {id:1,name:'Kowalski',rooms:2,nights:4,guests:3,src:'Booking.com',mkt:'Leisure-PL',rate:420},
-  {id:2,name:'Müller',rooms:1,nights:7,guests:2,src:'HRS',mkt:'Leisure-DE',rate:385},
-  {id:3,name:'Nowak',rooms:1,nights:3,guests:2,src:'Direct-Web',mkt:'Leisure-PL',rate:490},
-  {id:4,name:'Schmidt',rooms:2,nights:5,guests:4,src:'Booking.com',mkt:'Leisure-DE',rate:410},
-  {id:5,name:'Wiśniewski',rooms:1,nights:2,guests:1,src:'Direct-Tel',mkt:'Business-PL',rate:520},
-  {id:6,name:'Fischer',rooms:1,nights:4,guests:2,src:'Expedia',mkt:'Leisure-DE',rate:370},
-  {id:7,name:'Zielińska',rooms:3,nights:7,guests:6,src:'Direct-Web',mkt:'Leisure-PL',rate:450},
-  {id:8,name:'Weber',rooms:1,nights:3,guests:2,src:'Booking.com',mkt:'Leisure-DE',rate:395},
-  {id:9,name:'Lewandowski',rooms:1,nights:5,guests:2,src:'Direct-Web',mkt:'Leisure-PL',rate:480},
-  {id:10,name:'Becker',rooms:1,nights:4,guests:2,src:'HRS',mkt:'Leisure-DE',rate:375},
-  {id:11,name:'INVENTUM (grupa)',rooms:10,nights:3,guests:20,src:'Direct-Sales',mkt:'MICE',rate:140},
-  {id:12,name:'KONFERENCJA',rooms:5,nights:2,guests:12,src:'Direct-Sales',mkt:'MICE',rate:168.50},
-  {id:13,name:'Dąbrowski',rooms:1,nights:3,guests:2,src:'Booking.com',mkt:'Leisure-PL',rate:430},
-  {id:14,name:'Szymańska',rooms:1,nights:4,guests:3,src:'Direct-Tel',mkt:'Leisure-PL',rate:510},
-  {id:15,name:'Hoffmann',rooms:2,nights:5,guests:4,src:'Expedia',mkt:'Leisure-DE',rate:365}
-];
+const pkgData=[{d:'2026-03-18',occ:155,adu:198,ch:67,arrR:42,arrP:56,depR:18,depP:24,bfk:178,lun:12,din:145},{d:'2026-03-19',occ:162,adu:207,ch:71,arrR:35,arrP:47,depR:28,depP:36,bfk:185,lun:10,din:152},{d:'2026-03-20',occ:173,adu:221,ch:79,arrR:118,arrP:154,depR:21,depP:28,bfk:207,lun:8,din:168},{d:'2026-03-21',occ:189,adu:243,ch:88,arrR:48,arrP:63,depR:32,depP:42,bfk:225,lun:11,din:183},{d:'2026-03-22',occ:201,adu:258,ch:94,arrR:38,arrP:50,depR:26,depP:34,bfk:241,lun:15,din:196},{d:'2026-03-23',occ:195,adu:251,ch:90,arrR:22,arrP:29,depR:28,depP:37,bfk:234,lun:9,din:190},{d:'2026-03-24',occ:184,adu:237,ch:84,arrR:15,arrP:20,depR:26,depP:34,bfk:218,lun:7,din:178},{d:'2026-03-25',occ:178,adu:228,ch:80,arrR:18,arrP:24,depR:24,depP:31,bfk:210,lun:6,din:170},{d:'2026-03-26',occ:170,adu:218,ch:76,arrR:14,arrP:19,depR:22,depP:29,bfk:201,lun:8,din:163},{d:'2026-03-27',occ:175,adu:225,ch:78,arrR:21,arrP:28,depR:16,depP:21,bfk:207,lun:10,din:168},{d:'2026-03-28',occ:192,adu:247,ch:90,arrR:35,arrP:46,depR:18,depP:24,bfk:230,lun:14,din:187},{d:'2026-03-29',occ:210,adu:270,ch:99,arrR:40,arrP:52,depR:22,depP:29,bfk:252,lun:18,din:205},{d:'2026-03-30',occ:225,adu:290,ch:107,arrR:38,arrP:50,depR:23,depP:30,bfk:270,lun:15,din:220},{d:'2026-03-31',occ:240,adu:309,ch:115,arrR:35,arrP:46,depR:20,depP:26,bfk:288,lun:12,din:235},{d:'2026-04-01',occ:258,adu:332,ch:124,arrR:42,arrP:55,depR:24,depP:31,bfk:310,lun:14,din:252},{d:'2026-04-02',occ:280,adu:361,ch:135,arrR:48,arrP:63,depR:26,depP:34,bfk:336,lun:16,din:274},{d:'2026-04-03',occ:310,adu:399,ch:149,arrR:55,arrP:72,depR:25,depP:33,bfk:372,lun:18,din:303},{d:'2026-04-04',occ:347,adu:447,ch:167,arrR:62,arrP:81,depR:25,depP:33,bfk:416,lun:22,din:340},{d:'2026-04-05',occ:345,adu:444,ch:166,arrR:28,arrP:37,depR:30,depP:39,bfk:414,lun:25,din:338},{d:'2026-04-06',occ:340,adu:438,ch:163,arrR:18,arrP:24,depR:23,depP:30,bfk:408,lun:20,din:333},{d:'2026-04-07',occ:320,adu:412,ch:154,arrR:12,arrP:16,depR:32,depP:42,bfk:384,lun:15,din:313},{d:'2026-04-08',occ:295,adu:380,ch:142,arrR:15,arrP:20,depR:40,depP:52,bfk:354,lun:12,din:288},{d:'2026-04-09',occ:270,adu:348,ch:130,arrR:18,arrP:24,depR:43,depP:56,bfk:324,lun:10,din:264},{d:'2026-04-10',occ:250,adu:322,ch:120,arrR:20,arrP:26,depR:40,depP:52,bfk:300,lun:8,din:244},{d:'2026-04-11',occ:235,adu:303,ch:113,arrR:18,arrP:24,depR:33,depP:43,bfk:282,lun:10,din:230},{d:'2026-04-12',occ:220,adu:283,ch:106,arrR:15,arrP:20,depR:30,depP:39,bfk:264,lun:8,din:215},{d:'2026-04-13',occ:210,adu:270,ch:99,arrR:12,arrP:16,depR:22,depP:29,bfk:252,lun:7,din:205},{d:'2026-04-14',occ:198,adu:255,ch:93,arrR:10,arrP:13,depR:22,depP:29,bfk:238,lun:6,din:193},{d:'2026-04-15',occ:185,adu:238,ch:87,arrR:12,arrP:16,depR:25,depP:33,bfk:222,lun:8,din:180},{d:'2026-04-16',occ:178,adu:229,ch:83,arrR:14,arrP:18,depR:21,depP:28,bfk:214,lun:7,din:174},{d:'2026-04-17',occ:172,adu:221,ch:80,arrR:12,arrP:16,depR:18,depP:24,bfk:206,lun:6,din:168},{d:'2026-04-18',occ:168,adu:216,ch:78,arrR:15,arrP:20,depR:19,depP:25,bfk:202,lun:8,din:164}];
+const hskData=[{d:'2026-03-18',morn:95,arr:42,dep:18,eve:155,guests:265},{d:'2026-03-19',morn:100,arr:35,dep:28,eve:162,guests:278},{d:'2026-03-20',morn:108,arr:118,dep:21,eve:173,guests:300},{d:'2026-03-21',morn:115,arr:48,dep:32,eve:189,guests:331},{d:'2026-03-22',morn:122,arr:38,dep:26,eve:201,guests:352},{d:'2026-03-23',morn:118,arr:22,dep:28,eve:195,guests:341},{d:'2026-03-24',morn:112,arr:15,dep:26,eve:184,guests:321},{d:'2026-03-25',morn:108,arr:18,dep:24,eve:178,guests:308},{d:'2026-03-26',morn:103,arr:14,dep:22,eve:170,guests:294},{d:'2026-03-27',morn:106,arr:21,dep:16,eve:175,guests:303},{d:'2026-03-28',morn:116,arr:35,dep:18,eve:192,guests:337},{d:'2026-03-29',morn:128,arr:40,dep:22,eve:210,guests:369},{d:'2026-03-30',morn:137,arr:38,dep:23,eve:225,guests:397},{d:'2026-03-31',morn:146,arr:35,dep:20,eve:240,guests:424},{d:'2026-04-01',morn:157,arr:42,dep:24,eve:258,guests:456},{d:'2026-04-02',morn:171,arr:48,dep:26,eve:280,guests:496},{d:'2026-04-03',morn:189,arr:55,dep:25,eve:310,guests:548},{d:'2026-04-04',morn:212,arr:62,dep:25,eve:347,guests:614},{d:'2026-04-05',morn:210,arr:28,dep:30,eve:345,guests:610},{d:'2026-04-06',morn:207,arr:18,dep:23,eve:340,guests:601},{d:'2026-04-07',morn:195,arr:12,dep:32,eve:320,guests:566},{d:'2026-04-08',morn:180,arr:15,dep:40,eve:295,guests:522},{d:'2026-04-09',morn:165,arr:18,dep:43,eve:270,guests:478},{d:'2026-04-10',morn:153,arr:20,dep:40,eve:250,guests:442},{d:'2026-04-11',morn:143,arr:18,dep:33,eve:235,guests:416},{d:'2026-04-12',morn:134,arr:15,dep:30,eve:220,guests:389},{d:'2026-04-13',morn:128,arr:12,dep:22,eve:210,guests:369},{d:'2026-04-14',morn:121,arr:10,dep:22,eve:198,guests:348},{d:'2026-04-15',morn:113,arr:12,dep:25,eve:185,guests:325},{d:'2026-04-16',morn:108,arr:14,dep:21,eve:178,guests:312},{d:'2026-04-17',morn:105,arr:12,dep:18,eve:172,guests:301},{d:'2026-04-18',morn:102,arr:15,dep:19,eve:168,guests:294}];
+const pickupRes=[{id:1,name:'Kowalski',rooms:2,nights:4,guests:3,src:'Booking.com',mkt:'Leisure-PL',rate:420},{id:2,name:'Müller',rooms:1,nights:7,guests:2,src:'HRS',mkt:'Leisure-DE',rate:385},{id:3,name:'Nowak',rooms:1,nights:3,guests:2,src:'Direct-Web',mkt:'Leisure-PL',rate:490},{id:4,name:'Schmidt',rooms:2,nights:5,guests:4,src:'Booking.com',mkt:'Leisure-DE',rate:410},{id:5,name:'Wiśniewski',rooms:1,nights:2,guests:1,src:'Direct-Tel',mkt:'Business-PL',rate:520},{id:6,name:'Fischer',rooms:1,nights:4,guests:2,src:'Expedia',mkt:'Leisure-DE',rate:370},{id:7,name:'Zielińska',rooms:3,nights:7,guests:6,src:'Direct-Web',mkt:'Leisure-PL',rate:450},{id:8,name:'Weber',rooms:1,nights:3,guests:2,src:'Booking.com',mkt:'Leisure-DE',rate:395},{id:9,name:'Lewandowski',rooms:1,nights:5,guests:2,src:'Direct-Web',mkt:'Leisure-PL',rate:480},{id:10,name:'Becker',rooms:1,nights:4,guests:2,src:'HRS',mkt:'Leisure-DE',rate:375},{id:11,name:'INVENTUM (grupa)',rooms:10,nights:3,guests:20,src:'Direct-Sales',mkt:'MICE',rate:140},{id:12,name:'KONFERENCJA',rooms:5,nights:2,guests:12,src:'Direct-Sales',mkt:'MICE',rate:168.50},{id:13,name:'Dąbrowski',rooms:1,nights:3,guests:2,src:'Booking.com',mkt:'Leisure-PL',rate:430},{id:14,name:'Szymańska',rooms:1,nights:4,guests:3,src:'Direct-Tel',mkt:'Leisure-PL',rate:510},{id:15,name:'Hoffmann',rooms:2,nights:5,guests:4,src:'Expedia',mkt:'Leisure-DE',rate:365}];
 const pSum={bookings:100,roomNights:372,guests:241,totalRev:158420};
+const cancelData=[{cancelNo:113655,cancelDate:'19.03.2026',cancelTime:'09:38',name:'Pawlak, Szymon M R',source:'AVAILPRO',roomType:'DEL',arrDate:'23.03.2026',leadTime:4,rooms:1,nights:2,mktCode:'A',rateCode:'NRBB',rateAmt:455.20,revenueLoss:1118.03,depositPaid:0,cancelReason:'REL',cancelDesc:'Release – Non Guaranteed Booking'},{cancelNo:113679,cancelDate:'19.03.2026',cancelTime:'15:06',name:'Schneider, Adam Mr.',source:'PANA',roomType:'APOB',arrDate:'29.03.2026',leadTime:10,rooms:1,nights:5,mktCode:'BF',rateCode:'PWI',rateAmt:1402.60,revenueLoss:6717.10,depositPaid:0,cancelReason:'TRIP',cancelDesc:'Trip Cancelled'},{cancelNo:113690,cancelDate:'19.03.2026',cancelTime:'15:37',name:'Böljes, Stephanie MRS',source:'AVAILPRO',roomType:'DELOB',arrDate:'02.04.2026',leadTime:14,rooms:1,nights:2,mktCode:'A',rateCode:'STBB',rateAmt:1109.00,revenueLoss:2143.13,depositPaid:0,cancelReason:'TRIP',cancelDesc:'Trip Cancelled – zaliczka bezzwrotna'}];
+const cancelSummary={totalCancels:3,totalRoomNights:9,totalRevLoss:9978.26,totalDeposit:0,avgLeadTime:'9.3'};
 
-// ===== CANCELLATION DATA (from PDF) =====
-const cancelData=[
-  {
-    cancelNo:113655, cancelDate:'19.03.2026', cancelTime:'09:38',
-    name:'Pawlak, Szymon M R', company:'', agent:'T- Aqua Resort Miedzy',
-    source:'AVAILPRO', reservedBy:'AVAILPRO*', cancelledBy:'PANA',
-    roomType:'DEL', arrDate:'23.03.2026', leadTime:4,
-    rooms:1, nights:2, mktCode:'A', rateCode:'NRBB', rateAmt:455.20,
-    revenueLoss:1118.03, depositPaid:0,
-    cancelReason:'REL', cancelDesc:'Release – Non Guaranteed Booking'
+// ANIMATION DATA (from PDFs)
+const ANIM_SCHEDULE = {
+  poniedzialek: {
+    dayPL:'Poniedziałek', dayDE:'Montag', slots:[
+      {time:'9:30-10:30',pl:'Gry i zabawy na rozpoczęcie dnia',de:'Spiele und Aktivitäten zum Start in den Tag',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'sport'},
+      {time:'11:00-12:00',pl:'Lamy – zajęcia kreatywne',de:'Lamas – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
+      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung ab 4 Jahren',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
+      {time:'15:00-16:00',pl:'Kubek z czekoladą – zajęcia plastyczne',de:'Tasse mit Schokolade – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
+      {time:'18:30-19:00',pl:'Kolorowe tatuaże brokatowe',de:'Bunte Glitzer-Tattoos',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'fun'},
+      {time:'19:00-19:30',pl:'Mini Disco',de:'Mini-Disco',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'disco'}
+    ]
   },
-  {
-    cancelNo:113679, cancelDate:'19.03.2026', cancelTime:'15:06',
-    name:'Schneider, Adam Mr.', company:'', agent:'',
-    source:'PANA', reservedBy:'PANA', cancelledBy:'PANA',
-    roomType:'APOB', arrDate:'29.03.2026', leadTime:10,
-    rooms:1, nights:5, mktCode:'BF', rateCode:'PWI', rateAmt:1402.60,
-    revenueLoss:6717.10, depositPaid:0,
-    cancelReason:'TRIP', cancelDesc:'Trip Cancelled'
+  wtorek: {
+    dayPL:'Wtorek', dayDE:'Dienstag', slots:[
+      {time:'9:30-10:30',pl:'Sportowe wyzwania',de:'Sportliche Herausforderungen',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'sport'},
+      {time:'11:00-12:00',pl:'Sensoryka – zajęcia kreatywne',de:'Sensorik – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
+      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung ab 4 Jahren',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
+      {time:'15:00-16:00',pl:'Łapacze snów – zajęcia plastyczne',de:'Traumfänger – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
+      {time:'18:30-19:00',pl:'Malowanie buziek',de:'Kinderschminken',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'fun'},
+      {time:'19:00-19:30',pl:'Mini Disco',de:'Mini-Disco',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'disco'}
+    ]
   },
-  {
-    cancelNo:113690, cancelDate:'19.03.2026', cancelTime:'15:37',
-    name:'Böljes, Stephanie MRS', company:'', agent:'T- Aqua Resort Miedzy',
-    source:'AVAILPRO', reservedBy:'AVAILPRO*', cancelledBy:'rescancel',
-    roomType:'DELOB', arrDate:'02.04.2026', leadTime:14,
-    rooms:1, nights:2, mktCode:'A', rateCode:'STBB', rateAmt:1109.00,
-    revenueLoss:2143.13, depositPaid:0,
-    cancelReason:'TRIP', cancelDesc:'Trip Cancelled – rezerwacja anulowana na prośbę gościa, zaliczka bezzwrotna, informacja wysłana do rozliczeń'
+  sroda: {
+    dayPL:'Środa', dayDE:'Mittwoch', slots:[
+      {time:'9:30-10:30',pl:'Tor przeszkód i zabawy ruchowe',de:'Hindernisparcours und Bewegungsspiele',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'sport'},
+      {time:'11:00-12:00',pl:'Motylki – zajęcia kreatywne',de:'Schmetterlinge – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
+      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung ab 4 Jahren',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
+      {time:'15:00-16:00',pl:'Tort – zajęcia plastyczne',de:'Torte – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
+      {time:'18:30-19:00',pl:'Balonowe figurki',de:'Ballonfiguren',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'fun'},
+      {time:'19:00-19:30',pl:'Pokaz talentów',de:'Talentshow',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'show'}
+    ]
+  },
+  czwartek: {
+    dayPL:'Czwartek', dayDE:'Donnerstag', slots:[
+      {time:'9:30-10:30',pl:'Kolorowa chusta i ulubione zabawy',de:'Buntes Schwungtuch und Lieblingsspiele',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'sport'},
+      {time:'11:00-12:00',pl:'Morskie butelki – zajęcia kreatywne',de:'Meeresflaschen – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
+      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung ab 4 Jahren',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
+      {time:'15:00-16:00',pl:'Mozaika – zajęcia plastyczne',de:'Mosaik – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
+      {time:'18:30-19:00',pl:'Tatuaże brokatowe',de:'Glitzer-Tattoos',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'fun'},
+      {time:'19:00-19:30',pl:'Mini Disco',de:'Mini-Disco',loc:'SALA WSPINACZKOWA',locDE:'KLETTERHALLE',cat:'disco'}
+    ]
+  },
+  piatek: {
+    dayPL:'Piątek', dayDE:'Freitag', slots:[
+      {time:'8:15-9:15',pl:'Przywitanie z maskotką',de:'Begrüßung mit dem Maskottchen',loc:'HOL GŁÓWNY',locDE:'HAUPTHALLE',cat:'welcome'},
+      {time:'9:30-10:30',pl:'Gry i zabawy na rozpoczęcie dnia',de:'Spiele und Spaß zum Start in den Tag',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'sport'},
+      {time:'11:00-12:00',pl:'Korony – zajęcia kreatywne',de:'Kronen – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
+      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung für Kinder über 4 Jahre',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
+      {time:'15:00-16:00',pl:'Serduszka – zajęcia plastyczne',de:'Herzchen – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
+      {time:'16:30-17:30',pl:'1,2,3 gonisz Ty! Zabawy',de:'1, 2, 3 – Du bist dran! Spiele',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'sport'},
+      {time:'18:30-19:00',pl:'Kolorowe tatuaże brokatowe',de:'Bunte Glitzer-Tattoos',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'fun'},
+      {time:'19:30-20:00',pl:'Mini Disco',de:'Mini-Disco',loc:'NITE MARE',locDE:'NITE MARE',cat:'disco'},
+      {time:'20:00-20:30',pl:'Quiz Bajkowy',de:'Märchen-Quiz',loc:'NITE MARE',locDE:'NITE MARE',cat:'show'},
+      {time:'21:00-24:00',pl:'Pool Party (dodatkowo płatne)',de:'Pool Party (zusätzlich kostenpflichtig)',loc:'AQUA PARK',locDE:'AQUA PARK',cat:'party'}
+    ]
+  },
+  sobota: {
+    dayPL:'Sobota', dayDE:'Samstag', slots:[
+      {time:'8:15-9:15',pl:'Przywitanie z maskotką',de:'Begrüßung mit dem Maskottchen',loc:'HOL GŁÓWNY',locDE:'HAUPTHALLE',cat:'welcome'},
+      {time:'9:30-10:30',pl:'Sportowe wyzwania',de:'Sportliche Herausforderungen',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'sport'},
+      {time:'11:00-12:00',pl:'Bransoletki przyjaźni – zajęcia kreatywne',de:'Freundschaftsarmbänder – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
+      {time:'12:00-13:00',pl:'Spacer z Animatorem',de:'Spaziergang mit dem Animateur',loc:'RECEPCJA (zbiórka)',locDE:'REZEPTION (Treffpunkt)',cat:'outdoor'},
+      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung für Kinder über 4 Jahre',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
+      {time:'15:00-16:00',pl:'Pszczółki – zajęcia plastyczne',de:'Bienchen – Bastelaktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'craft'},
+      {time:'17:00-18:00',pl:'Kolorowe zabawy z chustą',de:'Bunte Spiele mit dem Schwungtuch',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'sport'},
+      {time:'18:00-19:00',pl:'Malowanie buziek',de:'Kinderschminken',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'fun'},
+      {time:'19:30-20:00',pl:'Mini Disco',de:'Mini-Disco',loc:'NITE MARE',locDE:'NITE MARE',cat:'disco'},
+      {time:'20:00-21:00',pl:'Dyskoteka rodzinna',de:'Familiendisco',loc:'NITE MARE',locDE:'NITE MARE',cat:'party'},
+      {time:'21:00-24:00',pl:'Dyskoteka dla dorosłych',de:'Disco für Erwachsene',loc:'NITE MARE',locDE:'NITE MARE',cat:'party'}
+    ]
+  },
+  niedziela: {
+    dayPL:'Niedziela', dayDE:'Sonntag', slots:[
+      {time:'8:15-9:15',pl:'Przywitanie z maskotką',de:'Begrüßung mit dem Maskottchen',loc:'HOL GŁÓWNY',locDE:'HAUPTHALLE',cat:'welcome'},
+      {time:'9:30-10:30',pl:'Tor przeszkód i zabawy ruchowe',de:'Hindernisparcours und Bewegungsspiele',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'sport'},
+      {time:'11:00-12:00',pl:'Maski – zajęcia kreatywne',de:'Masken – kreative Aktivitäten',loc:'TUI KIDS CLUB',locDE:'TUI KIDS CLUB',cat:'creative'},
+      {time:'12:30-14:30',pl:'Przedszkole – opieka 4+',de:'Kindergarten – Betreuung für Kinder über 4 Jahre',loc:'KIDS PLAY 1/A',locDE:'KIDS PLAY 1/A',cat:'care'},
+      {time:'19:00-19:30',pl:'Mini Disco',de:'Mini-Disco',loc:'SALA WSPINACZKOWA',locDE:'KLETTERSAAL',cat:'disco'}
+    ]
   }
-];
-const cancelSummary={
-  totalCancels:3, totalRoomNights:9, totalRevLoss:9978.26, totalDeposit:0,
-  avgLeadTime:((4+10+14)/3).toFixed(1)
 };
 
-// ===== EVENTS 2026 =====
-const EVENTS_2026=[
-  {start:'2026-01-01',end:'2026-01-01',pl:'Nowy Rok',de:'Neujahr',country:'PL+DE',type:'holiday',impact:'Wysoki'},
-  {start:'2026-01-06',end:'2026-01-06',pl:'Trzech Króli',de:'Heilige Drei Könige',country:'PL',type:'holiday',impact:'Średni'},
-  {start:'2026-01-12',end:'2026-01-25',pl:'Ferie zimowe (1. tura PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},
-  {start:'2026-01-19',end:'2026-02-01',pl:'Ferie zimowe (2. tura PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},
-  {start:'2026-02-02',end:'2026-02-20',pl:'Ferie zimowe (3./4. tura PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},
-  {start:'2026-02-09',end:'2026-02-20',pl:'Ferie zimowe Meklemburgia (DE)',de:'Winterferien MV',country:'DE',type:'de',impact:'Średni'},
-  {start:'2026-02-02',end:'2026-02-07',pl:'Ferie zimowe Berlin/Brandenburg (DE)',de:'Winterferien BE/BB',country:'DE',type:'de',impact:'Średni'},
-  {start:'2026-03-30',end:'2026-04-08',pl:'Ferie wiosenne Meklemburgia (DE)',de:'Osterferien MV',country:'DE',type:'de',impact:'Wysoki'},
-  {start:'2026-03-30',end:'2026-04-11',pl:'Ferie wiosenne Berlin/Brandenburg (DE)',de:'Osterferien BE/BB',country:'DE',type:'de',impact:'Wysoki'},
-  {start:'2026-04-03',end:'2026-04-03',pl:'Wielki Piątek (DE)',de:'Karfreitag',country:'DE',type:'holiday',impact:'Wysoki'},
-  {start:'2026-04-05',end:'2026-04-06',pl:'Wielkanoc',de:'Ostern',country:'PL+DE',type:'holiday',impact:'Bardzo wysoki'},
-  {start:'2026-04-09',end:'2026-04-14',pl:'Ferie wielkanocne (PL – szkoły)',de:'',country:'PL',type:'pl',impact:'Wysoki'},
-  {start:'2026-05-01',end:'2026-05-01',pl:'Święto Pracy',de:'Tag der Arbeit',country:'PL+DE',type:'holiday',impact:'Średni'},
-  {start:'2026-05-03',end:'2026-05-03',pl:'Święto Konstytucji 3 Maja',de:'',country:'PL',type:'holiday',impact:'Wysoki'},
-  {start:'2026-05-14',end:'2026-05-14',pl:'Wniebowstąpienie (DE)',de:'Christi Himmelfahrt',country:'DE',type:'holiday',impact:'Średni'},
-  {start:'2026-05-15',end:'2026-05-22',pl:'Ferie Meklemburgia (Pfingsten)',de:'Pfingstferien MV',country:'DE',type:'de',impact:'Średni'},
-  {start:'2026-05-24',end:'2026-05-25',pl:'Zielone Świątki',de:'Pfingsten',country:'PL+DE',type:'holiday',impact:'Wysoki'},
-  {start:'2026-06-04',end:'2026-06-04',pl:'Boże Ciało',de:'Fronleichnam',country:'PL',type:'holiday',impact:'Wysoki'},
-  {start:'2026-06-27',end:'2026-08-31',pl:'Wakacje letnie (PL)',de:'Sommerferien PL',country:'PL',type:'season',impact:'Bardzo wysoki'},
-  {start:'2026-06-29',end:'2026-08-07',pl:'Wakacje letnie Hesja (DE)',de:'Sommerferien Hessen',country:'DE',type:'de',impact:'Wysoki'},
-  {start:'2026-07-09',end:'2026-08-22',pl:'Wakacje letnie Berlin/Brandenburg (DE)',de:'Sommerferien BE/BB',country:'DE',type:'de',impact:'Bardzo wysoki'},
-  {start:'2026-07-13',end:'2026-08-22',pl:'Wakacje letnie Meklemburgia (DE)',de:'Sommerferien MV',country:'DE',type:'de',impact:'Bardzo wysoki'},
-  {start:'2026-08-03',end:'2026-09-14',pl:'Wakacje letnie Bawaria (DE)',de:'Sommerferien Bayern',country:'DE',type:'de',impact:'Wysoki'},
-  {start:'2026-08-15',end:'2026-08-15',pl:'Wniebowzięcie NMP',de:'Mariä Himmelfahrt',country:'PL',type:'holiday',impact:'Średni'},
-  {start:'2026-09-01',end:'2026-09-01',pl:'Koniec wakacji (PL)',de:'',country:'PL',type:'pl',impact:'Spadek'},
-  {start:'2026-10-03',end:'2026-10-03',pl:'Dzień Jedności Niemiec',de:'Tag der Deutschen Einheit',country:'DE',type:'holiday',impact:'Średni'},
-  {start:'2026-10-15',end:'2026-10-24',pl:'Ferie jesienne Meklemburgia',de:'Herbstferien MV',country:'DE',type:'de',impact:'Średni'},
-  {start:'2026-10-19',end:'2026-10-31',pl:'Ferie jesienne Berlin/Brandenburg',de:'Herbstferien BE/BB',country:'DE',type:'de',impact:'Średni'},
-  {start:'2026-11-01',end:'2026-11-01',pl:'Wszystkich Świętych',de:'Allerheiligen',country:'PL',type:'holiday',impact:'Średni'},
-  {start:'2026-11-11',end:'2026-11-11',pl:'Święto Niepodległości',de:'',country:'PL',type:'holiday',impact:'Średni'},
-  {start:'2026-12-21',end:'2027-01-02',pl:'Ferie świąteczne Meklemburgia',de:'Weihnachtsferien MV',country:'DE',type:'de',impact:'Wysoki'},
-  {start:'2026-12-23',end:'2027-01-03',pl:'Ferie świąteczne Berlin/Brandenburg',de:'Weihnachtsferien BE/BB',country:'DE',type:'de',impact:'Wysoki'},
-  {start:'2026-12-24',end:'2026-12-26',pl:'Boże Narodzenie',de:'Weihnachten',country:'PL+DE',type:'holiday',impact:'Bardzo wysoki'},
-  {start:'2026-12-31',end:'2026-12-31',pl:'Sylwester',de:'Silvester',country:'PL+DE',type:'season',impact:'Bardzo wysoki'}
-];
+const ANIM_DAYS_ORDER=['poniedzialek','wtorek','sroda','czwartek','piatek','sobota','niedziela'];
+const CAT_ICONS={welcome:'👋',sport:'🏃',creative:'🎨',care:'👶',craft:'✂️',fun:'✨',disco:'💃',show:'🎤',party:'🎉',outdoor:'🚶'};
+const CAT_NAMES={welcome:'Powitanie',sport:'Sport/Zabawy',creative:'Kreatywne',care:'Przedszkole',craft:'Plastyczne',fun:'Atrakcje',disco:'Mini Disco',show:'Pokaz',party:'Impreza',outdoor:'Na zewnątrz'};
 
+function getTimeClass(t){const h=parseInt(t);if(h<12)return'time-morning';if(h<15)return'time-midday';if(h<18)return'time-afternoon';if(h<21)return'time-evening';return'time-night'}
+function getLocClass(loc){if(loc.includes('HOL'))return'loc-hol';if(loc.includes('SALA')||loc.includes('WSPINACZ'))return'loc-sala';if(loc.includes('KIDS CLUB')||loc.includes('TUI'))return'loc-kids';if(loc.includes('KIDS PLAY'))return'loc-play';if(loc.includes('NITE'))return'loc-nite';if(loc.includes('AQUA'))return'loc-aqua';return''}
+
+function getTodayDayKey(){const dow=new Date('2026-03-20').getDay();return[null,'poniedzialek','wtorek','sroda','czwartek','piatek','sobota','niedziela'][dow]||'piatek'}
+
+// EVENTS
+const EVENTS_2026=[{start:'2026-01-01',end:'2026-01-01',pl:'Nowy Rok',de:'Neujahr',country:'PL+DE',type:'holiday',impact:'Wysoki'},{start:'2026-01-06',end:'2026-01-06',pl:'Trzech Króli',de:'Heilige Drei Könige',country:'PL',type:'holiday',impact:'Średni'},{start:'2026-01-12',end:'2026-01-25',pl:'Ferie zimowe (1. tura PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},{start:'2026-01-19',end:'2026-02-01',pl:'Ferie zimowe (2. tura PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},{start:'2026-02-02',end:'2026-02-20',pl:'Ferie zimowe (3./4. tura PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},{start:'2026-02-09',end:'2026-02-20',pl:'Ferie zimowe Meklemburgia',de:'Winterferien MV',country:'DE',type:'de',impact:'Średni'},{start:'2026-02-02',end:'2026-02-07',pl:'Ferie zimowe Berlin/Brandenburg',de:'Winterferien BE/BB',country:'DE',type:'de',impact:'Średni'},{start:'2026-03-30',end:'2026-04-08',pl:'Ferie wiosenne Meklemburgia',de:'Osterferien MV',country:'DE',type:'de',impact:'Wysoki'},{start:'2026-03-30',end:'2026-04-11',pl:'Ferie wiosenne Berlin/Brandenburg',de:'Osterferien BE/BB',country:'DE',type:'de',impact:'Wysoki'},{start:'2026-04-03',end:'2026-04-03',pl:'Wielki Piątek (DE)',de:'Karfreitag',country:'DE',type:'holiday',impact:'Wysoki'},{start:'2026-04-05',end:'2026-04-06',pl:'Wielkanoc',de:'Ostern',country:'PL+DE',type:'holiday',impact:'Bardzo wysoki'},{start:'2026-04-09',end:'2026-04-14',pl:'Ferie wielkanocne (PL)',de:'',country:'PL',type:'pl',impact:'Wysoki'},{start:'2026-05-01',end:'2026-05-01',pl:'Święto Pracy',de:'Tag der Arbeit',country:'PL+DE',type:'holiday',impact:'Średni'},{start:'2026-05-03',end:'2026-05-03',pl:'Konstytucja 3 Maja',de:'',country:'PL',type:'holiday',impact:'Wysoki'},{start:'2026-05-14',end:'2026-05-14',pl:'Wniebowstąpienie (DE)',de:'Christi Himmelfahrt',country:'DE',type:'holiday',impact:'Średni'},{start:'2026-05-24',end:'2026-05-25',pl:'Zielone Świątki',de:'Pfingsten',country:'PL+DE',type:'holiday',impact:'Wysoki'},{start:'2026-06-04',end:'2026-06-04',pl:'Boże Ciało',de:'Fronleichnam',country:'PL',type:'holiday',impact:'Wysoki'},{start:'2026-06-27',end:'2026-08-31',pl:'Wakacje letnie (PL)',de:'Sommerferien PL',country:'PL',type:'season',impact:'Bardzo wysoki'},{start:'2026-07-09',end:'2026-08-22',pl:'Wakacje Berlin/Brandenburg',de:'Sommerferien BE/BB',country:'DE',type:'de',impact:'Bardzo wysoki'},{start:'2026-07-13',end:'2026-08-22',pl:'Wakacje Meklemburgia',de:'Sommerferien MV',country:'DE',type:'de',impact:'Bardzo wysoki'},{start:'2026-08-15',end:'2026-08-15',pl:'Wniebowzięcie NMP',de:'Mariä Himmelfahrt',country:'PL',type:'holiday',impact:'Średni'},{start:'2026-10-15',end:'2026-10-24',pl:'Ferie jesienne Meklemburgia',de:'Herbstferien MV',country:'DE',type:'de',impact:'Średni'},{start:'2026-11-01',end:'2026-11-01',pl:'Wszystkich Świętych',de:'Allerheiligen',country:'PL',type:'holiday',impact:'Średni'},{start:'2026-11-11',end:'2026-11-11',pl:'Święto Niepodległości',de:'',country:'PL',type:'holiday',impact:'Średni'},{start:'2026-12-24',end:'2026-12-26',pl:'Boże Narodzenie',de:'Weihnachten',country:'PL+DE',type:'holiday',impact:'Bardzo wysoki'},{start:'2026-12-31',end:'2026-12-31',pl:'Sylwester',de:'Silvester',country:'PL+DE',type:'season',impact:'Bardzo wysoki'}];
 function getEventsForDate(ds){return EVENTS_2026.filter(e=>ds>=e.start&&ds<=e.end)}
-function evtDotsHTML(evts){if(!evts.length)return'';return'<span class="evt-dots">'+evts.map(e=>{let c=e.type==='holiday'?'holiday':e.type==='season'?'season':(e.country.includes('DE')?'de':'pl');return`<span class="evt-dot ${c}" title="${e.pl}${e.de?' / '+e.de:''}"></span>`}).join('')+'</span>'}
+function evtDotsHTML(ev){if(!ev.length)return'';return'<span class="evt-dots">'+ev.map(e=>{let c=e.type==='holiday'?'holiday':e.type==='season'?'season':(e.country.includes('DE')?'de':'pl');return`<span class="evt-dot ${c}" title="${e.pl}${e.de?' / '+e.de:''}"></span>`}).join('')+'</span>'}
 
-// ===== WEATHER =====
-async function loadWeather(){
-  try{
-    const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=53.93&longitude=14.45&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,weathercode&timezone=Europe%2FWarsaw&forecast_days=7');
-    const data=await r.json();const d=data.daily;
-    const icons={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌧️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'🌨️',75:'🌨️',80:'🌦️',81:'🌧️',82:'🌧️',95:'⛈️',96:'⛈️',99:'⛈️'};
-    const descs={0:'Bezchmurnie',1:'Głównie pogodnie',2:'Częściowe zachmurzenie',3:'Pochmurno',45:'Mgła',48:'Szadź',51:'Lekka mżawka',53:'Mżawka',55:'Gęsta mżawka',61:'Lekki deszcz',63:'Deszcz',65:'Silny deszcz',71:'Lekki śnieg',73:'Śnieg',75:'Silny śnieg',80:'Przelotny deszcz',81:'Deszcz',82:'Ulewa',95:'Burza',96:'Burza z gradem',99:'Silna burza'};
-    document.getElementById('weatherStrip').innerHTML=d.time.map((t,i)=>{
-      const dt=new Date(t);return`<div class="weather-day"><div class="wd-date">${dt.toLocaleDateString('pl-PL',{weekday:'short'})}, ${dt.toLocaleDateString('pl-PL',{day:'numeric',month:'short'})}</div><div class="wd-icon">${icons[d.weathercode[i]]||'🌡️'}</div><div class="wd-temp">${d.temperature_2m_max[i]}° / ${d.temperature_2m_min[i]}°</div><div class="wd-desc">${descs[d.weathercode[i]]||''}</div><div class="wd-detail">Opad: ${d.precipitation_sum[i]}mm · Wiatr: ${d.windspeed_10m_max[i]}km/h</div></div>`;
-    }).join('');
-  }catch(e){document.getElementById('weatherStrip').innerHTML='<div style="padding:20px;color:#ef4444;font-size:.8rem">Brak połączenia z API pogody.</div>'}
-}
+// WEATHER
+async function loadWeather(){try{const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=53.93&longitude=14.45&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,weathercode&timezone=Europe%2FWarsaw&forecast_days=7');const d=(await r.json()).daily;const ic={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌧️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'🌨️',75:'🌨️',80:'🌦️',81:'🌧️',82:'🌧️',95:'⛈️'};const ds={0:'Bezchmurnie',1:'Pogodnie',2:'Cz. zachmurzenie',3:'Pochmurno',45:'Mgła',51:'Mżawka',61:'Deszcz',63:'Deszcz',65:'Silny deszcz',71:'Śnieg',80:'Przelotny deszcz',95:'Burza'};document.getElementById('weatherStrip').innerHTML=d.time.map((t,i)=>{const dt=new Date(t);return`<div class="weather-day"><div class="wd-date">${dt.toLocaleDateString('pl-PL',{weekday:'short'})}, ${dt.toLocaleDateString('pl-PL',{day:'numeric',month:'short'})}</div><div class="wd-icon">${ic[d.weathercode[i]]||'🌡️'}</div><div class="wd-temp">${d.temperature_2m_max[i]}°/${d.temperature_2m_min[i]}°</div><div class="wd-desc">${ds[d.weathercode[i]]||''}</div><div class="wd-detail">Opad:${d.precipitation_sum[i]}mm Wiatr:${d.windspeed_10m_max[i]}km/h</div></div>`}).join('')}catch(e){document.getElementById('weatherStrip').innerHTML='<div style="padding:20px;color:#ef4444;font-size:.8rem">Brak połączenia z API pogody.</div>'}}
 function scheduleWeatherRefresh(){const n=new Date(),x=new Date(n);x.setHours(6,0,0,0);if(n>=x)x.setDate(x.getDate()+1);setTimeout(()=>{loadWeather();setInterval(loadWeather,864e5)},x-n)}
 
-// ===== HELPERS =====
+// HELPERS
 function fmtDate(d){return new Date(d).toLocaleDateString('pl-PL',{day:'2-digit',month:'2-digit'})}
 function fmtDay(d){return new Date(d).toLocaleDateString('pl-PL',{weekday:'short'})}
 function occPct(r){return((r/TOTAL_ROOMS)*100).toFixed(1)}
 function occColor(p){return p<40?'#10b981':p<70?'#3b82f6':p<90?'#f59e0b':'#ef4444'}
 function fmtPLN(v){return v.toLocaleString('pl-PL',{minimumFractionDigits:2,maximumFractionDigits:2})+' PLN'}
 
-// ===== BUILD =====
+// ===== MAIN INIT =====
 let chartsBuilt=false;
 function initDashboard(){
-  if(chartsBuilt)return;chartsBuilt=true;
-  const today='2026-03-20';
-  document.getElementById('topbarDate').textContent=new Date().toLocaleDateString('pl-PL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  loadWeather();scheduleWeatherRefresh();
+if(chartsBuilt)return;chartsBuilt=true;
+document.getElementById('topbarDate').textContent=new Date().toLocaleDateString('pl-PL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+loadWeather();scheduleWeatherRefresh();
 
-  const tp=pkgData.find(p=>p.d===today)||pkgData[0];
-  const th=hskData.find(h=>h.d===today)||hskData[0];
-  const tPct=occPct(tp.occ);
+const tp=pkgData[2],th=hskData[2]; // 2026-03-20
 
-  // === DASHBOARD KPIs ===
-  document.getElementById('todayKpis').innerHTML=`
-    <div class="kpi-card blue"><div class="kpi-label">Przyjazdy dziś<small>Arrivals (rooms)</small></div><div class="kpi-value">${tp.arrR}</div><div class="kpi-sub">${tp.arrP} osób</div></div>
-    <div class="kpi-card amber"><div class="kpi-label">Wyjazdy dziś<small>Departures (rooms)</small></div><div class="kpi-value">${tp.depR}</div><div class="kpi-sub">${tp.depP} osób</div></div>
-    <div class="kpi-card green"><div class="kpi-label">Pokoje dziś<small>Rooms tonight</small></div><div class="kpi-value">${tp.occ}</div><div class="kpi-sub">${tPct}% obłożenia</div></div>
-    <div class="kpi-card purple"><div class="kpi-label">Goście<small>Total guests</small></div><div class="kpi-value">${tp.adu+tp.ch}</div><div class="kpi-sub">${tp.adu} dor. + ${tp.ch} dzieci</div></div>
-    <div class="kpi-card cyan"><div class="kpi-label">Posiłki dziś<small>Meals today</small></div><div class="kpi-value">${tp.bfk+tp.lun+tp.din}</div><div class="kpi-sub">Śn:${tp.bfk} Ob:${tp.lun} Kol:${tp.din}</div></div>
-    <div class="kpi-card red"><div class="kpi-label">HSK obciążenie<small>Housekeeping workload</small></div><div class="kpi-value">${th.morn+th.arr+th.dep}</div><div class="kpi-sub">Por:${th.morn} Prz:${th.arr} Wyj:${th.dep}</div></div>
-    <div class="kpi-card blue"><div class="kpi-label">Pickup wczoraj<small>Bookings yesterday</small></div><div class="kpi-value">${pSum.bookings}</div><div class="kpi-sub">${pSum.roomNights} pokojonocy</div></div>
-    <div class="kpi-card green"><div class="kpi-label">Szczyt obłożenia<small>Peak ahead</small></div><div class="kpi-value">96.4%</div><div class="kpi-sub">04.04 – 347 pokoi</div></div>
-  `;
+// DASHBOARD KPIs
+document.getElementById('todayKpis').innerHTML=`
+<div class="kpi-card blue"><div class="kpi-label">Przyjazdy<small>Arrivals rooms</small></div><div class="kpi-value">${tp.arrR}</div><div class="kpi-sub">${tp.arrP} osób</div></div>
+<div class="kpi-card amber"><div class="kpi-label">Wyjazdy<small>Departures</small></div><div class="kpi-value">${tp.depR}</div><div class="kpi-sub">${tp.depP} osób</div></div>
+<div class="kpi-card green"><div class="kpi-label">Pokoje dziś<small>Rooms tonight</small></div><div class="kpi-value">${tp.occ}</div><div class="kpi-sub">${occPct(tp.occ)}%</div></div>
+<div class="kpi-card purple"><div class="kpi-label">Goście<small>Guests</small></div><div class="kpi-value">${tp.adu+tp.ch}</div><div class="kpi-sub">${tp.adu} dor. ${tp.ch} dz.</div></div>
+<div class="kpi-card cyan"><div class="kpi-label">Posiłki<small>Meals</small></div><div class="kpi-value">${tp.bfk+tp.lun+tp.din}</div><div class="kpi-sub">Śn:${tp.bfk} Ob:${tp.lun} Kol:${tp.din}</div></div>
+<div class="kpi-card red"><div class="kpi-label">HSK<small>Workload</small></div><div class="kpi-value">${th.morn+th.arr+th.dep}</div></div>
+<div class="kpi-card blue"><div class="kpi-label">Pickup wczoraj<small>Bookings</small></div><div class="kpi-value">${pSum.bookings}</div><div class="kpi-sub">${pSum.roomNights} RN</div></div>
+<div class="kpi-card green"><div class="kpi-label">Szczyt<small>Peak ahead</small></div><div class="kpi-value">96.4%</div><div class="kpi-sub">04.04</div></div>`;
 
-  // Dashboard cancel mini-KPIs
-  document.getElementById('dashCancelKpis').innerHTML=`
-    <div class="kpi-card red"><div class="kpi-label">Anulacje<small>Cancelled reservations</small></div><div class="kpi-value">${cancelSummary.totalCancels}</div></div>
-    <div class="kpi-card rose"><div class="kpi-label">Utracone pokojonoce<small>Lost room nights</small></div><div class="kpi-value">${cancelSummary.totalRoomNights}</div></div>
-    <div class="kpi-card red"><div class="kpi-label">Utracony przychód<small>Revenue Loss</small></div><div class="kpi-value negative">${fmtPLN(cancelSummary.totalRevLoss)}</div></div>
-    <div class="kpi-card slate"><div class="kpi-label">Śr. Lead Time<small>Avg days before arrival</small></div><div class="kpi-value">${cancelSummary.avgLeadTime} dni</div></div>
-  `;
+// Dashboard cancel
+document.getElementById('dashCancelKpis').innerHTML=`
+<div class="kpi-card red"><div class="kpi-label">Anulacje<small>Cancellations</small></div><div class="kpi-value">${cancelSummary.totalCancels}</div></div>
+<div class="kpi-card rose"><div class="kpi-label">Utracone RN<small>Lost room nights</small></div><div class="kpi-value">${cancelSummary.totalRoomNights}</div></div>
+<div class="kpi-card red"><div class="kpi-label">Utrata<small>Revenue Loss</small></div><div class="kpi-value negative">-${fmtPLN(cancelSummary.totalRevLoss)}</div></div>`;
 
-  // 7-day charts
-  const d7=pkgData.slice(0,7);
-  new Chart(document.getElementById('chart7occ'),{type:'bar',data:{labels:d7.map(r=>fmtDate(r.d)),datasets:[{label:'Pokoje',data:d7.map(r=>r.occ),backgroundColor:'#3b82f6',borderRadius:4},{label:'Goście',data:d7.map(r=>r.adu+r.ch),backgroundColor:'#93c5fd',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true}}}});
-  new Chart(document.getElementById('chart7meals'),{type:'bar',data:{labels:d7.map(r=>fmtDate(r.d)),datasets:[{label:'Śniadania',data:d7.map(r=>r.bfk),backgroundColor:'#f59e0b',borderRadius:4},{label:'Obiady',data:d7.map(r=>r.lun),backgroundColor:'#10b981',borderRadius:4},{label:'Kolacje',data:d7.map(r=>r.din),backgroundColor:'#8b5cf6',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
-
-  // === OCCUPANCY ===
-  const peakD=pkgData.reduce((a,b)=>a.occ>b.occ?a:b);
-  const lowD=pkgData.reduce((a,b)=>a.occ<b.occ?a:b);
-  const avgOcc=Math.round(pkgData.reduce((s,r)=>s+r.occ,0)/pkgData.length);
-  document.getElementById('occKpis').innerHTML=`
-    <div class="kpi-card blue"><div class="kpi-label">Średnie obłożenie<small>Avg Occupancy</small></div><div class="kpi-value">${occPct(avgOcc)}%</div><div class="kpi-sub">${avgOcc} pokoi/dzień</div></div>
-    <div class="kpi-card red"><div class="kpi-label">Szczyt<small>Peak Day</small></div><div class="kpi-value">${occPct(peakD.occ)}%</div><div class="kpi-sub">${fmtDate(peakD.d)} – ${peakD.occ} pokoi</div></div>
-    <div class="kpi-card green"><div class="kpi-label">Minimum<small>Lowest Day</small></div><div class="kpi-value">${occPct(lowD.occ)}%</div><div class="kpi-sub">${fmtDate(lowD.d)} – ${lowD.occ} pokoi</div></div>
-  `;
-  new Chart(document.getElementById('chart30occ'),{type:'bar',data:{labels:pkgData.map(r=>fmtDate(r.d)),datasets:[{label:'Pokoje',data:pkgData.map(r=>r.occ),backgroundColor:pkgData.map(r=>occColor(parseFloat(occPct(r.occ)))),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:TOTAL_ROOMS}}}});
-  const oT=document.getElementById('occTable');
-  oT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Pokoje<small>Rooms OCC</small></th><th>%</th><th>Dorośli<small>Adults</small></th><th>Dzieci<small>Children</small></th><th>Goście<small>Guests</small></th><th>Wyd.</th></tr>';
-  oT.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.occ}</td><td style="color:${occColor(parseFloat(occPct(r.occ)))};font-weight:700">${occPct(r.occ)}%</td><td>${r.adu}</td><td>${r.ch}</td><td>${r.adu+r.ch}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
-
-  // === MEALS ===
-  const tBfk=pkgData.reduce((s,r)=>s+r.bfk,0),tLun=pkgData.reduce((s,r)=>s+r.lun,0),tDin=pkgData.reduce((s,r)=>s+r.din,0);
-  document.getElementById('mealKpis').innerHTML=`
-    <div class="kpi-card amber"><div class="kpi-label">Śniadania<small>BFKST total</small></div><div class="kpi-value">${tBfk.toLocaleString('pl')}</div></div>
-    <div class="kpi-card green"><div class="kpi-label">Obiady<small>LUNCH total</small></div><div class="kpi-value">${tLun.toLocaleString('pl')}</div></div>
-    <div class="kpi-card purple"><div class="kpi-label">Kolacje<small>DINNER total</small></div><div class="kpi-value">${tDin.toLocaleString('pl')}</div></div>
-  `;
-  new Chart(document.getElementById('chart30meals'),{type:'line',data:{labels:pkgData.map(r=>fmtDate(r.d)),datasets:[{label:'Śniadania / BFKST',data:pkgData.map(r=>r.bfk),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.1)',fill:true,tension:.3},{label:'Kolacje / DINNER',data:pkgData.map(r=>r.din),borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,.1)',fill:true,tension:.3},{label:'Obiady / LUNCH',data:pkgData.map(r=>r.lun),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.1)',fill:true,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true}}}});
-  const mT=document.getElementById('mealTable');
-  mT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Śniadania<small>BFKST</small></th><th>Obiady<small>LUNCH</small></th><th>Kolacje<small>DINNER</small></th><th>Razem</th><th>Wyd.</th></tr>';
-  mT.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.bfk}</td><td>${r.lun}</td><td>${r.din}</td><td><strong>${r.bfk+r.lun+r.din}</strong></td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
-
-  // === HSK ===
-  const mxH=hskData.reduce((a,b)=>(a.morn+a.arr+a.dep)>(b.morn+b.arr+b.dep)?a:b);
-  document.getElementById('hskKpis').innerHTML=`
-    <div class="kpi-card blue"><div class="kpi-label">Obciążenie dziś<small>Today's workload</small></div><div class="kpi-value">${th.morn+th.arr+th.dep}</div></div>
-    <div class="kpi-card red"><div class="kpi-label">Szczyt HSK<small>Peak HSK day</small></div><div class="kpi-value">${mxH.morn+mxH.arr+mxH.dep}</div><div class="kpi-sub">${fmtDate(mxH.d)}</div></div>
-    <div class="kpi-card green"><div class="kpi-label">Goście dziś<small>Guests today</small></div><div class="kpi-value">${th.guests}</div></div>
-  `;
-  new Chart(document.getElementById('chart30hsk'),{type:'bar',data:{labels:hskData.map(r=>fmtDate(r.d)),datasets:[{label:'Poranki',data:hskData.map(r=>r.morn),backgroundColor:'#3b82f6',borderRadius:2},{label:'Przyjazdy',data:hskData.map(r=>r.arr),backgroundColor:'#10b981',borderRadius:2},{label:'Wyjazdy',data:hskData.map(r=>r.dep),backgroundColor:'#f59e0b',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
-  const hT=document.getElementById('hskTable');
-  hT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Poranki<small>Morning</small></th><th>Przyjazdy<small>Arrivals</small></th><th>Wyjazdy<small>Departures</small></th><th>Wieczór<small>Evening</small></th><th>Goście<small>Guests</small></th><th>Wyd.</th></tr>';
-  hT.querySelector('tbody').innerHTML=hskData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.morn}</td><td>${r.arr}</td><td>${r.dep}</td><td>${r.eve}</td><td>${r.guests}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
-
-  // === ARRIVALS ===
-  new Chart(document.getElementById('chart30flow'),{type:'bar',data:{labels:pkgData.map(r=>fmtDate(r.d)),datasets:[{label:'Przyjazdy',data:pkgData.map(r=>r.arrR),backgroundColor:'#10b981',borderRadius:2},{label:'Wyjazdy',data:pkgData.map(r=>-r.depR),backgroundColor:'#ef4444',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true}}}});
-  const fT=document.getElementById('flowTable');
-  fT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Prz. pok.<small>Arr rooms</small></th><th>Prz. os.<small>Arr pax</small></th><th>Wyj. pok.<small>Dep rooms</small></th><th>Wyj. os.<small>Dep pax</small></th><th>Netto</th><th>Wyd.</th></tr>';
-  fT.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);const net=r.arrR-r.depR;return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.arrR}</td><td>${r.arrP}</td><td>${r.depR}</td><td>${r.depP}</td><td style="font-weight:700;color:${net>=0?'#10b981':'#ef4444'}">${net>=0?'+':''}${net}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
-
-  // === PICKUP ===
-  document.getElementById('pickupKpis').innerHTML=`
-    <div class="kpi-card blue"><div class="kpi-label">Rezerwacje<small>Bookings</small></div><div class="kpi-value">${pSum.bookings}</div></div>
-    <div class="kpi-card green"><div class="kpi-label">Pokojonoce<small>Room nights</small></div><div class="kpi-value">${pSum.roomNights}</div></div>
-    <div class="kpi-card purple"><div class="kpi-label">Goście<small>Guests</small></div><div class="kpi-value">${pSum.guests}</div></div>
-    <div class="kpi-card amber"><div class="kpi-label">Przychód<small>Revenue</small></div><div class="kpi-value">${pSum.totalRev.toLocaleString('pl')} PLN</div></div>
-  `;
-  const srcMap={},mktMap={};pickupRes.forEach(r=>{srcMap[r.src]=(srcMap[r.src]||0)+1;mktMap[r.mkt]=(mktMap[r.mkt]||0)+1});
-  const sC=['#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#ec4899'];
-  new Chart(document.getElementById('chartPickupSrc'),{type:'doughnut',data:{labels:Object.keys(srcMap),datasets:[{data:Object.values(srcMap),backgroundColor:sC}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
-  new Chart(document.getElementById('chartPickupMkt'),{type:'doughnut',data:{labels:Object.keys(mktMap),datasets:[{data:Object.values(mktMap),backgroundColor:sC}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
-  const pT=document.getElementById('pickupTable');
-  pT.querySelector('thead').innerHTML='<tr><th>#</th><th>Rezerwacja<small>Reservation</small></th><th>Pok.<small>Rooms</small></th><th>Noce<small>Nights</small></th><th>Goście<small>Guests</small></th><th>Źródło<small>Source</small></th><th>Rynek<small>Market</small></th><th>Stawka/noc<small>Rate/night</small></th></tr>';
-  pT.querySelector('tbody').innerHTML=pickupRes.map(r=>`<tr><td>${r.id}</td><td><strong>${r.name}</strong></td><td>${r.rooms}</td><td>${r.nights}</td><td>${r.guests}</td><td><span class="pill pill-blue">${r.src}</span></td><td><span class="pill pill-green">${r.mkt}</span></td><td>${r.rate.toLocaleString('pl')} PLN</td></tr>`).join('');
-
-  // === CANCELLATIONS ===
-  buildCancellations();
-
-  // === CHANNELS ===
-  const srcRevMap={};pickupRes.forEach(r=>{srcRevMap[r.src]=(srcRevMap[r.src]||0)+r.rate*r.rooms*r.nights});
-  new Chart(document.getElementById('chartChBook'),{type:'bar',data:{labels:Object.keys(srcMap),datasets:[{label:'Rezerwacje',data:Object.values(srcMap),backgroundColor:'#3b82f6',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}}}});
-  new Chart(document.getElementById('chartChRev'),{type:'bar',data:{labels:Object.keys(srcRevMap),datasets:[{label:'PLN',data:Object.values(srcRevMap),backgroundColor:'#10b981',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}}}});
-
-  // === CALENDAR ===
-  buildCalendarMonths();buildCalendar(2);buildEventsTable();
+// Dashboard anim today
+const todayKey=getTodayDayKey();
+const todayAnim=ANIM_SCHEDULE[todayKey];
+if(todayAnim){
+  document.getElementById('dashAnimToday').innerHTML=`
+    <div style="font-size:.75rem;font-weight:600;margin-bottom:8px;color:#8b5cf6">${todayAnim.dayPL} <span style="color:#94a3b8;font-weight:400">· ${todayAnim.dayDE} · ${todayAnim.slots.length} aktywności</span></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">${todayAnim.slots.map(s=>`<div style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:8px;padding:6px 10px;font-size:.65rem;flex-shrink:0"><strong>${s.time}</strong> ${CAT_ICONS[s.cat]||''} ${s.pl}<br><span style="color:#94a3b8;font-size:.55rem">${s.loc}</span></div>`).join('')}</div>`;
 }
 
-// ===== CANCELLATION SECTION =====
-function buildCancellations(){
-  // KPIs
-  document.getElementById('cancelKpis').innerHTML=`
-    <div class="kpi-card red"><div class="kpi-label">Anulowane rezerwacje<small>Cancelled reservations</small></div><div class="kpi-value">${cancelSummary.totalCancels}</div><div class="kpi-sub">z dnia 19.03.2026</div></div>
-    <div class="kpi-card rose"><div class="kpi-label">Utracone pokojonoce<small>Lost room nights</small></div><div class="kpi-value">${cancelSummary.totalRoomNights}</div></div>
-    <div class="kpi-card red"><div class="kpi-label">Utracony przychód<small>Revenue Loss</small></div><div class="kpi-value negative">-${fmtPLN(cancelSummary.totalRevLoss)}</div></div>
-    <div class="kpi-card slate"><div class="kpi-label">Wpłacone zaliczki<small>Deposit Paid</small></div><div class="kpi-value">${fmtPLN(cancelSummary.totalDeposit)}</div></div>
-    <div class="kpi-card amber"><div class="kpi-label">Śr. Lead Time<small>Avg days before arrival</small></div><div class="kpi-value">${cancelSummary.avgLeadTime} dni</div></div>
-    <div class="kpi-card purple"><div class="kpi-label">Śr. stawka/noc<small>Avg Rate/night</small></div><div class="kpi-value">${fmtPLN(cancelData.reduce((s,c)=>s+c.rateAmt,0)/cancelData.length)}</div></div>
-  `;
+// 7-day charts
+const d7=pkgData.slice(0,7);
+new Chart(document.getElementById('chart7occ'),{type:'bar',data:{labels:d7.map(r=>fmtDate(r.d)),datasets:[{label:'Pokoje',data:d7.map(r=>r.occ),backgroundColor:'#3b82f6',borderRadius:4},{label:'Goście',data:d7.map(r=>r.adu+r.ch),backgroundColor:'#93c5fd',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true}}}});
+new Chart(document.getElementById('chart7meals'),{type:'bar',data:{labels:d7.map(r=>fmtDate(r.d)),datasets:[{label:'Śniadania',data:d7.map(r=>r.bfk),backgroundColor:'#f59e0b',borderRadius:4},{label:'Obiady',data:d7.map(r=>r.lun),backgroundColor:'#10b981',borderRadius:4},{label:'Kolacje',data:d7.map(r=>r.din),backgroundColor:'#8b5cf6',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
 
-  // Net Pickup KPIs (pickup - cancellations)
-  const netRN=pSum.roomNights-cancelSummary.totalRoomNights;
-  const netRev=pSum.totalRev-cancelSummary.totalRevLoss;
-  document.getElementById('netPickupKpis').innerHTML=`
-    <div class="kpi-card green"><div class="kpi-label">Nowy pickup (rez.)<small>New bookings</small></div><div class="kpi-value" style="color:#10b981">+${pSum.bookings}</div></div>
-    <div class="kpi-card red"><div class="kpi-label">Anulacje<small>Cancellations</small></div><div class="kpi-value negative">-${cancelSummary.totalCancels}</div></div>
-    <div class="kpi-card blue"><div class="kpi-label">Netto pokojonoce<small>Net Room Nights</small></div><div class="kpi-value" style="color:${netRN>=0?'#10b981':'#ef4444'}">${netRN>=0?'+':''}${netRN}</div></div>
-    <div class="kpi-card blue"><div class="kpi-label">Netto przychód<small>Net Revenue</small></div><div class="kpi-value" style="color:${netRev>=0?'#10b981':'#ef4444'}">${netRev>=0?'+':''}${fmtPLN(netRev)}</div></div>
-  `;
+// OCCUPANCY
+const peakD=pkgData.reduce((a,b)=>a.occ>b.occ?a:b),lowD=pkgData.reduce((a,b)=>a.occ<b.occ?a:b),avgO=Math.round(pkgData.reduce((s,r)=>s+r.occ,0)/pkgData.length);
+document.getElementById('occKpis').innerHTML=`<div class="kpi-card blue"><div class="kpi-label">Średnie<small>Avg</small></div><div class="kpi-value">${occPct(avgO)}%</div></div><div class="kpi-card red"><div class="kpi-label">Szczyt<small>Peak</small></div><div class="kpi-value">${occPct(peakD.occ)}%</div><div class="kpi-sub">${fmtDate(peakD.d)}</div></div><div class="kpi-card green"><div class="kpi-label">Min<small>Low</small></div><div class="kpi-value">${occPct(lowD.occ)}%</div><div class="kpi-sub">${fmtDate(lowD.d)}</div></div>`;
+new Chart(document.getElementById('chart30occ'),{type:'bar',data:{labels:pkgData.map(r=>fmtDate(r.d)),datasets:[{data:pkgData.map(r=>r.occ),backgroundColor:pkgData.map(r=>occColor(parseFloat(occPct(r.occ)))),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:TOTAL_ROOMS}}}});
+const oT=document.getElementById('occTable');oT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Pokoje<small>OCC</small></th><th>%</th><th>Dor.<small>Adults</small></th><th>Dz.<small>Ch.</small></th><th>Goście</th><th>Wyd.</th></tr>';oT.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.occ}</td><td style="color:${occColor(parseFloat(occPct(r.occ)))};font-weight:700">${occPct(r.occ)}%</td><td>${r.adu}</td><td>${r.ch}</td><td>${r.adu+r.ch}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
 
-  // Cancel reason chart
-  const reasonMap={},sourceMap={};
-  cancelData.forEach(c=>{
-    reasonMap[c.cancelReason]=(reasonMap[c.cancelReason]||0)+c.revenueLoss;
-    sourceMap[c.source]=(sourceMap[c.source]||0)+c.revenueLoss;
-  });
-  new Chart(document.getElementById('chartCancelReason'),{type:'bar',data:{labels:Object.keys(reasonMap).map(k=>k==='REL'?'Release (nieopłacona)':k==='TRIP'?'Trip Cancelled':'Inne: '+k),datasets:[{label:'Utracony przychód (PLN)',data:Object.values(reasonMap),backgroundColor:['#f59e0b','#ef4444','#8b5cf6'],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v.toLocaleString('pl')+' PLN'}}}}});
-  new Chart(document.getElementById('chartCancelSource'),{type:'doughnut',data:{labels:Object.keys(sourceMap),datasets:[{data:Object.values(sourceMap),backgroundColor:['#3b82f6','#f59e0b','#ef4444']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
+// MEALS
+const tB=pkgData.reduce((s,r)=>s+r.bfk,0),tL=pkgData.reduce((s,r)=>s+r.lun,0),tD=pkgData.reduce((s,r)=>s+r.din,0);
+document.getElementById('mealKpis').innerHTML=`<div class="kpi-card amber"><div class="kpi-label">Śniadania<small>BFKST</small></div><div class="kpi-value">${tB.toLocaleString('pl')}</div></div><div class="kpi-card green"><div class="kpi-label">Obiady<small>LUNCH</small></div><div class="kpi-value">${tL.toLocaleString('pl')}</div></div><div class="kpi-card purple"><div class="kpi-label">Kolacje<small>DINNER</small></div><div class="kpi-value">${tD.toLocaleString('pl')}</div></div>`;
+new Chart(document.getElementById('chart30meals'),{type:'line',data:{labels:pkgData.map(r=>fmtDate(r.d)),datasets:[{label:'BFKST',data:pkgData.map(r=>r.bfk),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.1)',fill:true,tension:.3},{label:'DINNER',data:pkgData.map(r=>r.din),borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,.1)',fill:true,tension:.3},{label:'LUNCH',data:pkgData.map(r=>r.lun),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.1)',fill:true,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true}}}});
+const mT=document.getElementById('mealTable');mT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Śn.<small>BFKST</small></th><th>Ob.<small>LUNCH</small></th><th>Kol.<small>DINNER</small></th><th>Razem</th><th>Wyd.</th></tr>';mT.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.bfk}</td><td>${r.lun}</td><td>${r.din}</td><td><strong>${r.bfk+r.lun+r.din}</strong></td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
 
-  // Table
-  const cT=document.getElementById('cancelTable');
-  cT.querySelector('thead').innerHTML=`<tr>
-    <th>Nr anulacji<small>Cancel No.</small></th>
-    <th>Gość<small>Guest Name</small></th>
-    <th>Typ pokoju<small>Room Type</small></th>
-    <th>Data przyjazdu<small>Arr. Date</small></th>
-    <th>Lead<small>Days</small></th>
-    <th>Pok.<small>Rms</small></th>
-    <th>Noce<small>Nts</small></th>
-    <th>Kod rynku<small>Mkt Code</small></th>
-    <th>Kod stawki<small>Rate Code</small></th>
-    <th>Stawka/noc<small>Rate Amt</small></th>
-    <th>Utrata przychodu<small>Revenue Loss</small></th>
-    <th>Zaliczka<small>Deposit</small></th>
-    <th>Źródło<small>Source</small></th>
-    <th>Powód anulacji<small>Cancel Reason</small></th>
-  </tr>`;
-  cT.querySelector('tbody').innerHTML=cancelData.map(c=>{
-    const reasonPill=c.cancelReason==='REL'?'pill-amber':'pill-red';
-    const reasonLabel=c.cancelReason==='REL'?'Release':'Anulacja podróży';
-    return`<tr class="row-cancel">
-      <td><strong>${c.cancelNo}</strong></td>
-      <td>${c.name}</td>
-      <td><span class="pill pill-slate">${c.roomType}</span></td>
-      <td>${c.arrDate}</td>
-      <td>${c.leadTime} dni</td>
-      <td>${c.rooms}</td>
-      <td>${c.nights}</td>
-      <td><span class="pill pill-purple">${c.mktCode}</span></td>
-      <td>${c.rateCode}</td>
-      <td>${fmtPLN(c.rateAmt)}</td>
-      <td style="color:#ef4444;font-weight:700">-${fmtPLN(c.revenueLoss)}</td>
-      <td>${fmtPLN(c.depositPaid)}</td>
-      <td><span class="pill pill-blue">${c.source}</span></td>
-      <td><span class="pill ${reasonPill}">${reasonLabel}</span><br><span style="font-size:.58rem;color:#94a3b8">${c.cancelDesc}</span></td>
-    </tr>`}).join('');
+// HSK
+const mxH=hskData.reduce((a,b)=>(a.morn+a.arr+a.dep)>(b.morn+b.arr+b.dep)?a:b);
+document.getElementById('hskKpis').innerHTML=`<div class="kpi-card blue"><div class="kpi-label">Dziś<small>Today</small></div><div class="kpi-value">${th.morn+th.arr+th.dep}</div></div><div class="kpi-card red"><div class="kpi-label">Szczyt<small>Peak</small></div><div class="kpi-value">${mxH.morn+mxH.arr+mxH.dep}</div><div class="kpi-sub">${fmtDate(mxH.d)}</div></div><div class="kpi-card green"><div class="kpi-label">Goście<small>Guests</small></div><div class="kpi-value">${th.guests}</div></div>`;
+new Chart(document.getElementById('chart30hsk'),{type:'bar',data:{labels:hskData.map(r=>fmtDate(r.d)),datasets:[{label:'Poranki',data:hskData.map(r=>r.morn),backgroundColor:'#3b82f6',borderRadius:2},{label:'Przyjazdy',data:hskData.map(r=>r.arr),backgroundColor:'#10b981',borderRadius:2},{label:'Wyjazdy',data:hskData.map(r=>r.dep),backgroundColor:'#f59e0b',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
+const hT=document.getElementById('hskTable');hT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Por.<small>Morn</small></th><th>Prz.<small>Arr</small></th><th>Wyj.<small>Dep</small></th><th>Wiecz.<small>Eve</small></th><th>Goście</th><th>Wyd.</th></tr>';hT.querySelector('tbody').innerHTML=hskData.map(r=>{const ev=getEventsForDate(r.d);return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.morn}</td><td>${r.arr}</td><td>${r.dep}</td><td>${r.eve}</td><td>${r.guests}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
 
-  // Grand total row
-  cT.querySelector('tbody').innerHTML+=`<tr style="background:#fef2f2;font-weight:700">
-    <td colspan="5">RAZEM / GRAND TOTAL</td>
-    <td>${cancelData.reduce((s,c)=>s+c.rooms,0)}</td>
-    <td>${cancelSummary.totalRoomNights}</td>
-    <td colspan="2"></td>
-    <td>${fmtPLN(cancelData.reduce((s,c)=>s+c.rateAmt,0))}</td>
-    <td style="color:#ef4444">-${fmtPLN(cancelSummary.totalRevLoss)}</td>
-    <td>${fmtPLN(cancelSummary.totalDeposit)}</td>
-    <td colspan="2"></td>
-  </tr>`;
+// ARRIVALS
+new Chart(document.getElementById('chart30flow'),{type:'bar',data:{labels:pkgData.map(r=>fmtDate(r.d)),datasets:[{label:'Przyjazdy',data:pkgData.map(r=>r.arrR),backgroundColor:'#10b981',borderRadius:2},{label:'Wyjazdy',data:pkgData.map(r=>-r.depR),backgroundColor:'#ef4444',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true},y:{stacked:true}}}});
+const fT=document.getElementById('flowTable');fT.querySelector('thead').innerHTML='<tr><th>Data</th><th>Dzień</th><th>Prz.pok.<small>Arr</small></th><th>Prz.os.</th><th>Wyj.pok.<small>Dep</small></th><th>Wyj.os.</th><th>Netto</th><th>Wyd.</th></tr>';fT.querySelector('tbody').innerHTML=pkgData.map(r=>{const ev=getEventsForDate(r.d);const n=r.arrR-r.depR;return`<tr class="${ev.length?'row-event':''}"><td><strong>${fmtDate(r.d)}</strong></td><td>${fmtDay(r.d)}</td><td>${r.arrR}</td><td>${r.arrP}</td><td>${r.depR}</td><td>${r.depP}</td><td style="font-weight:700;color:${n>=0?'#10b981':'#ef4444'}">${n>=0?'+':''}${n}</td><td>${evtDotsHTML(ev)}</td></tr>`}).join('');
 
-  // Reason bars
-  const maxRev=Math.max(...Object.values(reasonMap));
-  const reasonLabels={'REL':'Release – nieopłacona rezerwacja','TRIP':'Trip Cancelled – anulacja podróży'};
-  const reasonColors={'REL':'#f59e0b','TRIP':'#ef4444'};
-  document.getElementById('reasonBars').innerHTML=Object.entries(reasonMap).map(([k,v])=>{
-    const pct=((v/maxRev)*100).toFixed(0);
-    const count=cancelData.filter(c=>c.cancelReason===k).length;
-    return`<div class="reason-bar-row">
-      <div class="reason-bar-label">${reasonLabels[k]||k}<br><span style="font-size:.6rem;color:#94a3b8">${count} rez. · ${cancelData.filter(c=>c.cancelReason===k).reduce((s,c)=>s+c.nights,0)} nocy</span></div>
-      <div class="reason-bar-track"><div class="reason-bar-fill" style="width:${pct}%;background:${reasonColors[k]||'#64748b'}">${fmtPLN(v)}</div></div>
-    </div>`}).join('');
-}
+// PICKUP
+document.getElementById('pickupKpis').innerHTML=`<div class="kpi-card blue"><div class="kpi-label">Rezerwacje<small>Bookings</small></div><div class="kpi-value">${pSum.bookings}</div></div><div class="kpi-card green"><div class="kpi-label">RN<small>Room nights</small></div><div class="kpi-value">${pSum.roomNights}</div></div><div class="kpi-card purple"><div class="kpi-label">Goście<small>Guests</small></div><div class="kpi-value">${pSum.guests}</div></div><div class="kpi-card amber"><div class="kpi-label">Przychód<small>Revenue</small></div><div class="kpi-value">${pSum.totalRev.toLocaleString('pl')} PLN</div></div>`;
+const srcM={},mktM={};pickupRes.forEach(r=>{srcM[r.src]=(srcM[r.src]||0)+1;mktM[r.mkt]=(mktM[r.mkt]||0)+1});
+const sC=['#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#ec4899'];
+new Chart(document.getElementById('chartPickupSrc'),{type:'doughnut',data:{labels:Object.keys(srcM),datasets:[{data:Object.values(srcM),backgroundColor:sC}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
+new Chart(document.getElementById('chartPickupMkt'),{type:'doughnut',data:{labels:Object.keys(mktM),datasets:[{data:Object.values(mktM),backgroundColor:sC}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
+const pT=document.getElementById('pickupTable');pT.querySelector('thead').innerHTML='<tr><th>#</th><th>Rezerwacja</th><th>Pok.</th><th>Noce</th><th>Goście</th><th>Źródło</th><th>Rynek</th><th>Stawka</th></tr>';pT.querySelector('tbody').innerHTML=pickupRes.map(r=>`<tr><td>${r.id}</td><td><strong>${r.name}</strong></td><td>${r.rooms}</td><td>${r.nights}</td><td>${r.guests}</td><td><span class="pill pill-blue">${r.src}</span></td><td><span class="pill pill-green">${r.mkt}</span></td><td>${r.rate.toLocaleString('pl')} PLN</td></tr>`).join('');
 
-// ===== CALENDAR =====
-const MONTH_NAMES_PL=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'];
-const DAY_HEADERS=['Pon','Wt','Śr','Czw','Pt','Sob','Ndz'];
-function buildCalendarMonths(){document.getElementById('calMonths').innerHTML=MONTH_NAMES_PL.map((m,i)=>`<button class="cal-month-btn ${i===2?'active':''}" onclick="selectCalMonth(${i})">${m}</button>`).join('')}
-function selectCalMonth(i){document.querySelectorAll('.cal-month-btn').forEach((b,j)=>b.classList.toggle('active',j===i));buildCalendar(i)}
-function buildCalendar(mi){
-  const g=document.getElementById('calGrid'),y=2026;
-  let sd=new Date(y,mi,1).getDay();sd=sd===0?6:sd-1;
-  const dim=new Date(y,mi+1,0).getDate(),todayStr='2026-03-20';
-  let h=DAY_HEADERS.map(d=>`<div class="cal-header">${d}</div>`).join('');
-  for(let i=0;i<sd;i++)h+='<div class="cal-day empty"></div>';
-  for(let d=1;d<=dim;d++){
-    const ds=`${y}-${String(mi+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const ev=getEventsForDate(ds),isT=ds===todayStr,pk=pkgData.find(p=>p.d===ds);
-    let cls='cal-day';if(isT)cls+=' today';if(ev.length)cls+=' has-event';
-    let tags=ev.slice(0,2).map(e=>{let c=e.type==='holiday'?'holiday':e.type==='season'?'season':(e.country.includes('DE')?'de':'pl');return`<span class="cal-evt-tag ${c}" title="${e.pl}${e.de?'\n'+e.de:''}">${e.pl.substring(0,12)}${e.pl.length>12?'…':''}</span>`}).join('');
-    if(ev.length>2)tags+=`<span class="cal-evt-tag pl" style="background:#f1f5f9;color:#64748b">+${ev.length-2}</span>`;
-    h+=`<div class="${cls}"><div class="cal-day-num">${d}</div>${pk?`<div class="cal-day-occ">${pk.occ}pok. ${occPct(pk.occ)}%</div>`:''}<div class="cal-day-events">${tags}</div></div>`;
-  }
-  g.innerHTML=h;
-}
-function buildEventsTable(){document.querySelector('#eventsTable tbody').innerHTML=EVENTS_2026.map(e=>`<tr><td>${fmtDate(e.start)}${e.start!==e.end?' – '+fmtDate(e.end):''}</td><td><strong>${e.pl}</strong></td><td>${e.de||'—'}</td><td>${e.country.includes('PL')?'🇵🇱':''} ${e.country.includes('DE')?'🇩🇪':''}</td><td><span style="font-weight:600;color:${e.impact==='Bardzo wysoki'?'#ef4444':e.impact==='Wysoki'?'#f59e0b':e.impact==='Średni'?'#3b82f6':e.impact==='Spadek'?'#94a3b8':'#10b981'}">${e.impact}</span></td></tr>`).join('')}
-
-// INIT
-document.addEventListener('DOMContentLoaded',checkSession);
-</script>
-</body>
-</html>
+// CANCELLATIONS
+document.getElementById('cancelKpis').innerHTML=`<div class="kpi-card red"><div class="kpi-label">Anulacje<small>Cancelled</small></div><div class="kpi-value">${cancelSummary.totalCancels}</div></div><div class="kpi-card rose"><div class="kpi-label">Utracone RN<small>Lost</small></div><div class="kpi-value">${cancelSummary.totalRoomNights}</div></div><div class="kpi-card red"><div class="kpi-label">Utrata<small>Rev. Loss</small></div><div class="kpi-value negative">-${fmtPLN(cancelSummary.totalRevLoss)}</div></div><div class="kpi-card slate"><div class="kpi-label">Śr. Lead<small>Avg days</small></div><div class="kpi-value">${cancelSummary.avgLeadTime}d</div></div>`;
+const nRN=pSum.roomNights-cancelSummary.totalRoomNights,nRev=pSum.totalRev-cancelSummary.totalRevLoss;
+document.getElementById('netPickupKpis').innerHTML=`<div class="kpi-card green"><div class="kpi-label">Nowy pickup<small>New</small></div><div class="kpi-value" style="color:#10b981">+${pSum.bookings}</div></div><div class="kpi-card red"><div class="kpi-label">Anulacje<small>Cancel</small></div><div class="kpi-value negative">-${cancelSummary.totalCancels}</div></div><div class="kpi-card blue"><div class="kpi-label">Netto RN</div><div class="kpi-value" style="color:#10b981">+${nRN}</div></div><div class="kpi-card blue"><div class="kpi-label">Netto przychód</div><div class="kpi-value" style="color:#10b981">+${fmtPLN(nRev)}</div></div>`;
+const rMap={},soMap={};cancelData.forEach(c=>{rMap[c.cancelReason]=(rMap[c.cancelReason]||0)+c.revenueLoss;soMap[c.source]=(soMap[c.source]||0)+c.revenueLoss});
+new Chart(document.getElementById('chartCancelReason'),{type:'bar',data:{labels:Object.keys(rMap).map(k=>k==='REL'?'Release':'Trip Cancelled'),datasets:[{data:Object.values(rMap),backgroundColor:['#f59e0b','#ef4444'],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}}}});
+new Chart(document.getElementById('chartCancelSource'),{type:'doughnut',data:{labels:Object.keys(soMap),datasets:[{data:Object.values(soMap),backgroundColor:['#3b82f6','#f59e0b']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
+const cT=document.getElementById('cancelTable');cT.querySelector('thead').innerHTML='<tr><th>Nr<small>Cancel No.</small></th><th>Gość</th><th>Typ<small>Room</small></th><th>Przyjazd<small>Arr</small></th><th>Lead</th><th>Pok.</th><th>Noce</th><th>Stawka<small>Rate</small></th><th>Utrata<small>Rev.Loss</small></th><th>Źródło<small>Source</small></th><th>Powód<small>Reason</small></th></tr>';
+cT.querySelector('tbody').innerHTML=cancelData.map(c=>`<tr class="row-cancel"><td><strong>${c.cancelNo}</strong></td><td>${c.name}</td><td><span class="pill pill-slate">${c.roomType}</span></td><td>${c.arrDate}</td><td>${c.leadTime}d</td><td>${c.rooms}</td><td>${c.nights}</td><td>${fmtPLN(c.rateAmt)}</td><td style="color:#
