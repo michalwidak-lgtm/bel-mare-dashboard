@@ -1,21 +1,23 @@
-/* ===== BEL MARE v3.1 - APP LOGIC - FIXED ===== */
+/* ===== BEL MARE v3.2 - APP LOGIC - FIXED CHARTS + CALENDAR + TABLES ===== */
 var TR=360,LAT=54.1139,LON=15.7744;
 var MPL=['Styczen','Luty','Marzec','Kwiecien','Maj','Czerwiec','Lipiec','Sierpien','Wrzesien','Pazdziernik','Listopad','Grudzien'];
-var EV26={'2026-04-03':'Wielki Piatek','2026-04-05':'Wielkanoc','2026-04-06':'Pon.Wielkanocny','2026-05-01':'1 Maja','2026-05-03':'3 Maja','2026-06-04':'Boze Cialo','2026-06-27':'Wakacje','2026-08-15':'15 Sierpnia','2026-08-31':'Koniec wakacji'};
+var EV26={'2026-04-03':'Wielki Piatek','2026-04-05':'Wielkanoc','2026-04-06':'Pon.Wielkanocny','2026-05-01':'1 Maja','2026-05-03':'3 Maja','2026-06-04':'Boze Cialo','2026-06-27':'Wakacje','2026-08-15':'15 Sierpnia','2026-08-31':'Koniec wakacji','2026-11-01':'Wszystkich Sw.','2026-11-11':'Niepodleglosc','2026-12-24':'Wigilia','2026-12-25':'Boze Narodzenie','2026-12-26':'2gi dzien BN','2026-12-31':'Sylwester','2027-01-01':'Nowy Rok','2027-01-06':'Trzech Kroli'};
 var DEFUSERS=[{id:'admin',username:'admin',role:'admin',name:'Administrator'},{id:'op1',username:'operacja',role:'user',name:'Dzial Operacyjny'},{id:'rec1',username:'recepcja',role:'viewer',name:'Recepcja'}];
 
-var CU=null,CH={},calM=new Date().getMonth(),calY=new Date().getFullYear();
+var CU=null,CH={},calM=2,calY=2026; /* start: Marzec 2026 */
 var pkgData=[],hskData=[],cancelData=[],rotbData=[];
 var fPkg=[],fHsk=[];
 var selFiles={pkg:null,hsk:null,cancel:null,rotb:null};
 var hist=[];
 
+/* --- helpers --- */
 function fmtD(s){if(!s)return'';var p=s.split('-');return p[2]+'.'+p[1]+'.'+p[0];}
 function fmtN(n){return(n||0).toLocaleString('pl-PL');}
 function fmtPLN(n){return(n||0).toLocaleString('pl-PL',{minimumFractionDigits:2,maximumFractionDigits:2})+' zl';}
 function todStr(){return new Date().toISOString().slice(0,10);}
 function dataRange(){if(!pkgData.length)return{min:'',max:''};var d=pkgData.map(function(r){return r.date;}).sort();return{min:d[0],max:d[d.length-1]};}
 
+/* --- history/snapshots --- */
 function loadHistory(){try{hist=JSON.parse(localStorage.getItem('bm_hist')||'[]');}catch(e){hist=[];}}
 function saveHistory(){if(hist.length>30)hist=hist.slice(-30);try{localStorage.setItem('bm_hist',JSON.stringify(hist));}catch(e){hist=hist.slice(-10);try{localStorage.setItem('bm_hist',JSON.stringify(hist));}catch(e2){}}}
 function lastSnap(){return hist.length?hist[hist.length-1]:null;}
@@ -30,6 +32,7 @@ function loadCurrentData(){
   if(!rotbData.length)rotbData=JSON.parse(JSON.stringify(S_ROTB));
 }
 
+/* --- delta calc --- */
 function calcDelta(cur,prev){
   if(!prev||!cur)return null;
   var d={rotbMonths:[],prevDate:prev.date||'?',curDate:cur.date||'?'};
@@ -64,7 +67,7 @@ function buildDeltaBanner(){
     '</div>'+(mdet?'<div style="margin-top:12px;font-size:12px">'+mdet+'</div>':'')+'</div>';
 }
 
-/* AUTH */
+/* ===== AUTH ===== */
 function getUsers(){var u=localStorage.getItem('bm_users');if(!u){localStorage.setItem('bm_users',JSON.stringify(DEFUSERS));return JSON.parse(JSON.stringify(DEFUSERS));}return JSON.parse(u);}
 function saveUsers(u){localStorage.setItem('bm_users',JSON.stringify(u));}
 
@@ -79,9 +82,7 @@ function handleLogin(){
   document.getElementById('loginOverlay').classList.add('hidden');
   initAfterLogin();
 }
-
 function handleLogout(){sessionStorage.removeItem('bm_cu');CU=null;document.getElementById('loginOverlay').classList.remove('hidden');document.getElementById('loginUser').value='';document.getElementById('loginError').textContent='';}
-
 function checkSession(){var s=sessionStorage.getItem('bm_cu');if(s){CU=JSON.parse(s);document.getElementById('loginOverlay').classList.add('hidden');initAfterLogin();}}
 
 function initAfterLogin(){
@@ -92,7 +93,7 @@ function initAfterLogin(){
   initDash();
 }
 
-/* NAV */
+/* ===== NAV ===== */
 var TITLES={'dashboard':'Dashboard','calendar':'Kalendarz','occupancy':'Oblozenie','rotb':'Rooms on the Books','meals':'Posilki','hsk':'Housekeeping','arrivals':'Przyjazdy / Wyjazdy','cancellations':'Anulacje','changes':'Zmiany','import':'Import','admin':'Admin'};
 var navItems=document.querySelectorAll('.ni');
 for(var i=0;i<navItems.length;i++){
@@ -107,7 +108,7 @@ for(var i=0;i<navItems.length;i++){
   });
 }
 
-/* FILTER */
+/* ===== FILTER ===== */
 function initFilters(){
   var r=dataRange();if(!r.min)return;
   var suf=['','O','M','H','A'];
@@ -141,7 +142,7 @@ function preset(t){
   applyFilter();
 }
 
-/* KPI */
+/* ===== KPI ===== */
 function buildKPI(){
   var d=fPkg,h=fHsk;
   if(!d.length){document.getElementById('kpiGrid').innerHTML='<p style="color:#94a3b8;grid-column:1/-1;text-align:center;padding:40px">Brak danych</p>';return;}
@@ -174,76 +175,161 @@ function buildMonthSummary(){
   el.innerHTML=h;
 }
 
-/* CHARTS */
+/* ===== CHARTS ===== */
 function dc(id){if(CH[id]){CH[id].destroy();delete CH[id];}}
+
+/* helper: color for occ bar */
+function occColor(occ){
+  var pct=occ/TR*100;
+  if(pct>=90)return'#ef4444';
+  if(pct>=70)return'#f59e0b';
+  if(pct>=40)return'#3b82f6';
+  return'#10b981';
+}
+function occColorArr(arr){var c=[];for(var i=0;i<arr.length;i++)c.push(occColor(arr[i]));return c;}
 
 function buildDashCharts(){
   var d=fPkg;if(!d.length)return;
   var lb=[];for(var i=0;i<d.length;i++)lb.push(d[i].date.slice(5).replace('-','.'));
   var occD=[],limD=[];for(var i=0;i<d.length;i++){occD.push(d[i].occ);limD.push(TR);}
-  dc('chOcc');CH.chOcc=new Chart(document.getElementById('chOcc'),{type:'line',data:{labels:lb,datasets:[{label:'Pokoje',data:occD,borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.1)',fill:true,tension:.3,pointRadius:2},{label:'360',data:limD,borderColor:'#ef4444',borderDash:[5,5],pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,max:TR+20}}}});
+  dc('chOcc');CH.chOcc=new Chart(document.getElementById('chOcc'),{type:'line',data:{labels:lb,datasets:[{label:'Pokoje',data:occD,borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.1)',fill:true,tension:.3,pointRadius:2},{label:'360',data:limD,borderColor:'#ef4444',borderDash:[5,5],pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},datalabels:{display:false}},scales:{y:{beginAtZero:true,max:TR+20}}}});
 
   var bD=[],dD=[],lD=[],wD=[];for(var i=0;i<d.length;i++){bD.push(d[i].bfk);dD.push(d[i].din);lD.push(d[i].lun);wD.push(d[i].wst||0);}
-  dc('chMeals');CH.chMeals=new Chart(document.getElementById('chMeals'),{type:'bar',data:{labels:lb,datasets:[{label:'Sniadania',data:bD,backgroundColor:'#f59e0b'},{label:'Kolacje',data:dD,backgroundColor:'#8b5cf6'},{label:'Obiady',data:lD,backgroundColor:'#10b981'},{label:'Wstawki',data:wD,backgroundColor:'#ec4899'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
+  dc('chMeals');CH.chMeals=new Chart(document.getElementById('chMeals'),{type:'bar',data:{labels:lb,datasets:[{label:'Sniadania',data:bD,backgroundColor:'#f59e0b'},{label:'Kolacje',data:dD,backgroundColor:'#8b5cf6'},{label:'Obiady',data:lD,backgroundColor:'#10b981'},{label:'Wstawki',data:wD,backgroundColor:'#ec4899'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},datalabels:{display:false}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
 
   var aD=[],cD=[];for(var i=0;i<d.length;i++){aD.push(d[i].adu);cD.push(d[i].ch);}
-  dc('chGuests');CH.chGuests=new Chart(document.getElementById('chGuests'),{type:'line',data:{labels:lb,datasets:[{label:'Dorosli',data:aD,borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.08)',fill:true,tension:.3,pointRadius:2},{label:'Dzieci',data:cD,borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.08)',fill:true,tension:.3,pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}});
+  dc('chGuests');CH.chGuests=new Chart(document.getElementById('chGuests'),{type:'line',data:{labels:lb,datasets:[{label:'Dorosli',data:aD,borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.08)',fill:true,tension:.3,pointRadius:2},{label:'Dzieci',data:cD,borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.08)',fill:true,tension:.3,pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},datalabels:{display:false}},scales:{y:{beginAtZero:true}}}});
 
   if(rotbData.length){
-    var am=[],ml=[];for(var i=0;i<rotbData.length;i++){if(rotbData[i].totalRooms>0||rotbData[i].lyOccPct>0){am.push(rotbData[i]);ml.push(rotbData[i].month.split(' ')[0]);}}
+    var am=[],ml=[];for(var i=0;i<rotbData.length;i++){if(rotbData[i].totalRooms>0||rotbData[i].lyOccPct>0){am.push(rotbData[i]);ml.push(rotbData[i].month);}}
     var oD=[],lyD=[],rD=[];for(var i=0;i<am.length;i++){oD.push(am[i].occPct);lyD.push(am[i].lyOccPct);rD.push(am[i].totalRooms);}
-    dc('chRotbD');CH.chRotbD=new Chart(document.getElementById('chRotbD'),{type:'bar',data:{labels:ml,datasets:[{label:'Occ%',data:oD,backgroundColor:'rgba(37,99,235,.7)'},{label:'LY%',data:lyD,backgroundColor:'rgba(239,68,68,.3)'},{type:'line',label:'Pokoje',data:rD,borderColor:'#10b981',yAxisID:'y1',tension:.3,pointRadius:4,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,max:100},y1:{position:'right',beginAtZero:true,grid:{drawOnChartArea:false}}}}});
+    dc('chRotbD');CH.chRotbD=new Chart(document.getElementById('chRotbD'),{type:'bar',data:{labels:ml,datasets:[{label:'Occ%',data:oD,backgroundColor:'rgba(37,99,235,.7)'},{label:'LY%',data:lyD,backgroundColor:'rgba(239,68,68,.3)'},{type:'line',label:'Pokoje',data:rD,borderColor:'#10b981',yAxisID:'y1',tension:.3,pointRadius:4,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},datalabels:{display:false}},scales:{y:{beginAtZero:true,max:100},y1:{position:'right',beginAtZero:true,grid:{drawOnChartArea:false}}}}});
   }
 }
 
+/* ===== SUB-PAGES (OCC, MEALS, HSK, ARR, CANCEL) ===== */
 function buildSubPages(){
   var d=fPkg,h=fHsk,td=todStr();if(!d.length)return;
   var lb=[];for(var i=0;i<d.length;i++)lb.push(d[i].date.slice(5).replace('-','.'));
 
-  var occP=[],occR=[];for(var i=0;i<d.length;i++){occP.push((d[i].occ/TR*100).toFixed(1));occR.push(d[i].occ);}
-  dc('chOccD');CH.chOccD=new Chart(document.getElementById('chOccD'),{type:'bar',data:{labels:lb,datasets:[{type:'line',label:'%',data:occP,borderColor:'#ef4444',yAxisID:'y1',pointRadius:2,tension:.3,fill:false},{label:'Pokoje',data:occR,backgroundColor:'rgba(37,99,235,.6)',yAxisID:'y'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,max:TR+20},y1:{position:'right',min:0,max:110,grid:{drawOnChartArea:false}}}}});
-  var t='<table><thead><tr><th>Data</th><th>Dzien</th><th>Pokoje</th><th>%</th><th>Dorosli</th><th>Dzieci</th><th>Prz.Pok</th><th>Wyj.Pok</th></tr></thead><tbody>';
-  for(var i=0;i<d.length;i++){var r=d[i];var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+r.date.slice(5).replace('-','.')+'</td><td>'+r.day+'</td><td class="num"><strong>'+r.occ+'</strong></td><td class="num">'+(r.occ/TR*100).toFixed(1)+'%</td><td class="num">'+r.adu+'</td><td class="num">'+r.ch+'</td><td class="num">'+r.arrR+'</td><td class="num">'+r.depR+'</td></tr>';}
-  t+='</tbody></table>';document.getElementById('tblOcc').innerHTML=t;
+  /* --- OCCUPANCY CHART: dynamic scale + datalabels + dual axis --- */
+  var occP=[],occR=[];for(var i=0;i<d.length;i++){occP.push(parseFloat((d[i].occ/TR*100).toFixed(1)));occR.push(d[i].occ);}
+  var maxOcc=Math.max.apply(null,occR);
+  var maxY=Math.ceil(maxOcc*1.15/50)*50;if(maxY<50)maxY=50;
+  dc('chOccD');
+  CH.chOccD=new Chart(document.getElementById('chOccD'),{
+    type:'bar',
+    data:{labels:lb,datasets:[
+      {label:'Pokoje',data:occR,backgroundColor:occColorArr(occR),yAxisID:'y',order:2},
+      {type:'line',label:'% occ',data:occP,borderColor:'#ef4444',borderWidth:2,yAxisID:'y1',pointRadius:3,tension:.3,fill:false,order:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'bottom'},
+        datalabels:{
+          display:function(ctx){return ctx.datasetIndex===0;},
+          anchor:'end',align:'top',
+          font:{size:10,weight:'bold'},
+          color:'#1e293b',
+          formatter:function(v){return v;}
+        }
+      },
+      scales:{
+        y:{beginAtZero:true,max:maxY,ticks:{stepSize:50},title:{display:true,text:'Pokoje'}},
+        y1:{position:'right',min:0,max:Math.min(110,Math.ceil(maxOcc/TR*100*1.3)),grid:{drawOnChartArea:false},ticks:{callback:function(v){return v+'%';}},title:{display:true,text:'% occ'}}
+      }
+    },
+    plugins:[ChartDataLabels]
+  });
 
+  /* --- OCCUPANCY TABLE: fixed columns + occ bar --- */
+  var t='<table class="occ-tbl"><colgroup><col style="width:78px"><col style="width:54px"><col style="width:60px"><col style="width:100px"><col style="width:60px"><col style="width:60px"><col style="width:58px"><col style="width:58px"></colgroup>';
+  t+='<thead><tr><th>Data</th><th>Dzien</th><th>Pokoje</th><th>Oblozenie</th><th>Dorosli</th><th>Dzieci</th><th>Prz.Pok</th><th>Wyj.Pok</th></tr></thead><tbody>';
+  var sumOcc=0,sumAdu=0,sumCh=0,sumArr=0,sumDep=0;
+  for(var i=0;i<d.length;i++){
+    var r=d[i];var pct=(r.occ/TR*100);
+    var bc=pct>=90?'hi':pct>=70?'mh':pct>=40?'md':'lo';
+    var bw=Math.min(pct,100);
+    var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';
+    t+='<tr class="'+c+'"><td>'+fmtD(r.date)+'</td><td>'+r.day+'</td><td class="num"><strong>'+r.occ+'</strong></td>';
+    t+='<td><span class="occ-pct">'+pct.toFixed(1)+'%</span><span class="occ-bar '+bc+'" style="width:'+bw+'px"></span></td>';
+    t+='<td class="num">'+r.adu+'</td><td class="num">'+r.ch+'</td><td class="num">'+r.arrR+'</td><td class="num">'+r.depR+'</td></tr>';
+    sumOcc+=r.occ;sumAdu+=r.adu;sumCh+=r.ch;sumArr+=r.arrR;sumDep+=r.depR;
+  }
+  var avgOcc=d.length?(sumOcc/d.length):0;var avgPct=(avgOcc/TR*100);
+  t+='<tr style="font-weight:700;background:#f1f5f9"><td colspan="2">RAZEM / SR.</td><td class="num">'+avgOcc.toFixed(0)+'</td><td>'+avgPct.toFixed(1)+'%</td><td class="num">'+fmtN(sumAdu)+'</td><td class="num">'+fmtN(sumCh)+'</td><td class="num">'+fmtN(sumArr)+'</td><td class="num">'+fmtN(sumDep)+'</td></tr>';
+  t+='</tbody></table>';
+  document.getElementById('tblOcc').innerHTML=t;
+
+  /* --- MEALS --- */
   var bD=[],dD=[],lD=[],wD=[];for(var i=0;i<d.length;i++){bD.push(d[i].bfk);dD.push(d[i].din);lD.push(d[i].lun);wD.push(d[i].wst||0);}
-  dc('chMD');CH.chMD=new Chart(document.getElementById('chMD'),{type:'line',data:{labels:lb,datasets:[{label:'Sniadania',data:bD,borderColor:'#f59e0b',tension:.3,pointRadius:2},{label:'Kolacje',data:dD,borderColor:'#8b5cf6',tension:.3,pointRadius:2},{label:'Obiady',data:lD,borderColor:'#10b981',tension:.3,pointRadius:2},{label:'Wstawki',data:wD,borderColor:'#ec4899',tension:.3,pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}});
+  dc('chMD');CH.chMD=new Chart(document.getElementById('chMD'),{type:'line',data:{labels:lb,datasets:[{label:'Sniadania',data:bD,borderColor:'#f59e0b',tension:.3,pointRadius:2},{label:'Kolacje',data:dD,borderColor:'#8b5cf6',tension:.3,pointRadius:2},{label:'Obiady',data:lD,borderColor:'#10b981',tension:.3,pointRadius:2},{label:'Wstawki',data:wD,borderColor:'#ec4899',tension:.3,pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},datalabels:{display:false}},scales:{y:{beginAtZero:true}}}});
   var totD=[];for(var i=0;i<d.length;i++)totD.push(d[i].bfk+d[i].din+d[i].lun+(d[i].wst||0));
-  dc('chMT');CH.chMT=new Chart(document.getElementById('chMT'),{type:'bar',data:{labels:lb,datasets:[{label:'Lacznie',data:totD,backgroundColor:'rgba(99,102,241,.6)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+  dc('chMT');CH.chMT=new Chart(document.getElementById('chMT'),{type:'bar',data:{labels:lb,datasets:[{label:'Lacznie',data:totD,backgroundColor:'rgba(99,102,241,.6)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true}}}});
   t='<table><thead><tr><th>Data</th><th>Dzien</th><th>Sniadania</th><th>Kolacje</th><th>Obiady</th><th>Wstawki</th><th>Razem</th></tr></thead><tbody>';
-  for(var i=0;i<d.length;i++){var r=d[i];var tot=r.bfk+r.din+r.lun+(r.wst||0);var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+r.date.slice(5).replace('-','.')+'</td><td>'+r.day+'</td><td class="num">'+r.bfk+'</td><td class="num">'+r.din+'</td><td class="num">'+r.lun+'</td><td class="num">'+(r.wst||0)+'</td><td class="num"><strong>'+tot+'</strong></td></tr>';}
+  for(var i=0;i<d.length;i++){var r=d[i];var tot=r.bfk+r.din+r.lun+(r.wst||0);var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+fmtD(r.date)+'</td><td>'+r.day+'</td><td class="num">'+r.bfk+'</td><td class="num">'+r.din+'</td><td class="num">'+r.lun+'</td><td class="num">'+(r.wst||0)+'</td><td class="num"><strong>'+tot+'</strong></td></tr>';}
   t+='</tbody></table>';document.getElementById('tblMeals').innerHTML=t;
 
+  /* --- HSK --- */
   if(h.length){
     var hl=[];for(var i=0;i<h.length;i++)hl.push(h[i].date.slice(5).replace('-','.'));
     var mD=[],aD2=[],dpD=[],eD=[];for(var i=0;i<h.length;i++){mD.push(h[i].morn);aD2.push(h[i].arr);dpD.push(h[i].dep);eD.push(h[i].eve);}
-    dc('chHD');CH.chHD=new Chart(document.getElementById('chHD'),{type:'bar',data:{labels:hl,datasets:[{label:'Poranne',data:mD,backgroundColor:'#60a5fa'},{label:'Przyjazdy',data:aD2,backgroundColor:'#34d399'},{label:'Wyjazdy',data:dpD,backgroundColor:'#f87171'},{type:'line',label:'Wieczorne',data:eD,borderColor:'#8b5cf6',pointRadius:2,tension:.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}});
+    dc('chHD');CH.chHD=new Chart(document.getElementById('chHD'),{type:'bar',data:{labels:hl,datasets:[{label:'Poranne',data:mD,backgroundColor:'#60a5fa'},{label:'Przyjazdy',data:aD2,backgroundColor:'#34d399'},{label:'Wyjazdy',data:dpD,backgroundColor:'#f87171'},{type:'line',label:'Wieczorne',data:eD,borderColor:'#8b5cf6',pointRadius:2,tension:.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},datalabels:{display:false}},scales:{y:{beginAtZero:true}}}});
     t='<table><thead><tr><th>Data</th><th>Dzien</th><th>Goscie</th><th>Poranne</th><th>Przyjazdy</th><th>Wyjazdy</th><th>Wieczorne</th><th>Suma</th></tr></thead><tbody>';
-    for(var i=0;i<h.length;i++){var r=h[i];var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+r.date.slice(5).replace('-','.')+'</td><td>'+r.day+'</td><td class="num">'+r.guests+'</td><td class="num">'+r.morn+'</td><td class="num">'+r.arr+'</td><td class="num">'+r.dep+'</td><td class="num">'+r.eve+'</td><td class="num"><strong>'+(r.morn+r.arr+r.dep)+'</strong></td></tr>';}
+    for(var i=0;i<h.length;i++){var r=h[i];var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+fmtD(r.date)+'</td><td>'+r.day+'</td><td class="num">'+r.guests+'</td><td class="num">'+r.morn+'</td><td class="num">'+r.arr+'</td><td class="num">'+r.dep+'</td><td class="num">'+r.eve+'</td><td class="num"><strong>'+(r.morn+r.arr+r.dep)+'</strong></td></tr>';}
     t+='</tbody></table>';document.getElementById('tblHsk').innerHTML=t;
   }
 
+  /* --- ARRIVALS --- */
   var arrD=[],depD2=[];for(var i=0;i<d.length;i++){arrD.push(d[i].arrR);depD2.push(-d[i].depR);}
-  dc('chArr');CH.chArr=new Chart(document.getElementById('chArr'),{type:'bar',data:{labels:lb,datasets:[{label:'Przyjazdy',data:arrD,backgroundColor:'#34d399'},{label:'Wyjazdy',data:depD2,backgroundColor:'#f87171'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+  dc('chArr');CH.chArr=new Chart(document.getElementById('chArr'),{type:'bar',data:{labels:lb,datasets:[{label:'Przyjazdy',data:arrD,backgroundColor:'#34d399'},{label:'Wyjazdy',data:depD2,backgroundColor:'#f87171'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},datalabels:{display:false}}}});
   t='<table><thead><tr><th>Data</th><th>Dzien</th><th>Prz.Pok</th><th>Prz.Os</th><th>Wyj.Pok</th><th>Wyj.Os</th><th>Bilans</th></tr></thead><tbody>';
-  for(var i=0;i<d.length;i++){var r=d[i];var b=r.arrR-r.depR;var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+r.date.slice(5).replace('-','.')+'</td><td>'+r.day+'</td><td class="num">'+r.arrR+'</td><td class="num">'+r.arrP+'</td><td class="num">'+r.depR+'</td><td class="num">'+r.depP+'</td><td class="num" style="color:'+(b>0?'var(--ok)':b<0?'var(--err)':'inherit')+';font-weight:600">'+(b>0?'+':'')+b+'</td></tr>';}
+  for(var i=0;i<d.length;i++){var r=d[i];var b=r.arrR-r.depR;var c=r.date===td?'today':(r.day==='Sob.'||r.day==='Niedz.')?'wknd':'';t+='<tr class="'+c+'"><td>'+fmtD(r.date)+'</td><td>'+r.day+'</td><td class="num">'+r.arrR+'</td><td class="num">'+r.arrP+'</td><td class="num">'+r.depR+'</td><td class="num">'+r.depP+'</td><td class="num" style="color:'+(b>0?'var(--ok)':b<0?'var(--err)':'inherit')+';font-weight:600">'+(b>0?'+':'')+b+'</td></tr>';}
   t+='</tbody></table>';document.getElementById('tblArr').innerHTML=t;
 
-  var cd=cancelData;var tLoss=0,tNts=0;for(var i=0;i<cd.length;i++){tLoss+=cd[i].revLoss||0;tNts+=cd[i].nts||0;}
-  var reasons={};for(var i=0;i<cd.length;i++){var rr=cd[i].reason||'?';reasons[rr]=(reasons[rr]||0)+1;}
-  var rStr='';for(var k in reasons)rStr+=k+':'+reasons[k]+' ';
+  /* --- CANCELLATIONS --- */
+  var cd=cancelData;var tLoss=0,tNts=0,tDep=0;
+  for(var i=0;i<cd.length;i++){tLoss+=cd[i].revLoss||0;tNts+=cd[i].nts||0;tDep+=cd[i].deposit||0;}
+  var reasons={},sources={};
+  for(var i=0;i<cd.length;i++){
+    var rr=cd[i].reason||'?';reasons[rr]=(reasons[rr]||0)+(cd[i].revLoss||0);
+    var src=cd[i].mkt||'?';sources[src]=(sources[src]||0)+1;
+  }
+  var avgLT=0;for(var i=0;i<cd.length;i++)avgLT+=cd[i].leadTime||0;avgLT=cd.length?(avgLT/cd.length):0;
+  var avgNR=tNts>0?(tLoss/tNts):0;
+
   document.getElementById('cancelKpi').innerHTML=
-    '<div class="kc red"><div class="kt">ANULACJE</div><div class="kv">'+cd.length+'</div><div class="kd">'+tNts+' nocy</div></div>'+
-    '<div class="kc orange"><div class="kt">REVENUE LOSS</div><div class="kv">'+fmtPLN(tLoss)+'</div><div class="kd">Sr. '+(cd.length?fmtPLN(tLoss/cd.length):'-')+'</div></div>'+
-    '<div class="kc purple"><div class="kt">POWODY</div><div class="kv">'+Object.keys(reasons).length+'</div><div class="kd">'+rStr+'</div></div>';
-  t='<table><thead><tr><th>#</th><th>Nr</th><th>Nazwisko</th><th>Typ</th><th>Przyjazd</th><th>Noce</th><th>Rate</th><th>Rev Loss</th><th>Powod</th></tr></thead><tbody>';
-  for(var i=0;i<cd.length;i++){var c2=cd[i];t+='<tr><td>'+(i+1)+'</td><td>'+c2.confNo+'</td><td>'+c2.name+'</td><td><span class="pill pill-b">'+c2.roomType+'</span></td><td>'+c2.arrDate+'</td><td class="num">'+c2.nts+'</td><td>'+c2.rate+'</td><td class="num" style="color:var(--err);font-weight:600">'+fmtPLN(c2.revLoss||0)+'</td><td><span class="pill pill-o">'+c2.reason+'</span></td></tr>';}
-  if(cd.length)t+='<tr style="font-weight:700;background:#f1f5f9"><td colspan="7">RAZEM</td><td class="num" style="color:var(--err)">'+fmtPLN(tLoss)+'</td><td></td></tr>';
+    '<div class="kc red"><div class="kt">ANULACJE</div><div class="kv">'+cd.length+'</div><div class="kd">'+tNts+' pokojonocy</div></div>'+
+    '<div class="kc orange"><div class="kt">UTRACONY PRZYCHOD</div><div class="kv">'+fmtPLN(tLoss)+'</div><div class="kd">Sr. '+(cd.length?fmtPLN(tLoss/cd.length):'-')+'/anulacje</div></div>'+
+    '<div class="kc blue"><div class="kt">ZALICZKI</div><div class="kv">'+fmtPLN(tDep)+'</div></div>'+
+    '<div class="kc purple"><div class="kt">SR. LEAD TIME</div><div class="kv">'+avgLT.toFixed(1)+' dni</div></div>'+
+    '<div class="kc teal"><div class="kt">SR. STAWKA/NOC</div><div class="kv">'+fmtPLN(avgNR)+'</div></div>';
+
+  /* cancel charts */
+  var rKeys=Object.keys(reasons),rVals=[];for(var i=0;i<rKeys.length;i++)rVals.push(reasons[rKeys[i]]);
+  var sKeys=Object.keys(sources),sVals=[];for(var i=0;i<sKeys.length;i++)sVals.push(sources[sKeys[i]]);
+  var rColors=['#ef4444','#f59e0b','#3b82f6','#8b5cf6','#ec4899','#14b8a6'];
+  dc('chCancelReason');
+  if(rKeys.length){
+    CH.chCancelReason=new Chart(document.getElementById('chCancelReason'),{type:'bar',data:{labels:rKeys,datasets:[{label:'Utracony przychod (PLN)',data:rVals,backgroundColor:rColors.slice(0,rKeys.length)}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},datalabels:{anchor:'end',align:'right',font:{size:11,weight:'bold'},formatter:function(v){return fmtN(v)+' zl';}}},scales:{x:{beginAtZero:true}}},plugins:[ChartDataLabels]});
+  }
+  dc('chCancelSource');
+  if(sKeys.length){
+    CH.chCancelSource=new Chart(document.getElementById('chCancelSource'),{type:'doughnut',data:{labels:sKeys,datasets:[{data:sVals,backgroundColor:rColors.slice(0,sKeys.length)}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},datalabels:{font:{size:13,weight:'bold'},color:'#fff',formatter:function(v,ctx){return ctx.chart.data.labels[ctx.dataIndex]+': '+v;}}}}});
+  }
+
+  t='<table><thead><tr><th>#</th><th>Nr rez.</th><th>Nazwisko</th><th>Typ pok.</th><th>Przyjazd</th><th>Anulacja</th><th>Lead</th><th>Pok</th><th>Noce</th><th>Zrodlo</th><th>Stawka</th><th>Stawka/noc</th><th>Rev Loss</th><th>Zaliczka</th><th>Powod</th></tr></thead><tbody>';
+  for(var i=0;i<cd.length;i++){
+    var c2=cd[i];
+    t+='<tr><td>'+(i+1)+'</td><td>'+c2.confNo+'</td><td>'+c2.name+'</td><td><span class="pill pill-b">'+c2.roomType+'</span></td><td>'+c2.arrDate+'</td><td>'+c2.cancelDate+'</td><td class="num">'+c2.leadTime+'</td><td class="num">'+c2.rms+'</td><td class="num">'+c2.nts+'</td><td>'+c2.mkt+'</td><td>'+c2.rate+'</td><td class="num">'+fmtPLN(c2.rateAmt)+'</td><td class="num" style="color:var(--err);font-weight:600">'+fmtPLN(c2.revLoss||0)+'</td><td class="num">'+fmtPLN(c2.deposit||0)+'</td><td><span class="pill pill-o">'+c2.reason+'</span> <small>'+c2.reasonDesc+'</small></td></tr>';
+  }
+  if(cd.length)t+='<tr style="font-weight:700;background:#f1f5f9"><td colspan="8">RAZEM</td><td class="num">'+tNts+'</td><td colspan="3"></td><td class="num" style="color:var(--err)">'+fmtPLN(tLoss)+'</td><td class="num">'+fmtPLN(tDep)+'</td><td></td></tr>';
   t+='</tbody></table>';document.getElementById('tblCancel').innerHTML=t;
 
   buildRotbPage();
 }
 
+/* ===== ROTB PAGE ===== */
 function buildRotbPage(){
   var d=rotbData;if(!d.length)return;
   var totR=0,totRev=0;for(var i=0;i<d.length;i++){totR+=d[i].totalRooms;totRev+=d[i].revenue;}
@@ -263,11 +349,11 @@ function buildRotbPage(){
   }
   document.getElementById('rotbCards').innerHTML=cards;
 
-  var am=[],ml=[];for(var i=0;i<d.length;i++){if(d[i].totalRooms>0||d[i].lyOccPct>0){am.push(d[i]);ml.push(d[i].month.split(' ')[0]);}}
+  var am=[],ml=[];for(var i=0;i<d.length;i++){if(d[i].totalRooms>0||d[i].lyOccPct>0){am.push(d[i]);ml.push(d[i].month);}}
   var oD=[],lyD3=[],rD=[],revD=[],adrD=[];
   for(var i=0;i<am.length;i++){oD.push(am[i].occPct);lyD3.push(am[i].lyOccPct);rD.push(am[i].totalRooms);revD.push(am[i].revenue);adrD.push(am[i].adr);}
-  dc('chRotb');CH.chRotb=new Chart(document.getElementById('chRotb'),{type:'bar',data:{labels:ml,datasets:[{label:'Occ%',data:oD,backgroundColor:'rgba(37,99,235,.7)'},{label:'LY%',data:lyD3,backgroundColor:'rgba(239,68,68,.3)'},{type:'line',label:'Pokoje',data:rD,borderColor:'#10b981',yAxisID:'y1',tension:.3,pointRadius:4,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,max:100},y1:{position:'right',beginAtZero:true,grid:{drawOnChartArea:false}}}}});
-  dc('chRev');CH.chRev=new Chart(document.getElementById('chRev'),{type:'bar',data:{labels:ml,datasets:[{label:'Revenue',data:revD,backgroundColor:'rgba(16,185,129,.6)'},{type:'line',label:'ADR',data:adrD,borderColor:'#f59e0b',yAxisID:'y1',tension:.3,pointRadius:4,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true},y1:{position:'right',beginAtZero:true,grid:{drawOnChartArea:false}}}}});
+  dc('chRotb');CH.chRotb=new Chart(document.getElementById('chRotb'),{type:'bar',data:{labels:ml,datasets:[{label:'Occ%',data:oD,backgroundColor:'rgba(37,99,235,.7)'},{label:'LY%',data:lyD3,backgroundColor:'rgba(239,68,68,.3)'},{type:'line',label:'Pokoje',data:rD,borderColor:'#10b981',yAxisID:'y1',tension:.3,pointRadius:4,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},datalabels:{display:false}},scales:{y:{beginAtZero:true,max:100},y1:{position:'right',beginAtZero:true,grid:{drawOnChartArea:false}}}}});
+  dc('chRev');CH.chRev=new Chart(document.getElementById('chRev'),{type:'bar',data:{labels:ml,datasets:[{label:'Revenue',data:revD,backgroundColor:'rgba(16,185,129,.6)'},{type:'line',label:'ADR',data:adrD,borderColor:'#f59e0b',yAxisID:'y1',tension:.3,pointRadius:4,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},datalabels:{display:false}},scales:{y:{beginAtZero:true},y1:{position:'right',beginAtZero:true,grid:{drawOnChartArea:false}}}}});
 
   var t2='<table><thead><tr><th>Miesiac</th><th>Pokoje OTB</th><th>Occ %</th><th>LY %</th><th>D pp</th><th>Revenue</th><th>ADR</th></tr></thead><tbody>';
   for(var i=0;i<d.length;i++){var m2=d[i];var diff2=(m2.occPct-m2.lyOccPct).toFixed(1);t2+='<tr><td><strong>'+m2.month+'</strong></td><td class="num">'+fmtN(m2.totalRooms)+'</td><td class="num">'+m2.occPct+'%</td><td class="num">'+m2.lyOccPct+'%</td><td class="num" style="color:'+(diff2>=0?'var(--ok)':'var(--err)')+';font-weight:600">'+(diff2>=0?'+':'')+diff2+'</td><td class="num">'+fmtPLN(m2.revenue)+'</td><td class="num">'+(m2.adr>0?fmtPLN(m2.adr):'-')+'</td></tr>';}
@@ -275,8 +361,13 @@ function buildRotbPage(){
   document.getElementById('tblRotb').innerHTML=t2;
 }
 
-/* CALENDAR */
-function calMo(dir){calM+=dir;if(calM>11){calM=0;calY++;}if(calM<0){calM=11;calY--;}buildCal();}
+/* ===== CALENDAR — full range Mar 2026 -> Mar 2027+ ===== */
+function calMo(dir){
+  calM+=dir;
+  if(calM>11){calM=0;calY++;}
+  if(calM<0){calM=11;calY--;}
+  buildCal();
+}
 
 function buildCal(){
   document.getElementById('calLabel').textContent=MPL[calM]+' '+calY;
@@ -286,25 +377,45 @@ function buildCal(){
   var first=new Date(calY,calM,1);var startDay=(first.getDay()+6)%7;
   var daysInMonth=new Date(calY,calM+1,0).getDate();
   var td=todStr();
-  var rotbMap={};
-  for(var i=0;i<pkgData.length;i++){rotbMap[pkgData[i].date]=pkgData[i].occ;}
+
+  /* build map from pkgData + rotbData */
+  var occMap={};
+  for(var i=0;i<pkgData.length;i++){occMap[pkgData[i].date]=pkgData[i].occ;}
+
+  /* try to get ROTB monthly data */
+  var rotbMonth=null;
+  for(var i=0;i<rotbData.length;i++){
+    if(rotbData[i].monthIdx===calM&&rotbData[i].year===calY){rotbMonth=rotbData[i];break;}
+  }
+
   for(var i=0;i<startDay;i++){h+='<div class="cald om"></div>';}
   for(var day=1;day<=daysInMonth;day++){
     var ds=calY+'-'+String(calM+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
     var isTod=ds===td;
-    var occ=rotbMap[ds];
-    var pct=occ!==undefined?(occ/TR*100):0;
-    var cls2=occ===undefined?'no':pct>=80?'hi':pct>=50?'md':'lo';
+    var occ=occMap[ds];
+    var pct,cls2;
+    if(occ!==undefined){
+      pct=(occ/TR*100);
+      cls2=pct>=90?'hi':pct>=70?'mh':pct>=40?'md':'lo';
+    } else if(rotbMonth&&rotbMonth.occPct>0){
+      /* estimate from monthly avg */
+      pct=rotbMonth.occPct;
+      occ=Math.round(TR*pct/100);
+      cls2=pct>=90?'hi':pct>=70?'mh':pct>=40?'md':'lo';
+    } else {
+      pct=0;cls2='no';
+    }
     var ev=EV26[ds];
     h+='<div class="cald'+(isTod?' tod':'')+'"><div class="dnum">'+day+'</div>';
-    if(occ!==undefined)h+='<div class="docc '+cls2+'">'+occ+' ('+pct.toFixed(0)+'%)</div>';
+    if(occ!==undefined&&occ>0)h+='<div class="docc '+cls2+'">'+occ+' ('+pct.toFixed(0)+'%)</div>';
+    else if(cls2!=='no')h+='<div class="docc '+cls2+'">~'+occ+' ('+pct.toFixed(0)+'%)</div>';
     if(ev)h+='<div class="dev">'+ev+'</div>';
     h+='</div>';
   }
   grid.innerHTML=h;
 }
 
-/* CHANGES */
+/* ===== CHANGES ===== */
 function buildChanges(){
   var el=document.getElementById('changesContent');
   if(hist.length<2){el.innerHTML='<div class="alm"><h3>Brak danych do porownania</h3><p style="margin-top:8px">Potrzebujesz min. 2 importow.</p></div>';return;}
@@ -320,7 +431,7 @@ function buildChanges(){
   h2+='</div>';el.innerHTML=h2;
 }
 
-/* IMPORT */
+/* ===== IMPORT ===== */
 function fSel(type,input){
   if(input.files&&input.files[0]){
     selFiles[type]=input.files[0];
@@ -367,7 +478,7 @@ function buildHistList(){
   h3+='</tbody></table>';el.innerHTML=h3;
 }
 
-/* ADMIN */
+/* ===== ADMIN ===== */
 function buildAdmin(){
   var el=document.getElementById('adminContent');
   if(!CU||CU.role!=='admin'){el.innerHTML='<div class="alm"><h3>Brak dostepu</h3></div>';return;}
@@ -375,66 +486,4 @@ function buildAdmin(){
   var h4='<div class="acard"><h3>Uzytkownicy</h3><table class="ul"><thead><tr><th>Login</th><th>Nazwa</th><th>Rola</th><th></th></tr></thead><tbody>';
   for(var i=0;i<users.length;i++){
     var u=users[i];var rc=u.role==='admin'?'r-a':u.role==='user'?'r-u':'r-v';
-    h4+='<tr><td>'+u.username+'</td><td>'+u.name+'</td><td><span class="rb '+rc+'">'+u.role+'</span></td><td>'+(u.username!=='admin'?'<button class="dub" onclick="delUser(\''+u.id+'\')">Usun</button>':'')+'</td></tr>';
-  }
-  h4+='</tbody></table></div>';
-  h4+='<div class="acard"><h3>Dodaj uzytkownika</h3><div class="af"><div><label>Login</label><input id="nuUser"></div><div><label>Nazwa</label><input id="nuName"></div><div><label>Rola</label><select id="nuRole"><option value="user">Operator</option><option value="viewer">Podglad</option><option value="admin">Admin</option></select></div><button onclick="addUser()">Dodaj</button></div></div>';
-  el.innerHTML=h4;
-}
-
-function addUser(){
-  var un=document.getElementById('nuUser').value.trim();
-  var nm=document.getElementById('nuName').value.trim();
-  var rl=document.getElementById('nuRole').value;
-  if(!un||!nm)return;
-  var users=getUsers();
-  for(var i=0;i<users.length;i++){if(users[i].username===un){alert('Login zajety');return;}}
-  users.push({id:'u'+Date.now(),username:un,role:rl,name:nm});
-  saveUsers(users);buildAdmin();
-}
-
-function delUser(id){
-  var users=getUsers();var nu=[];
-  for(var i=0;i<users.length;i++){if(users[i].id!==id)nu.push(users[i]);}
-  saveUsers(nu);buildAdmin();
-}
-
-/* PRINT */
-function printSec(id){var c=document.getElementById(id);if(!c)return;var w=window.open('','','width=900,height=600');w.document.write('<html><head><title>Print</title></head><body>'+c.parentElement.parentElement.innerHTML+'</body></html>');w.document.close();w.print();}
-function printTbl(id){var c=document.getElementById(id);if(!c)return;var w=window.open('','','width=900,height=600');w.document.write('<html><head><title>Print</title><style>table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #ccc;padding:6px;text-align:left}th{background:#f1f5f9}</style></head><body>'+c.innerHTML+'</body></html>');w.document.close();w.print();}
-
-/* WEATHER */
-function fetchWeather(){
-  try{
-    fetch('https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+'&current=temperature_2m,weather_code&timezone=Europe%2FWarsaw')
-    .then(function(r){return r.json();})
-    .then(function(data){
-      if(data&&data.current){
-        var temp=data.current.temperature_2m;
-        var wc=data.current.weather_code;
-        var ic=wc<=1?'☀️':wc<=3?'⛅':wc<=50?'☁️':wc<=65?'🌧️':'🌦️';
-        document.getElementById('wBadge').textContent=ic+' '+temp+'C';
-      }
-    })
-    .catch(function(){document.getElementById('wBadge').textContent='Pogoda niedostepna';});
-  }catch(e){document.getElementById('wBadge').textContent='Pogoda niedostepna';}
-}
-
-function updateClock(){
-  var now=new Date();
-  document.getElementById('clock').textContent=now.toLocaleTimeString('pl-PL',{hour:'2-digit',minute:'2-digit'});
-}
-
-/* REBUILD */
-function rebuildAll(){
-  buildKPI();buildMonthSummary();buildDashCharts();buildSubPages();
-}
-
-/* INIT */
-function initDash(){
-  loadHistory();loadCurrentData();initFilters();buildDeltaBanner();buildHistList();
-  fetchWeather();updateClock();setInterval(updateClock,30000);
-}
-
-/* START */
-checkSession();
+    h4+='<tr><td>'+u
