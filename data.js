@@ -1,6 +1,4 @@
-/* ===== BEL MARE DATA v3.2 — dane demo + struktura ===== */
-
-/* ---------- PACKAGE FORECAST (S_PKG) ---------- */
+/* ===== BEL MARE DATA v3.2 ===== */
 var S_PKG=[
 {d:1,date:'2026-03-23',day:'Pon.',occ:79,adu:159,ch:108,arrP:108,depP:73,arrR:33,depR:26,bfk:203,din:126,lun:6,wst:0,total:335},
 {d:2,date:'2026-03-24',day:'Wt.',occ:72,adu:146,ch:98,arrP:65,depP:82,arrR:22,depR:30,bfk:186,din:112,lun:5,wst:0,total:303},
@@ -37,7 +35,6 @@ var S_PKG=[
 {d:33,date:'2026-04-24',day:'Pt.',occ:82,adu:166,ch:112,arrP:72,depP:38,arrR:24,depR:13,bfk:212,din:132,lun:6,wst:0,total:350}
 ];
 
-/* ---------- HOUSEKEEPING (S_HSK) ---------- */
 var S_HSK=[
 {date:'2026-03-23',day:'Pon.',guests:267,morn:72,arr:33,dep:26,eve:79},
 {date:'2026-03-24',day:'Wt.',guests:244,morn:65,arr:22,dep:30,eve:72},
@@ -73,19 +70,12 @@ var S_HSK=[
 {date:'2026-04-23',day:'Czw.',guests:224,morn:59,arr:10,dep:16,eve:67}
 ];
 
-/* ---------- CANCELLATIONS (S_CANCEL) ----------
-   Dane z PDF "Reservation Cancellations 22.03"
-   3 anulacje, 9 utraconych pokojonocy, -9978.26 PLN */
 var S_CANCEL=[
-{confNo:'83498',name:'Berger, Marc',roomType:'DEL',arrDate:'29.03.26',cancelDate:'19.03.26',leadTime:10,rms:1,nts:4,mkt:'AVAILPRO',rate:'APOB',rateAmt:1131.50,revLoss:4526.00,deposit:0,reason:'REL',reasonDesc:'Release - nieoplacona rezerwacja'},
+{confNo:'83498',name:'Berger, Marc',roomType:'DEL',arrDate:'29.03.26',cancelDate:'19.03.26',leadTime:10,rms:1,nts:4,mkt:'AVAILPRO',rate:'APOB',rateAmt:1131.50,revLoss:4526.00,deposit:0,reason:'REL',reasonDesc:'Release'},
 {confNo:'84498',name:'Scholz, Karen',roomType:'DEL',arrDate:'28.03.26',cancelDate:'21.03.26',leadTime:7,rms:1,nts:3,mkt:'PANA',rate:'DELOB',rateAmt:1064.09,revLoss:3192.26,deposit:0,reason:'TRIP',reasonDesc:'Trip Cancelled'},
-{confNo:'84636',name:'Weber, Petra',roomType:'STDO',arrDate:'01.04.26',cancelDate:'22.03.26',leadTime:10,rms:1,nts:2,mkt:'AVAILPRO',rate:'APM',rateAmt:1130.00,revLoss:2260.00,deposit:0,reason:'REL',reasonDesc:'Release - nieoplacona rezerwacja'}
+{confNo:'84636',name:'Weber, Petra',roomType:'STDO',arrDate:'01.04.26',cancelDate:'22.03.26',leadTime:10,rms:1,nts:2,mkt:'AVAILPRO',rate:'APM',rateAmt:1130.00,revLoss:2260.00,deposit:0,reason:'REL',reasonDesc:'Release'}
 ];
-var S_CANCEL_TOTALS={count:3,roomNights:9,lostRevenue:9978.26,deposits:0,avgLeadTime:9,avgNightRate:1108.70};
 
-/* ---------- ROOMS ON THE BOOKS (S_ROTB) ----------
-   Dane z PDF "Rooms on the books 23.03.2026"
-   13 miesiecy: Marzec 2026 -> Marzec 2027 */
 var S_ROTB=[
 {month:'Marzec 2026',monthIdx:2,year:2026,totalRooms:2480,occPct:22.2,lyOccPct:18.5,revenue:1116000,adr:450,daily:[]},
 {month:'Kwiecien 2026',monthIdx:3,year:2026,totalRooms:3850,occPct:35.6,lyOccPct:30.2,revenue:1848000,adr:480,daily:[]},
