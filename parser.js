@@ -1,3 +1,4 @@
+/* ===== BEL MARE PARSER v3.2 ===== */
 async function exTxt(file){
   var buf=await file.arrayBuffer();
   var pdf=await pdfjsLib.getDocument({data:buf}).promise;
@@ -18,13 +19,14 @@ async function exTxt(file){
   }
   return txt;
 }
+
 var D2P={Mon:'Pon.',Tue:'Wt.',Wed:'Sr.',Thu:'Czw.',Fri:'Pt.',Sat:'Sob.',Sun:'Niedz.',Monday:'Pon.',Tuesday:'Wt.',Wednesday:'Sr.',Thursday:'Czw.',Friday:'Pt.',Saturday:'Sob.',Sunday:'Niedz.'};
 var DPL_P=['Niedz.','Pon.','Wt.','Sr.','Czw.','Pt.','Sob.'];
 function si(v){var n=parseInt(String(v).replace(/[^\d-]/g,''));return isNaN(n)?0:n;}
 function sf(v){var n=parseFloat(String(v).replace(/[^\d.,-]/g,'').replace(',','.'));return isNaN(n)?0:n;}
 
 async function parsePkg(file){
-  var txt=await exTxt(file);var lines=txt.split('\n');var res=[];var dc=0;
+  var txt=await exTxt(file);var lines=txt.split('\n');var res=[];var cnt=0;
   for(var i=0;i<lines.length;i++){
     var line=lines[i].trim();if(!line)continue;
     var dm=line.match(/(\d{1,2})[.\-\/](\d{1,2})[.\-\/](\d{2,4})/);if(!dm)continue;
@@ -34,9 +36,9 @@ async function parsePkg(file){
     var cn=[];for(var j=0;j<nums.length;j++){if(nums[j]!==dm[1]&&nums[j]!==dm[2]&&nums[j]!==dm[3]&&nums[j]!==dd&&nums[j]!==mm&&nums[j]!==yy)cn.push(nums[j]);}
     if(cn.length<6)continue;
     var dn='';var keys=Object.keys(D2P);for(var k=0;k<keys.length;k++){if(line.toLowerCase().indexOf(keys[k].toLowerCase())>=0){dn=D2P[keys[k]];break;}}
-    if(!dn){var d=new Date(ds);dn=DPL_P[d.getDay()];}
-    dc++;var n=[];for(var j=0;j<cn.length;j++)n.push(si(cn[j]));
-    res.push({d:dc,date:ds,day:dn,occ:n[0]||0,adu:n[1]||0,ch:n[2]||0,arrP:n[3]||0,depP:n[4]||0,arrR:n[5]||0,depR:n[6]||0,bfk:n[7]||0,din:n[8]||0,lun:n[9]||0,wst:n.length>=12?n[10]||0:0,total:n[n.length-1]||0});
+    if(!dn){var d2=new Date(ds);dn=DPL_P[d2.getDay()];}
+    cnt++;var n=[];for(var j=0;j<cn.length;j++)n.push(si(cn[j]));
+    res.push({d:cnt,date:ds,day:dn,occ:n[0]||0,adu:n[1]||0,ch:n[2]||0,arrP:n[3]||0,depP:n[4]||0,arrR:n[5]||0,depR:n[6]||0,bfk:n[7]||0,din:n[8]||0,lun:n[9]||0,wst:n.length>=12?n[10]||0:0,total:n[n.length-1]||0});
   }
   return res;
 }
@@ -52,7 +54,7 @@ async function parseHsk(file){
     var cn=[];for(var j=0;j<nums.length;j++){if(nums[j]!==dm[1]&&nums[j]!==dm[2]&&nums[j]!==dm[3]&&nums[j]!==dd&&nums[j]!==mm&&nums[j]!==yy)cn.push(nums[j]);}
     if(cn.length<4)continue;
     var dn='';var keys=Object.keys(D2P);for(var k=0;k<keys.length;k++){if(line.toLowerCase().indexOf(keys[k].toLowerCase())>=0){dn=D2P[keys[k]];break;}}
-    if(!dn){var d=new Date(ds);dn=DPL_P[d.getDay()];}
+    if(!dn){var d2=new Date(ds);dn=DPL_P[d2.getDay()];}
     var n=[];for(var j=0;j<cn.length;j++)n.push(si(cn[j]));
     res.push({date:ds,day:dn,guests:n[0]||0,morn:n[1]||0,arr:n[2]||0,dep:n[3]||0,eve:n[4]||0});
   }
@@ -104,7 +106,6 @@ async function parseRotb(file){
         if(big.length>=2){cur.revenue=sf(big[big.length-2]);cur.adr=sf(big[big.length-1]);}
       }
     }
-    if(/^\d{1,3}$/.test(line)&&cur)days.push(si(line));
   }
   if(cur)res.push({month:cur.month,monthIdx:cur.monthIdx,year:cur.year,totalRooms:cur.totalRooms,occPct:cur.occPct,lyOccPct:cur.lyOccPct,revenue:cur.revenue,adr:cur.adr,daily:days.slice()});
   return res;
