@@ -435,5 +435,25 @@ tr.wknd td{background:#fefce8}
 <script src="data.js"></script>
 <script src="parser.js"></script>
 <script src="app.js"></script>
+<script>
+if(typeof handleLogin==='undefined'){
+  console.error('app.js nie zaladowal sie poprawnie!');
+  function handleLogin(){
+    var u=document.getElementById('loginUser').value.trim().toLowerCase();
+    var e=document.getElementById('loginError');
+    if(!u){e.textContent='Wpisz login';return;}
+    var DEFUSERS=[{id:'admin',username:'admin',role:'admin',name:'Administrator'},{id:'op1',username:'operacja',role:'user',name:'Dzial Operacyjny'},{id:'rec1',username:'recepcja',role:'viewer',name:'Recepcja'}];
+    var f=null;
+    for(var i=0;i<DEFUSERS.length;i++){if(DEFUSERS[i].username===u){f=DEFUSERS[i];break;}}
+    if(!f){e.textContent='Nieznany login';return;}
+    sessionStorage.setItem('bm_cu',JSON.stringify(f));
+    document.getElementById('loginOverlay').classList.add('hidden');
+    document.getElementById('uName').textContent=f.name;
+    document.getElementById('uAv').textContent=f.name.charAt(0);
+  }
+  document.getElementById('loginUser').addEventListener('keydown',function(ev){if(ev.key==='Enter')handleLogin();});
+}
+</script>
+
 </body>
 </html>
